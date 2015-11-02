@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* CSS Document */
+
+body { -moz-user-select: none; /*火狐*/ -webkit-user-select: none; /*webkit浏览器*/ -ms-user-select: none; /*IE10*/ -khtml-user-select: none; /*早期浏览器*/ user-select: none; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); -webkit-focus-ring-color: rgba(0, 0, 0, 0); -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; padding: 0; margin: 0; background-color: #EBEBEB; color: #000; font-family: 'microsoft yahei', Verdana, Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.25em; }
+.store-layout { max-width: 640px; min-width: 320px; margin: 0 auto; overflow: hidden; }
+.store-top-header { width: 100%; height: 200px; position: relative; background-size: contain; }
+.store-avatar { max-width: 100px; max-height: 100px; min-width: 50px; min-height: 50px; position: absolute; z-index: 2; bottom: -20px; left: 10px; }
+.store-avatar img { width: 100%; }
+.store-name { line-height: 24px; filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#BFFFFFFF', endColorstr='#BFFFFFFF');background:rgba(255,255,255,0.75); width: 100%; height: 48px; padding: 8px 8px 8px 120px; position: absolute; z-index: 1; bottom: 0; left: 0; }
+.store-top-header h1 { font-size: 20px; color: #333; float: left; }
+.store-top-header h2 { font-size: 14px; color: #999; float: left; clear: left;}
+.store-top-header a { font-size: 16px; color: #FFF; background-color: #FF5000; display: block; padding: 10px 20px; border-radius: 10px; position: absolute; z-index: 2; bottom: 10px; right: 10px; }
+.store-top-stats { background-color: #FFF; width: 100%; padding: 20px 0 0 0; }
+.store-top-stats ul { font-size: 0; *word-spacing: -1px/*IE6、7*/;
+overflow: hidden; padding-bottom: 10px; }
+.store-top-stats ul li { background-color: #FFF; text-align: center; letter-spacing: normal; vertical-align: top; display: inline-block; *display: inline/*IE7*/;
+width: 49%; margin-left: -1px; padding: 10px 0 0 0; border-left: dotted 1px #CCC; *zoom:1/*IE7*/;
+}
+.store-top-stats-number { font-size: 24px; line-height: 28px; }
+.store-top-stats-desciption { font-size: 16px; line-height: 20px; }
+.goods { border: none; }
+.goods .title { background-color: transparent; padding: 8px; }
+.goods .content { font-size: 0; *word-spacing: -1px/*IE6、7*/;
+}
+.goods-item { font-size: 16px; background-color: #FFF; letter-spacing: normal; vertical-align: top; display: inline-block; *display: inline/*IE7*/;
+width: 48%; margin: 1%; border-radius: 5px; *zoom:1/*IE7*/;
+box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+.goods-item a { display: block; }
+.goods-item-pic { display: block; max-width: 240px; min-width: 120px; max-height: 240px; min-height: 120px; margin: 8px auto 0 auto; }
+.goods-item-pic img { width: 100%; }
+.goods-item-name { font-size: 0.8em; line-height: 18px; color: #777; height: 36px; padding: 8px 8px 0 8px; margin-bottom: 8px; overflow: hidden; }
+.goods-item-price { font-size: 1em; color: #F30; height: 20px; padding: 8px 0; margin: 0 8px; border-top: dotted 1px #D1D1D1; }
+.item img { width: 100%; display: block; }
+.swipe { overflow: hidden; visibility: hidden; position: relative; }
+.swipe-wrap { overflow: hidden; position: relative; height: auto; }
+.swipe-wrap > div { float: left; width: 100%; position: relative; }
+.swipe-wrap img { width: 100%; max-height: 240px; min-height: 120px; }
+.goods-item-price .product-price { color: #f30; }
+.goods-item-price .product-price-s { color: #999; }
+.in-store-search { background: url(../images/icon.png) no-repeat 0 -780px; width: 36px; height: 36px; position: absolute; top: 6px; right: 60px; z-index: 9999; color: #fff; }
+.store-search-container { background-color: #FFF; max-width: 640px; min-width: 320px; margin: 0 auto; }
+.iss-form-elements { font-size: 0; background-color: #F5F5F5; text-align: center; padding: 15px 2%; }
+.iss-form-elements input { font-size: 14px; vertical-align: middle; display: inline-block; width: 78%; height: 30px; text-indent: 8px; border: solid 1px #CCC; border-right: none; }
+.iss-form-elements button { font-size: 14px; color: #FFF; background-color: #aaa; vertical-align: middle; display: inline-block; width: 18%; height: 32px; border: none; cursor: pointer; }

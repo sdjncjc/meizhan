@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
+    <meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>限量购 - 亲亲美站</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
+    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link rel="stylesheet" href="/css/common.css" />
+	<link rel="stylesheet" href="/css/group_list.css" />
+</head>
+<body>
+    <section class="header">
+        <section class="navbar">
+			<a class="back-btn" href="javascript:history.back();"></a>
+            <h1 class="title">限量购</h1>
+            <a class="home-btn" href="/"></a>
+        </section>
+    </section>
+    <section class="wrapper">
+        <section class="filterbar"></section>
+        <div class="group-list"></div>
+        <div class="loading">正在加载...</div>
+    </section>
+    <div class="toolbar">
+        <a href="/trade/cart.html"></a>
+    </div>
+	<a href="javascript:;" class="backtop"></a>
+
+    <script id="filterbar-template" type="text/template">
+        <div class="filterbar-dropdown-mask hidden"></div>
+        <div class="filterbar-dropdown hidden" style="top: 0px;">
+            <div class="filterbar-dropdown-item active" data-categoy="all">
+                <div class="filterbar-dropdown-item-inner">全部</div>
+            </div>
+            {{each groupbuy_class as value index}}
+            <div class="filterbar-dropdown-item" data-category="{{value.class_id}}">
+                <div class="filterbar-dropdown-item-inner">{{value.class_name}}</div>
+            </div>
+            {{/each}}
+            <div class="filterbar-dropdown-item" data-category="nextup">
+                <div class="filterbar-dropdown-item-inner">下期预告</div>
+            </div>
+        </div>
+        <div class="filterbar-inner-container">
+            <div class="filterbar-inner-mask hidden">
+                <p>分类列表</p>
+            </div>
+            <div class="filterbar-inner-wrapper">
+                <div class="filterbar-inner">
+                    <div class="filterbar-inner-item active" data-category="all">全部</div>
+                    {{each groupbuy_class as value index}}
+                    <div class="filterbar-inner-item" data-category="{{value.class_id}}">{{value.class_name}}</div>
+                    {{/each}}
+                    <div class="filterbar-inner-item" data-category="nextup">下期预告</div>
+                </div>
+            </div>
+            <div class="filterbar-more">
+                <i class="show-more"></i>
+            </div>
+        </div>
+    </script>
+
+	<script type="text/template" id="list-item-template">
+        {{each group_list as value index}}
+        <a href="/goods.html?id={{value.goods_id}}">
+        {{if value.goods_storage > 0}}
+        <div class="item">
+        {{else}}
+        <div class="item soldout">
+        {{/if}}
+            <div class="label">省<div class="price">{{value.goods_marketprice-value.groupbuy_price}}</div></div> 
+            <div class="soldout-icon">已抢光</div>
+            <img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}">
+            <div class="item-detail">
+                <p class="title">
+                    {{value.goods_name}}
+                </p>
+                <div class="desc">
+                    <span>&bull;&nbsp;{{value.remark}}</span>
+                </div>
+                <div>
+                    <div class="info-wrapper">
+                        <p class="price"><span class="symbol">&yen;</span>{{value.groupbuy_price}}<span class="ori-price">{{value.goods_marketprice}}</span></p>
+                        <div class="sold">已售{{value.buy_quantity+value.virtual_quantity}}件</div>
+                    </div>
+                    <div class="buy-btn">{{if value.goods_storage > 0}}马上团{{else}}已抢光{{/if}}</div>
+                </div>
+            </div>
+        </div>
+        </a>
+        {{/each}}
+	</script>
+
+	<script type="text/template" id="list-next-up-template">
+        {{each group_list as value index}}
+            <div class="item nextup">
+                <a href="/goods.html?id={{value.goods_id}}">
+                <div class="label">省<div class="price">{{value.goods_marketprice-value.groupbuy_price}}</div></div>
+                <img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}">
+                </a>
+                <div class="item-detail">
+                    <a href="/goods.html?id={{value.goods_id}}">
+                    <p class="title">
+                        {{value.goods_name}}
+                    </p>
+                    <div class="desc">
+                        <span>&bull;&nbsp;{{value.remark}}</span>
+                    </div>
+                    </a>
+                    <div>
+                        <div class="info-wrapper">
+                            <p class="price"><span class="symbol">&yen;</span>{{value.groupbuy_price}}<span class="ori-price">{{value.goods_marketprice}}</span></p>
+                            <div class="sold">距开始{{if value.timer.hour > 0}}{{value.timer.hour}}时{{/if}}{{value.timer.minute}}分</div>
+                        </div>
+                        <div class="buy-btn" data-iid="{{value.goods_id}}">收藏</div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+	</script>
+
+	<script type="text/template" id="empty-list-template">
+        <div class="empty">
+            <div class="icon"></div>
+            <p>暂无限量购商品</p>
+            <a class="button" href='/'>逛逛今日特卖</a>
+        </div>
+	</script>
+
+    <script type="text/javascript" src="/js/zepto.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/group_list.js"></script>
+</body>
+</html>

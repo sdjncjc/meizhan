@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>亲亲客户端下载</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="no"/>
+    
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+	<link rel="stylesheet" type="text/css" href="../css/child.css">
+	<style>
+	#download_box{ position:relative;}
+	#download_box img{ width:100%;}
+	</style>
+	<script>
+		var ua = navigator.userAgent.toLowerCase();
+		if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			window.location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=net.qinqin.android';
+		}
+	</script>
+</head>
+<body>
+	<header id="header"></header>
+	<div id="download_box"><a id="download_box_a" href="#" title="立即下载(Android版)"><img src="../images/download_bg.jpg" /><img style="display:none;" src="../images/download_bg2.jpg" /></a></div>
+	<footer id="footer"></footer>
+    <script type="text/javascript" src="../js/zepto.min.js"></script>
+    <script type="text/javascript" src="../js/template.js"></script>
+    <script type="text/javascript" src="../js/config.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/tmpl/common-top.js"></script>
+	<script type="text/javascript" src="../js/tmpl/footer.js"></script>
+	<script>
+		window.onload=function(){
+			if (/android/i.test(navigator.userAgent)){
+				// todo : android
+				$('#download_box_a img').eq(1).hide();
+				window.location.href = AndroidSiteUrl;
+				document.getElementById('download_box_a').href = AndroidSiteUrl;
+			}
+			if (/ipad|iphone|mac/i.test(navigator.userAgent)){
+				// todo : ios
+				$('#download_box_a img').eq(0).hide();
+				window.location.href = IOSSiteUrl;
+				document.getElementById('download_box_a').href = IOSSiteUrl;
+			}
+		}
+	</script>
+</body>
+</html>

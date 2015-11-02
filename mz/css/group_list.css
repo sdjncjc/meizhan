@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+.wrapper{padding-top:3.6rem}
+.group-list .item{*zoom:1;border-bottom:1px solid #eee;position:relative}
+.group-list .item:before,.group-list .item:after{display:table;content:""}
+.group-list .item:after{clear:both}
+.group-list .item-detail{margin:.512rem;height:5.632rem}
+.group-list .label{background:url(../img/item-label.png) no-repeat center center;background-size:contain;height:1.83466667rem;width:2.048rem;position:absolute;top:.512rem;left:.512rem;text-align:center;color:#ff4965;font-size:.55rem;padding-top:.128rem}
+.group-list .label .price{font-size:.5rem}
+.group-list img{float:left;width:5.632rem;height:5.632rem;margin:.512rem;margin-right:0;padding-right:.512rem}
+.group-list .title{font-size:.68266667rem;height:1.6rem;line-height:.8rem;display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.group-list .desc{font-size:.54826667rem;color:#e69e51;margin:.384rem 0;height:1.3rem;line-height:.65rem;display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.group-list .info-wrapper{float:left}
+.group-list .symbol{font-size:.525rem}
+.group-list .price{color:#ff4965;font-size:.78933333rem;margin-bottom:.10666667rem}
+.group-list .ori-price{text-decoration:line-through;color:#999;font-size:.525rem;margin-left:.29866667rem}
+.group-list .sold{color:#999}
+.group-list .buy-btn{float:right;margin-top:.256rem;width:3.072rem;height:1.28rem;line-height:1.28rem;text-align:center;white-space:nowrap;color:#fff;border:.05rem solid transparent;border-radius:.15rem;background-color:#ff4965;background-image:none}
+.nextup .buy-btn{background-color:#75cc31}
+.soldout-icon{display:none}
+.soldout .buy-btn{color:#fff;background-color:#cecece}
+.soldout .soldout-icon{display:block;position:absolute;top:50%;left:1.38666667rem;margin-top:-1.6rem;width:3.2rem;height:3.2rem;line-height:3.2rem;text-align:center;background:rgba(0,0,0,.6);color:#fff;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%}
+.empty{width:6.016rem;text-align:center;margin:auto;margin-top:3rem}
+.empty .icon{background:url(../img/empty-icon.png) no-repeat center center;background-size:contain;width:4.992rem;height:4.992rem;margin:auto}
+.empty p{margin:1.024rem 0 1.49333333rem;color:#999}
+.empty .button{display:block;width:6.016rem;height:1.70666667rem;line-height:1.70666667rem;text-align:center;white-space:nowrap;color:#ff4965;border:.05rem solid #ff4965;border-radius:.15rem;background-color:#fff;background-image:none}
+.loading{height:2rem;line-height:2rem;text-align:center}

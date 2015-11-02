@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>店内搜索</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<link rel="stylesheet" type="text/css" href="../css/child.css">
+<link rel="stylesheet" type="text/css" href="../css/store.css">
+</head>
+<body id="home-320">
+<header id="header"></header>
+<div id="store-search-wrapper"></div>
+<div class="footer" id="footer"></div>
+</body>
+<script type="text/html" id="store-search-tpl">
+
+<div class="store-search-container">
+	<form method="get" action="store_goods.html">
+		<input type="hidden" name="store_id" value="<%= store_info.store_id %>" />
+		<div class="iss-form-elements">
+		<input type="text" name="keyword" placeholder="搜索店铺内商品" />
+		<button>搜索</button>
+		</div>
+	</form>
+	<div class="categroy-cnt">
+	<div class="all"><a href="store_goods.html?store_id=<%= store_info.store_id %>">全部商品</a></div>
+	<ul class="categroy-seciond-list">
+<% for (var i in store_goods_class) { var gc = store_goods_class[i]; if (gc.level == 1) { %>
+		<li class="category-seciond-item">
+			<div class="cs-frist-category">
+				<a class="level<%= gc.level %>" href="store_goods.html?store_id=<%= store_info.store_id %>&stc_id=<%= gc.id %>"><%= gc.name %></a>
+				<a class="graydownarrow" href="javascript:;" data-toggle="<%= gc.id %>"> </a>
+			</div>
+		</li>
+<% } else { %>
+		<li class="category-seciond-item" data-toggle-items="<%= gc.pid %>">
+			<div class="cs-frist-category secondary-category">
+				<a href="store_goods.html?store_id=<%= store_info.store_id %>&stc_id=<%= gc.id %>"><%= gc.name %></a>
+			</div>
+		</li>
+<% } } %>
+	</ul>
+	</div>
+</div>
+
+</script>
+<script type="text/javascript" src="../js/config.js"></script>
+<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/touch.js"></script>
+<script type="text/javascript" src="../js/template.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/tmpl/common-top.js"></script>
+<script type="text/javascript" src="../js/tmpl/footer.js"></script>
+<script type="text/javascript" src="../js/tmpl/store_search.js"></script>
+<script type="text/javascript" src="../js/tmpl/footer.js"></script>
+</html>

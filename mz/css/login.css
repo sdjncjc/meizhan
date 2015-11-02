@@ -1,0 +1,38 @@
+@charset "utf-8";
+body{ background:#eee;}
+
+.login{position:relative;margin:0 .44rem;overflow:hidden}
+.login input::-webkit-input-placeholder{color:#C7C7CD}
+.login input:-moz-placeholder{color:#C7C7CD}
+.login input::-moz-placeholder{color:#C7C7CD}
+.login input:-ms-input-placeholder{color:#C7C7CD}
+.login button{border:0}
+.login a{text-decoration:none}
+.login .input{position:relative;margin:.8rem .13rem 0;font-size:0}
+.login .input input{border:.05rem solid #DCDCDC}
+.login .input input:last-child{border-bottom-left-radius:.2rem;border-bottom-right-radius:.2rem;margin-top:-.05rem}
+.login .input input:first-child{border-top-left-radius:.2rem;border-top-right-radius:.2rem;margin-top:0}
+.login .user-name-input,.login .password-input,.login .go-signup-btn{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box}
+.login .user-name-input,.login .password-input{display:block;z-index:1;position:relative;width:100%;height:2rem;padding:.6rem 0 .55rem 1.64rem;background-position:.533rem center;background-repeat:no-repeat;background-size:auto .75rem;line-height:1rem;font-size:.75rem}
+.login .user-name-input:focus,.login .password-input:focus{z-index:2;border-color:#09C}
+.login .user-name-input{background-image:url(../img/name-input.png)}
+.login .password-input{background-image:url(../img/password-input.png)}
+.login .pin-input{background-image:url(../img/pin-input.png);width:75%;display:inline-block}
+.login .login-btn,.login .signup-btn,.login .go-signup-btn{width:100%;height:2rem;border-radius:.1rem;margin-top:.5rem;line-height:2rem;font-size:.8rem;text-align:center}
+.login .login-btn,.login .signup-btn{background-color:#FF3964;color:#FFF}
+.login .go-signup-btn{display:block;float:right;width:100%;border:.05rem solid #FF3964;background-color:#FFEBF2;color:#FF4965}
+.login button[disabled]{border-color:#ccc;color:#ccc;background-color:#fff}
+.login .remember{margin:.5rem .2rem .1rem}
+.login .remember .checkbox{font-size:.6rem}
+.login .remember .checkbox input{vertical-align:middle;-webkit-appearance:checkbox;}
+.btn_forgetPsw{float:right;color:#3a6df0;font-size:.6rem}
+
+.header .navbar{position:absolute}
+.wrapper{padding-top:2rem}
+
+.weixin-login{text-align:center;display:none;margin:1.1rem .6rem 0}
+.weixin-login .btn-weixinLogin{width:3.64rem;height:3.64rem;display:inline-block;background-image:url(../img/weixinLogin.png);background-size:100%}
+.weixin-login .line-title{font-size:.65rem;margin:.64rem 0 .5rem;position:relative}
+.weixin-login .line-title:before{content:'';width:4.2rem;border-bottom:1px solid #d8d8d9;position:absolute;top:.4rem;left:0}
+.weixin-login .line-title:after{content:'';width:4.2rem;border-bottom:1px solid #d8d8d9;position:absolute;top:.4rem;right:0}
+.weixin-login .line-title.next{margin-top:1.1rem}

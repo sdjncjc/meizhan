@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
+    <meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>TOP排行榜 - 亲亲美站</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
+    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link rel="stylesheet" href="/css/common.css" />
+	<link rel="stylesheet" href="/css/goods.css" />
+</head>
+<body>
+	<section class="navbar">
+		<a class="back-btn" href="javascript:history.back();"></a>
+		<h1 class="title">商品详情</h1>
+		<a class="home-btn" href="/"></a>
+	</section>
+
+	<!-- 内容盒子 -->
+	<section class="wrapper">
+		<section id="slider" class="swipe">
+			<div class='swipe-wrap'></div>
+			<script id="slider-template" type="text/template">
+				{{each goods_image_mobile as value index}}
+				<img src="{{value}}" />
+				{{/each}}
+			</script>
+			<div id="countdown-container" class="countdown-container hidden">
+				<div class="item-countdown"></div>
+			</div>
+			<div class="slider-index">1/1</div>
+		</section>
+	
+	
+		<!-- 详细描述 -->
+		<section class="item-base">
+			<script id="item-base-template" type="text/template">
+				<section class="base-info">
+					<div class="left-desc">
+						<div class="desc-title">
+							{{if event_type == 'oversea'}}
+							<img src="${country_icon}" class="oversea-country"/>
+							<span class="oversea-country-name">${country_name}</span>
+							{{else if event_type == 'show'}}
+							<span>今日特卖</span>
+							{{else}}
+							<span class="${todayClass}">${tuanInfo.today}</span>
+							{{/if}}
+							${title}
+						</div>
+						{@if desc}
+						<p class="desc">
+							${desc}
+						</p>
+						{@/if}
+					</div>
+					<div class="right-collection">
+						<div class="collection"></div>
+						<div class="col">收藏</div>
+					</div>
+				</section>
+				{@if event_type == 'show'}
+				<section class="base-price">
+					<div class="price-wrap">
+						<span class="now-price">
+							<span>&yen;</span>${price/100}
+						</span>
+						<span class="origin-price">
+							<span>&yen;</span>${origin_price/100}
+						</span>
+						{@each labels as label}
+						{@if label == '折扣'}
+						<a class="discount">${discount/10}折</a>
+						{@else}
+						<a class="discount">${label}</a>
+						{@/if}
+						{@/each}
+					</div>
+				</section>
+				{@else if event_type == 'oversea'}
+				<section class="oversea-base-price">
+					<div class="oversea-price-wrap">
+						<span class="oversea-now-price">
+							<span class="oversea-brand">免税价</span>
+							<span>&yen;</span>
+							<span class="oversea-price">${price/100}</span>
+							{@each labels as label}
+							{@if label == '折扣'}
+							<span class="oversea-discount">${discount/10}折</span>
+							{@else}
+							<span class="oversea-discount">${label}</span>
+							{@/if}
+							{@/each}
+						</span>
+						<span class="oversea-origin-price">
+							<span>国内价</span>
+							<span class="oversea-price">&yen;${origin_price/100}</span>
+						</span>
+					</div>
+					<div class="oversea-shipments">
+						<div class="shipments-wrap">
+							<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAXVBMVEUAAACYSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+I5eaeAAAAHnRSTlMArAbHTe7m4KQ7Hw3Q8Ny1n5SSh3p0aFtCu7pVGBfhHV/EAAAAe0lEQVQY04WRxxaFIAwFQbDw9PXe5v8/U0VPNok6mxxmQcp1E21d7ZymCHhncIFk6AcEQ7+AqPW/hPJ4lnecJ+gArqKrfZtrA9SF6BtNrk+Ak+gEbz8QGPGZ+7DIAU1c0gk+6hPV0h5wfR3hJ8urU33Nw3ZrMWyHpiPuAaFEDs1GX4oIAAAAAElFTkSuQmCC"/>
+							<span>发货:</span>
+							${shipments}
+						</div>
+					</div>
+				</section>
+				{@else}
+				<section class="base-price">
+					<div class="price-wrap">
+						<span class="now-price">
+							<span style="font-size: .6rem">限量购</span>
+							<span>&yen;</span>${price/100}
+						</span>
+						<span class="origin-price">
+							<span>&yen;</span>${origin_price/100}
+						</span>
+						{@each labels as label}
+						{@if label == '折扣'}
+						<a class="discount">${discount/10}折</a>
+						{@else}
+						<a class="discount">${label}</a>
+						{@/if}
+						{@/each}
+					</div>
+				</section>
+				{@/if}
+				<section class="base-rebate">
+					{@each promotion_tips as promotion}
+					<div class="promotions">
+						<span class="rebate-ico" style="background-image: url('${promotion.icon}')"></span>
+						<span>${promotion.message}</span>
+					</div>
+					{@/each}
+				</section>
+			</script>
+		</section>
+	
+		<!-- 颜色和尺寸 -->
+		<section class="grid-wrap item-sku">
+			<script id="item-sku-template" type="text/template">
+				<div class="grid">
+					<div>
+						{@each stSku as ksku, kid}
+						<h5>${ksku.kname}</h5>
+						<ul>
+							{@each ksku.value as vsku, vid}
+							<li class="col-3"><a href="javascript:void(0);" class="" sku-vid="${vid}">${vsku.vname}</a>
+							</li>
+							{@/each}
+						</ul>
+						{@/each}
+					</div>
+				</div>
+			</script>
+		</section>
+	
+	
+		<!-- 买家口碑 -->
+		<section class="item-praise">
+			<script id="item-praise-template" type="text/template">
+				<div>
+					<div>
+						<h5>买家口碑(${rate_count})</h5>
+						<ul class="praise-button" id="praise-button-click">
+							{@each rate_tags as val}
+							<li>
+								<a id="praise-${val.tag_id}" class="J_praise-${val.tag_id}" data-id="${val.tag_id}">${val.name}
+									<span>${val.count}</span>
+								</a>
+							</li>
+							{@/each}
+						</ul>
+					</div>
+				</div>
+			</script>
+		</section>
+	
+		<!-- 查看更多 -->
+		<section class="item-discuss">
+			<script id="item-discuss-template" type="text/template">
+				{@each rate_items as val}
+				<div class="discuss">
+					<div class="discuss-title">
+						<div class="stars-grey">
+							<div class="stars-red stars-${val.rate_star * 2}"></div>
+						</div>
+						<div class="account">${val.display_name}</div>
+					</div>
+					<p class="discuss-content">
+						${val.comment}
+					</p>
+				</div>
+				{@/each}
+				<div class="more-discuss">更多买家口碑</div>
+			</script>
+		</section>
+	
+	
+		<!-- 进入专场 -->
+		<section class="item-special">
+			<script id="item-special-template" type="text/template">
+				<div class="special-wrap">
+					<div class="special-top">
+						<img src="${logo}"/>
+						<div class="special-desc">
+							<div class="special-title">${brand}</div>
+							<div class="special-content">${brand_sub_title}</div>
+						</div>
+						{@if event_type == 'show'}
+						<a href="/list/list.html?eventId=${event_id}" class="special-button">进入专场</a>
+						{@else if event_type == 'oversea'}
+						<a href="/oversea/oversea-list.html?bid=${mart_oversea_show_id}" class="special-button">进入专场</a>
+						{@/if}
+					</div>
+					{@if event_type == 'show'}
+					<ul class="special-center">
+						<li>商品综合
+							<span>${total_rate}</span>
+							<span class="special-brand">
+								{@if total_rate >= 4.5}
+								高
+								{@else}
+								低
+								{@/if}
+							</span>
+						</li>
+						<li>发货速度
+							<span>${shipment_rate}</span>
+							<span class="special-brand">
+								{@if total_rate >= 4.5}
+								高
+								{@else}
+								低
+								{@/if}
+							</span>
+						</li>
+						<li>商品综合
+							<span>${shipping_rate}</span>
+							<span class="special-brand">
+								{@if total_rate >= 4.5}
+								高
+								{@else}
+								低
+								{@/if}
+							</span>
+						</li>
+					</ul>
+					{@/if}
+					<div class="special-bottom">
+						{@each platform_advantages as val}
+						<span>${val}</span>
+						{@/each}
+					</div>
+				</div>
+			</script>
+		</section>
+	
+		<!-- tab -->
+		<section class="grid-wrap item-detail">
+			<script id="item-detail-template" type="text/template">
+				<div class="">
+					<div class="nav-box">
+						<ul class="nav-wrapper">
+							<li id="detail" class="active">商品详情</li>
+							<li id="praise">买家口碑</li>
+							<li id="qa">常见问题</li>
+						</ul>
+					</div>
+					<div id="detail-wrapper" class="J_tab">
+						<div class="detail-introduct">
+							{@each product_props as pro}
+							<div class="props">
+								<span class="pro-name">${pro.prop_name}</span>
+								<span>${pro.prop_value}</span>
+							</div>
+							{@/each}
+						</div>
+						$${detail}
+					</div>
+					<div id="qa-wrapper" class="J_tab">
+						<div class="page-wrapper">
+							<div class="diff-wrapper">
+								<ul>
+									<h4 class="title-fontSize color-purple"><img src="http://b0.hucdn.com/party/default/48b89b434c6be05e01b13a0b565cd146_43x43.png">贝贝海外购</h4>
+									<li>全部中文介绍，招商团队全球精选</li>
+									<li>支付宝、网银、信用卡支付</li>
+									<li>保税区、海外仓、国内中转仓，三种方式直发，时效保障</li>
+									<li>海关全程监管，享受行邮免税政策</li>
+									<li>支持国内仓退货，退货运费提供补贴</li>
+									<li>贴心国内客服团队，政策统一，全程一站式服务</li>
+								</ul>
+								<ul>
+									<h4 class="title-fontSize"><img src="http://b0.hucdn.com/party/default/78a628a65f17d18647f502f6c5a05879_43x43.png">传统海淘</h4>
+									<li>外语很难看懂，商品繁杂无从下手</li>
+									<li>必须用国外信用卡、Paypal等外币支付</li>
+									<li>转运环节复杂，额外付款，运输长达45天，费时费力费钱</li>
+									<li>非正规渠道入关，或产生关税由顾客自己承担</li>
+									<li>经常无法退货，或退货费用高</li>
+									<li>出现问题转运仓和商家互相推卸责任，外语客服沟通困难</li>
+								</ul>
+							</div>
+	
+	
+							<div class="help-wrapper">
+								<div class="help-info help-oversea-questions">
+									<div class="question-container">
+										<a class="show-question" href="javascript:void(0);">
+											<div class="question-title title-fontSize">商品来自哪里？<i class="down-arrow"></i>
+											</div>
+										</a>
+										<p class="hidden">我们的专业招商团队，确保所有的品牌均为海外优质品牌，主要是由海外品牌商或品牌代理经销商等供应商提供，让您轻松享受到国外优质原装进口商品。</p>
+									</div>
+	
+									<div class="question-container">
+										<a class="show-question" href="javascript:void(0);">
+											<div class="question-title title-fontSize">为何商品从宁波等国内仓发出？<i class="down-arrow"></i>
+											</div>
+										</a>
+										<p class="hidden">保税区发货，是贝贝网与政府、海关、国检等部门合作的一种全新海外购模式：以批量运输方式进入中国境内，在保税区储存，当您在贝贝网成功下单后，商品会直接从保税区仓库用国内快递直接发出</p>
+									</div>
+	
+									<div class="question-container">
+										<a class="show-question" href="javascript:void(0);">
+											<div class="question-title title-fontSize">我还要额外缴纳关税么？<i class="down-arrow"></i>
+											</div>
+										</a>
+										<p class="hidden">依据《中华人民共和国进境物品归类表》，以商品实际销售价格作为完税价格（征税基数），参照行邮税税率征收进境物品进口税，应征税在50元以下（含50元），海关予以免征，您不需要担心承担任何额外关税。</p>
+									</div>
+	
+									<div class="question-container">
+										<a class="show-question" href="javascript:void(0);">
+											<div class="question-title title-fontSize">我要承担国际物流和国内物流费用么？<i class="down-arrow"></i>
+											</div>
+										</a>
+										<p class="hidden">您不需要承担国际物流和国内物流费用，国内偏远地区除外（新疆、西藏、内蒙古）</p>
+									</div>
+	
+									<div class="question-container">
+										<a class="show-question" href="javascript:void(0);">
+											<div class="question-title title-fontSize">订单什么时候发货？大概多久我能收到货？<i class="down-arrow"></i>
+											</div>
+										</a>
+										<p class="hidden">由于海关通关需要时间，一般3天内能完全清关发货，最长7天内发货。发货之后一般3-5天内能收到货，您可以在我的订单查看快递状态，由于快递公司无法及时更新发货信息，您可能看到的状态会有所延迟。</p>
+									</div>
+	
+									<div class="question-container">
+										<a class="show-question" href="javascript:void(0);">
+											<div class="question-title title-fontSize">我为什么会一个订单收到多个包裹？<i class="down-arrow"></i>
+											</div>
+										</a>
+										<p class="hidden">由于海外购的特殊性以及可能来自不同的供货商，这是正常情况，您的订单可能会被拆成多个订单，如果你提前收到了1个包裹，那么不要急，这个订单的其他包裹也就很快会到手啦</p>
+									</div>
+	
+									<div class="question-container">
+										<a class="show-question" href="javascript:void(0);">
+											<div class="question-title title-fontSize">贝贝海外购是否支持退货？<i class="down-arrow"></i>
+											</div>
+										</a>
+										<p class="hidden">支持退货，商品问题导致退货由贝贝提供提供运费补贴，同省补贴不超过10元，非同省不超过20元，特定地区不超过25元（特定地区指：新疆、西藏、内蒙古）。</p>
+									</div>
+	
+									<div class="question-container">
+										<a class="show-question" href="javascript:void(0);">
+											<div class="question-title title-fontSize">如何享受售后服务？<i class="down-arrow"></i>
+											</div>
+										</a>
+										<p class="hidden">有任何售前售后问题，可通过以下两种方式咨询：联系在线客服，或拨打客户电话：400-668-0000。客服工作时间：周一到周日9：00-22：00，法定假日除外。</p>
+									</div>
+								</div>
+								<div class="contact hidden"><a id="contact_link" href="#">点击咨询</a>购买前如有问题，请向贝贝客服咨询</div>
+							</div>
+						</div>
+					</div>
+					<div id="praise-wrapper" class="J_tab">
+						<div class="total-rate">
+							<span class="rate-title">商品满意度</span>
+							<span class="score">${total_rate}</span>
+								<span class="rate-stars-contain">
+									<span class="rate-stars-grey">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAWCAMAAADU6N+kAAAAV1BMVEUAAADZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dl19SJdAAAAHHRSTlMA+e706eDZhGtGLCMdEQ3Kia+pl3t2dVJLOBgExat86AAAALxJREFUSMfF0EkOwyAQRNEyno3B89z3P2foSJZwnHV3LQD9twPRejymQRttgC5dBRUXoEoVEVXhViSfhZ55QJFK4pXhpUZt+u1pC2iQq5exoHvFuNROmMqc3stLSFL7t/M3CZLNXjmzCJOkxvxk03CWpSN95PTgKE11EuWk5iRPQ9QHDgrURb3joEAm6oaDPHmK5wEFaoiXdAnxmlDkaec6WdiJZQ9Fnioy/Qne2Ruqwi1P6+xwz81rOEXpA3WYeMQK2izyAAAAAElFTkSuQmCC"/>
+									</span>
+									<span id="rate-stars-red" class="stars-${total_rate_stars}">
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAWCAMAAADU6N+kAAAAV1BMVEUAAAD/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWVhjSTKAAAAHHRSTlMA+fTu6eDZhGtGLCMdEQ3Kia+pl3t2dVJLOBgEy+DTxwAAALtJREFUSMfF0EkOhDAMRNEizISEefb9z9lxS0ih6bVdG0f/7YJoPR7ToI02QJeugooLUKWKiKpwFclnoWceUKSSeGV4qVFrvt20gAa5ehkLuleMS+2EqczpvbyEJLV/O3+TINnslTOLMElq0p+cNpxl6TCPbA6O0lQnUU5qTvI0RH3goEBd1DsOCpRGPeUgT57ieUCBGuIlXUK8JhR52rlOFnZi2UORp4pMf4J39oaqcOVpnR3uuXnlI0kfRzB4xIQvyyUAAAAASUVORK5CYII="/>
+									</span>
+								</span>
+						</div>
+						<ul class="praise-button" id="praise2-button-click">
+							<li><a id="praise2-0" data-id="0" class="active J_praise-0">全部</a></li>
+							{@each rate_tags as val}
+							<li>
+								<a id="praise2-${val.tag_id}" class="J_praise-${val.tag_id}" data-id="${val.tag_id}">${val.name}
+									<span>${val.count}</span>
+								</a>
+							</li>
+							{@/each}
+						</ul>
+						<div id="discuss-content"></div>
+					</div>
+				</div>
+			</script>
+		</section>
+	</section>
+	<script id="praise-discuss-template" type="text/template">
+		{@each rate_items as val}
+		<div class="discuss">
+			<div class="discuss-title">
+					<span class="discuss-stars-contain">
+						<span class="discuss-stars-grey">
+							<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAWCAMAAADU6N+kAAAAV1BMVEUAAADZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dl19SJdAAAAHHRSTlMA+e706eDZhGtGLCMdEQ3Kia+pl3t2dVJLOBgExat86AAAALxJREFUSMfF0EkOwyAQRNEyno3B89z3P2foSJZwnHV3LQD9twPRejymQRttgC5dBRUXoEoVEVXhViSfhZ55QJFK4pXhpUZt+u1pC2iQq5exoHvFuNROmMqc3stLSFL7t/M3CZLNXjmzCJOkxvxk03CWpSN95PTgKE11EuWk5iRPQ9QHDgrURb3joEAm6oaDPHmK5wEFaoiXdAnxmlDkaec6WdiJZQ9Fnioy/Qne2Ruqwi1P6+xwz81rOEXpA3WYeMQK2izyAAAAAElFTkSuQmCC"/>
+						</span>
+						<span class="discuss-stars-red stars-${val.rate_star * 2}">
+							<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAWCAMAAADU6N+kAAAAV1BMVEUAAAD/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWVhjSTKAAAAHHRSTlMA+fTu6eDZhGtGLCMdEQ3Kia+pl3t2dVJLOBgEy+DTxwAAALtJREFUSMfF0EkOhDAMRNEizISEefb9z9lxS0ih6bVdG0f/7YJoPR7ToI02QJeugooLUKWKiKpwFclnoWceUKSSeGV4qVFrvt20gAa5ehkLuleMS+2EqczpvbyEJLV/O3+TINnslTOLMElq0p+cNpxl6TCPbA6O0lQnUU5qTvI0RH3goEBd1DsOCpRGPeUgT57ieUCBGuIlXUK8JhR52rlOFnZi2UORp4pMf4J39oaqcOVpnR3uuXnlI0kfRzB4xIQvyyUAAAAASUVORK5CYII="/>
+						</span>
+					</span>
+				<span class="discuss-account">${val.display_name}</span>
+			</div>
+			<div class="show-img">
+				{@each val.imgs as img}
+				<img use-lazyload data-src="${img}!100x100.jpg" src="http://s0.husor.cn/image/app/beibei_loading.jpg"/>
+				{@/each}
+			</div>
+			<p class="discuss-content">
+				${val.comment}
+			</p>
+			<div class="discuss-bottom">
+				<span>${val.sku_properties}</span>
+				<span>${val.baby_age}</span>
+			</div>
+		</div>
+		{@/each}
+	</script>
+	
+	
+	
+	<!-- footer -->
+	<section class="footer J_footer">
+		<div class="info-line">
+			<a href="javascript:void(0);" class="J_login">登录</a>
+			<a href="javascript:void(0);" class="J_signup">注册</a>
+			<a href="http://t.beibei.com/h5dl">客户端</a>
+			<a href="javascript:void(0);" class="J_topc">电脑版</a>
+		</div>
+		<p class="info"></p>
+		<p class="tel">客服热线：<span>400-668-0000</span></p>
+		<p class="icp">2014 浙ICP备12005806号</p>
+	</section>
+	<div class="cart-hint">
+		成功加入购物车<a href="/trade/cart.html">立即结算&nbsp;&nbsp;></a>
+	</div>
+	<section class="ft-bar">
+		<a class="cart" href="/trade/cart.html">
+				<span class="cart-num-cont">
+					<span class="cart-num">0</span>
+				</span>
+		</a>
+		<a class="cart-add" href="javascript:void(0);"><span class="hasCollection"></span>加入购物车</a>
+		<a class="cart-price"></a>
+	</section>
+    <script type="text/javascript" src="/js/zepto.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/swipe.js"></script>
+    <script type="text/javascript" src="/js/goods.js"></script>
+</body>
+</html>

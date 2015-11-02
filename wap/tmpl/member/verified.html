@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实名认证</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../../css/member.css">
+</head>
+<body>
+    <header id="header"></header>
+    <div class="login-form">
+        <form action="" method ="">
+            <span>
+                <input type="text" placeholder="真实姓名" class="input-40" name="member_truename" id="member_truename"/>
+            </span>
+             <span>
+                <input type="text" placeholder="身份证号" class="input-40" name="member_idnum" id="member_idnum"/>
+            </span>
+             <span class="check_mobile" style="display:none;">
+                <input type="text" placeholder="手机号码" class="input-40" style="width:55%;" name="member_mobile" id="member_mobile"/>
+				  <a href="javascript:void(0);" id="send_auth_code" class="l-btn-login" style="width:40%; float:right;"><p class="send_success_tips">获取短信验证码</p></a>
+            </span>
+             <span class="check_mobile" style="display:none;">
+                <input type="text" placeholder="效验码" class="input-40" name="vcode" id="vcode"/>
+            </span>
+            <div class="error-tips mt10"></div>
+            <a href="javascript:void(0);" class="l-btn-login mt10" id="verifiedbtn">
+                确认
+            </a>
+        </form>
+    </div>
+    <div class="footer" id="footer"></div>
+    <input type="hidden" name="referurl">
+    <script type="text/javascript" src="../../js/config.js"></script>
+    <script type="text/javascript" src="../../js/zepto.min.js"></script>
+    <script type="text/javascript" src="../../js/template.js"></script>
+    <script type="text/javascript" src="../../js/common.js"></script>
+    <script type="text/javascript" src="../../js/tmpl/common-top.js"></script>
+    <script type="text/javascript" src="../../js/simple-plugin.js"></script>
+    <script type="text/javascript" src="../../js/tmpl/verified.js"></script>
+	<script type="text/javascript" src="../../js/tmpl/footer.js"></script>
+</body>
+</html>

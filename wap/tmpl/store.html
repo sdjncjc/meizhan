@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+<meta charset="UTF-8">
+<title>店铺首页</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<link rel="stylesheet" type="text/css" href="../css/child.css">
+<link rel="stylesheet" type="text/css" href="../css/store.css">
+</head>
+<body>
+<header id="header"></header>
+<div id="store-wrapper"></div>
+<footer id="footer"></footer>
+<script type="text/html" id="store-tpl">
+<a class="in-store-search" href="store_search.html?store_id=<%= store_info.store_id %>" title="店内搜索"></a>
+
+<div class="store-layout">
+<div class="store-top-header">
+	<div class="store-avatar"><img alt="" src="<%= store_info.store_avatar %>" /></div>
+	<div class="store-name"><h1><%= store_info.store_name %></h1>
+	<h2><%= store_info.store_credit_text %></h2></div>
+	<a href="javascript:;" data-type="favor-me"><% if (store_info.is_favorate) { %>取消<% } %>收藏</a>
+</div>
+<div class="store-top-stats">
+<ul>
+	<li>
+		<p class="store-top-stats-number"><%= store_info.goods_count %></p>
+		<p class="store-top-stats-desciption">商品数</p>
+	</li>
+	<li>
+		<p class="store-top-stats-number" id="store-num-favor"><%= store_info.store_collect %></p>
+		<p class="store-top-stats-desciption">收藏数</p>
+	</li>
+</ul>
+</div>
+
+<% if (store_info.mb_sliders.length) { %>
+<div class="adv_list store-sliders">
+	<div class="swipe-wrap">
+<% for (var i in store_info.mb_sliders) { var s = store_info.mb_sliders[i]; %>
+		<div class="item">
+<% if (s.type == 1 && s.link) { %>
+			<a href="<%= s.link %>">
+<% } else if (s.type == 2 && s.link > 0) { %>
+			<a href="product_detail.html?goods_id=<%= s.link %>">
+<% } else { %>
+			<a href="javascript:;">
+<% } %>
+				<img alt="" src="<%= s.imgUrl %>" />
+			</a>
+		</div>
+<% } %>
+	</div>
+</div>
+<% } %>
+
+<div class="goods">
+	<div class="title">推荐商品</div>
+	<ul class="content">
+<% for (var i in rec_goods_list) { var g = rec_goods_list[i]; %>
+		<li class="goods-item">
+			<a href="product_detail.html?goods_id=<%= g.goods_id %>">
+				<div class="goods-item-pic"><img alt="" src="<%= g.goods_image_url %>" /></div>
+				<div class="goods-item-name"><%= g.goods_name %></div>
+				<div class="goods-item-price">
+					<span class="product-price">￥<%= g.goods_price %></span>
+
+<% if (g.is_virtual == '1') { %>
+					<span class="product-status bg-virtual">虚拟兑换</span>
+<% } else { %>
+	<% if (g.is_presell == '1') { %>
+					<span class="product-status bg-presell">预售</span>
+	<% } %>
+	<% if (g.is_fcode == '1') { %>
+					<span class="product-status bg-fcode">F码优先</span>
+	<% } %>
+<% } %>
+
+<% if (g.group_flag) { %>
+					<span class="product-status bg-yf8">团购</span>
+<% } %>
+
+<% if (g.xianshi_flag) { %>
+					<span class="product-status bg-blue">限时折扣</span>
+<% } %>
+
+				</p>
+			</a>
+		</li>
+<% } %>
+	</ul>
+</div>
+
+</div>
+</script>
+<script type="text/javascript" src="../js/zepto.min.js"></script>
+<script type="text/javascript" src="../js/config.js"></script>
+<script type="text/javascript" src="../js/template.js"></script>
+<script type="text/javascript" src="../js/swipe.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/simple-plugin.js"></script>
+<script type="text/javascript" src="../js/tmpl/common-top.js"></script>
+<script type="text/javascript" src="../js/tmpl/store.js"></script>
+<script type="text/javascript" src="../js/tmpl/footer.js"></script>
+</body>
+</html>
