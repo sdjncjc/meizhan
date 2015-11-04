@@ -161,8 +161,34 @@ class mz_goodsControl extends mobileHomeControl{
         }
 
         //特卖
-        $model_brandsale = Model('brandsale');
-        $store_info = $model_brandsale->getStoreInfoByID($goods_detail['goods_info']['brand_id']);
+        $goods_detail['brandsale'] = Model('brandsale')->field('rec_id, brand_name, start_time, end_time, area_id, brand_pic, info, is_oversea')->where(array('is_open'=>1,'brand_id'=>$goods_detail['goods_info']['brand_id'],'gc_id'=>$goods_detail['goods_info']['gc_id_1']))->find();
+		if($goods_detail['brandsale']['start_time']<=TIMESTAMP && $goods_detail['brandsale']['end_time']>TIMESTAMP){
+			$goods_detail['goods_info']['remaining_time'] = $goods_detail['brandsale']['end_time']-TIMESTAMP;
+		}
+		if($goods_detail['brandsale']){
+			$goods_detail['brandsale']['brand_pic_url'] = brandImage($goods_detail['brandsale']['brand_pic']);
+			$info = unserialize($goods_detail['brandsale']['info']);
+			$goods_detail['brandsale']['special_content'] = '上新'.$info['data_cate'][0]['num'].'款';
+		}
+		
+        //国家
+		$area_id = $goods_detail['brandsale']['area_id'];
+		if(!$area_id && $goods_detail['goods_info']['goods_type'])$area_id=32;
+        $brandsale_area = Model('brandsale_area')->field('area_name, area_img')->where(array('area_id'=>$area_id))->find();
+		if($brandsale_area){
+			$goods_detail['goods_info']['area_name'] = $brandsale_area['area_name'];
+			$goods_detail['goods_info']['area_img_url'] = UPLOAD_SITE_URL."/shop/oversea/".$brandsale_area['area_img'];
+			//发货地区
+			if($goods_detail['goods_info']['areaid_2']){
+				$area = Model('area')->field('area_name')->where(array('area_id'=>$goods_detail['goods_info']['areaid_2']))->find();
+				$goods_detail['goods_info']['send_area_name'] = $area['area_name'];
+			}
+		}
+		
+        //折扣
+		$goods_detail['goods_info']['discount'] = sprintf('%0.1f', $goods_detail['goods_info']['goods_promotion_price']/$goods_detail['goods_info']['goods_marketprice']*10);
+        //口碑
+        $goods_detail['goodsevallist'] = Model('evaluate_goods')->field('geval_frommembername,geval_scores,geval_content')->where(array('geval_goodsid'=>$goods_id))->order('geval_scores desc, geval_id desc')->limit(2)->select();
 
         //店铺
         $model_store = Model('store');
@@ -223,7 +249,7 @@ class mz_goodsControl extends mobileHomeControl{
             $goods_detail['is_favorate'] = $c > 0;
             $goods_detail['cart_count'] = Model('cart')->countCartByMemberId($memberId);
         }
-
+//print_r($goods_detail);
         output_data($goods_detail);
     }
 
@@ -250,10 +276,10 @@ class mz_goodsControl extends mobileHomeControl{
         unset($goods_detail['goods_info']['store_id']);
         unset($goods_detail['goods_info']['store_name']);
         unset($goods_detail['goods_info']['brand_id']);
-        unset($goods_detail['goods_info']['brand_name']);
+        //unset($goods_detail['goods_info']['brand_name']);
         unset($goods_detail['goods_info']['type_id']);
         unset($goods_detail['goods_info']['goods_image']);
-        unset($goods_detail['goods_info']['goods_body']);
+        //unset($goods_detail['goods_info']['goods_body']);
         unset($goods_detail['goods_info']['goods_state']);
         unset($goods_detail['goods_info']['goods_stateremark']);
         unset($goods_detail['goods_info']['goods_verify']);
@@ -287,5 +313,42 @@ class mz_goodsControl extends mobileHomeControl{
 
         Tpl::output('goods_common_info', $goods_common_info);
         Tpl::showpage('goods_body');
+    }
+
+    /**
+     * 商品评论
+     */
+    public function get_commentsOp() {
+		$size = 10;
+        $goods_id = intval($_GET['goods_id']);
+        $condition = array();
+        $condition['geval_goodsid'] = $goods_id;
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
+        $type = intval($_GET['type']);
+        switch ($type) {
+            case '1':
+                $condition['geval_scores'] = array('in', '5,4');
+                break;
+            case '2':
+                $condition['geval_scores'] = array('in', '3,2');
+                break;
+            case '3':
+                $condition['geval_scores'] = array('in', '1');
+                break;
+        }
+
+        $goodsevallist = Model('evaluate_goods')->field('geval_scores,geval_frommembername,geval_content,geval_image')->where($condition)->order('geval_id desc')->limit((($page-1)*$size).','.$size)->select();
+		if($goodsevallist){
+			foreach($goodsevallist as $k=>$v){
+				if($v['geval_image']){
+					$geval_image = explode(",",$v['geval_image']);
+					foreach($geval_image as $vv){
+						$goodsevallist[$k]['geval_image_arr'][] = snsThumb($vv);
+					}
+				}
+			}
+		}
+        output_data(array('goodsevallist' => $goodsevallist));
     }
 }

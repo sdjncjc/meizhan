@@ -84,7 +84,7 @@
 .wrapper .item-base .base-rebate .rebate-ico{display:inline-block;width:.512rem;height:.512rem;background-repeat:no-repeat;background-size:100% 100%;border-radius:.1rem;position:relative;top:.05rem}
 .wrapper .item-base .base-rebate span{font-size:.46933333rem;color:#999}
 .wrapper .item-praise{border-bottom:1px solid #eee;padding-top:.8rem;margin-bottom:.6rem;background:#fff}
-.wrapper .item-praise h5{font-weight:400;font-size:.59733333rem;color:#333;margin-left:.4rem;margin-bottom:.4rem}
+.wrapper .item-discuss h5{font-weight:400;font-size:.59733333rem;color:#333;margin-left:.4rem;margin-bottom:.4rem}
 .wrapper .praise-button{*zoom:1}
 .wrapper .praise-button:before,.wrapper .praise-button:after{display:table;content:""}
 .wrapper .praise-button:after{clear:both}
@@ -145,7 +145,7 @@
 .wrapper .item-detail .nav-wrapper li{font-size:.59733333rem;color:#000;padding-top:.6rem;padding-bottom:.4rem;-webkit-box-flex:1;-ms-flex:1;-webkit-flex:1;flex:1}
 .wrapper .item-detail li.active{color:#F92D58;border-bottom:solid .1rem #F92D58}
 .wrapper .item-detail #qa-wrapper{padding-top:.3rem;color:#666}
-.wrapper .item-detail #qa-wrapper .page-wrapper{display:none}
+.wrapper .item-detail #qa-wrapper .page-wrapper{/*display:none*/}
 .wrapper .item-detail #qa-wrapper div:first-child p:first-child{margin-top:0rem}
 .wrapper .item-detail #qa-wrapper p{padding-left:1rem;margin:.6rem}
 .wrapper .item-detail #qa-wrapper i{height:.7rem}
@@ -157,7 +157,7 @@
 .wrapper .item-detail #detail-wrapper{margin:0 auto;width:15.2rem}
 .wrapper .item-detail #detail-wrapper .detail-introduct{padding-top:.3rem}
 .wrapper .item-detail #detail-wrapper .props{margin-bottom:.3rem;color:#333}
-.wrapper .item-detail #detail-wrapper .props .pro-name{width:3.5rem}
+.wrapper .item-detail #detail-wrapper .props .pro-name{width:3.5rem;float:left}
 .wrapper .item-detail #detail-wrapper .props span{display:inline-block}
 .wrapper .item-detail #praise-wrapper{display:none}
 .wrapper .item-detail #praise-wrapper .total-rate{width:14.93333333rem;margin:0 auto;margin-bottom:.3rem}
@@ -238,3 +238,5 @@
 .item-base .detail-redBag-btn{line-height:1.024rem;float:right;width:1.92rem;height:1.024rem;border-radius:.08533333rem;text-align:center}
 .item-base .active{color:#ff6e1c;background-color:#ffedad}
 .item-base .disabled{color:#999;background-color:#eee}
+
+.backtop{bottom:2.5rem;}
