@@ -8,7 +8,7 @@
     <meta content="telephone=no" name="format-detection" />
     <meta content="email=no" name="format-detection" />
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <title>TOP排行榜 - 亲亲美站</title>
+    <title>商品详情 - 亲亲美站</title>
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
     <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
 	<link rel="stylesheet" href="/css/common.css" />
@@ -30,7 +30,7 @@
 				<img src="{{value}}" />
 				{{/each}}
 			</script>
-			<div id="countdown-container" class="countdown-container hidden">
+			<div class="countdown-container">
 				<div class="item-countdown"></div>
 			</div>
 			<div class="slider-index">1/1</div>
@@ -43,100 +43,99 @@
 				<section class="base-info">
 					<div class="left-desc">
 						<div class="desc-title">
-							{{if event_type == 'oversea'}}
-							<img src="${country_icon}" class="oversea-country"/>
-							<span class="oversea-country-name">${country_name}</span>
-							{{else if event_type == 'show'}}
-							<span>今日特卖</span>
+							{{if goods_info.area_name}}
+							<img src="{{goods_info.area_img_url}}" class="oversea-country"/>
+							<span class="oversea-country-name">{{goods_info.area_name}}</span>
+							{{else if goods_info.promotion_type == 'groupbuy'}}
+							<span>限量特卖</span>
 							{{else}}
-							<span class="${todayClass}">${tuanInfo.today}</span>
+							<span>今日特卖</span>
 							{{/if}}
-							${title}
+							{{goods_info.goods_name}}
 						</div>
-						{@if desc}
+						{{if goods_info.goods_jingle}}
 						<p class="desc">
-							${desc}
+							{{goods_info.goods_jingle}}
 						</p>
-						{@/if}
+						{{/if}}
 					</div>
 					<div class="right-collection">
 						<div class="collection"></div>
 						<div class="col">收藏</div>
 					</div>
 				</section>
-				{@if event_type == 'show'}
-				<section class="base-price">
-					<div class="price-wrap">
-						<span class="now-price">
-							<span>&yen;</span>${price/100}
-						</span>
-						<span class="origin-price">
-							<span>&yen;</span>${origin_price/100}
-						</span>
-						{@each labels as label}
-						{@if label == '折扣'}
-						<a class="discount">${discount/10}折</a>
-						{@else}
-						<a class="discount">${label}</a>
-						{@/if}
-						{@/each}
-					</div>
-				</section>
-				{@else if event_type == 'oversea'}
+				{{if goods_info.area_name}}
 				<section class="oversea-base-price">
 					<div class="oversea-price-wrap">
 						<span class="oversea-now-price">
 							<span class="oversea-brand">免税价</span>
 							<span>&yen;</span>
-							<span class="oversea-price">${price/100}</span>
-							{@each labels as label}
-							{@if label == '折扣'}
-							<span class="oversea-discount">${discount/10}折</span>
-							{@else}
-							<span class="oversea-discount">${label}</span>
-							{@/if}
-							{@/each}
+							<span class="oversea-price">{{goods_info.goods_promotion_price}}</span>
+							<span class="oversea-discount">{{goods_info.discount}}折</span>
+							{{if !goods_info.transport_id && goods_info.goods_freight <= 0}}
+							<span class="oversea-discount">免邮</span>
+							{{/if}}
 						</span>
 						<span class="oversea-origin-price">
 							<span>国内价</span>
-							<span class="oversea-price">&yen;${origin_price/100}</span>
+							<span class="oversea-price">&yen;{{goods_info.goods_marketprice}}</span>
 						</span>
 					</div>
+					{{if goods_info.send_area_name}}
 					<div class="oversea-shipments">
 						<div class="shipments-wrap">
-							<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAAAXVBMVEUAAACYSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+I5eaeAAAAHnRSTlMArAbHTe7m4KQ7Hw3Q8Ny1n5SSh3p0aFtCu7pVGBfhHV/EAAAAe0lEQVQY04WRxxaFIAwFQbDw9PXe5v8/U0VPNok6mxxmQcp1E21d7ZymCHhncIFk6AcEQ7+AqPW/hPJ4lnecJ+gArqKrfZtrA9SF6BtNrk+Ak+gEbz8QGPGZ+7DIAU1c0gk+6hPV0h5wfR3hJ8urU33Nw3ZrMWyHpiPuAaFEDs1GX4oIAAAAAElFTkSuQmCC"/>
+							<img src="/img/shipments-wrap.png"/>
 							<span>发货:</span>
-							${shipments}
+							5天内{{goods_info.send_area_name}}发货,预计发货后10天内到达
 						</div>
 					</div>
+					{{/if}}
 				</section>
-				{@else}
+				{{else if goods_info.promotion_type == 'groupbuy'}}
 				<section class="base-price">
 					<div class="price-wrap">
 						<span class="now-price">
 							<span style="font-size: .6rem">限量购</span>
-							<span>&yen;</span>${price/100}
+							<span>&yen;</span>{{goods_info.goods_promotion_price}}
 						</span>
 						<span class="origin-price">
-							<span>&yen;</span>${origin_price/100}
+							<span>&yen;</span>{{goods_info.goods_marketprice}}
 						</span>
-						{@each labels as label}
-						{@if label == '折扣'}
-						<a class="discount">${discount/10}折</a>
-						{@else}
-						<a class="discount">${label}</a>
-						{@/if}
-						{@/each}
+						<a class="discount">{{goods_info.discount}}折</a>
+						{{if !goods_info.transport_id && goods_info.goods_freight <= 0}}
+						<a class="discount">免邮</a>
+						{{/if}}
 					</div>
 				</section>
-				{@/if}
-				<section class="base-rebate">
-					{@each promotion_tips as promotion}
-					<div class="promotions">
-						<span class="rebate-ico" style="background-image: url('${promotion.icon}')"></span>
-						<span>${promotion.message}</span>
+				{{else}}
+				<section class="base-price">
+					<div class="price-wrap">
+						<span class="now-price">
+							<span>&yen;</span>{{goods_info.goods_promotion_price}}
+						</span>
+						<span class="origin-price">
+							<span>&yen;</span>{{goods_info.goods_marketprice}}
+						</span>
+						<a class="discount">{{goods_info.discount}}折</a>
+						{{if !goods_info.transport_id && goods_info.goods_freight <= 0}}
+						<a class="discount">免邮</a>
+						{{/if}}
 					</div>
-					{@/each}
+				</section>
+				{{/if}}
+				<section class="base-rebate">
+					{{if mansong_info && mansong_info.mansong_name}}
+					<div class="promotions">
+						<span class="rebate-ico" style="background-image: url('/img/img_detail_tag3_v1.png')"></span>
+						<span>{{mansong_info.mansong_name}}</span>
+					</div>
+					{{/if}}
+					{{if gift_array.length>0}}
+					<div class="promotions">
+						<span class="rebate-ico" style="background-image: url('/img/img_detail_tag3_v1.png')"></span>
+						<span>数量有限，赠完为止</span>
+					</div>
+					{{/if}}
 				</section>
 			</script>
 		</section>
@@ -144,59 +143,41 @@
 		<!-- 颜色和尺寸 -->
 		<section class="grid-wrap item-sku">
 			<script id="item-sku-template" type="text/template">
+				{{if goods_map_spec.length>0}}
 				<div class="grid">
 					<div>
-						{@each stSku as ksku, kid}
-						<h5>${ksku.kname}</h5>
+						{{each goods_map_spec as value index}}
+						<h5>{{value.goods_spec_name}}</h5>
 						<ul>
-							{@each ksku.value as vsku, vid}
-							<li class="col-3"><a href="javascript:void(0);" class="" sku-vid="${vid}">${vsku.vname}</a>
-							</li>
-							{@/each}
+							{{each value.goods_spec_value as val ind}}
+							<li class="col-{{value.len}}"><a href="javascript:void(0);"{{if goods_info.goods_spec[val.specs_value_id]}} class="active"{{/if}} sku-vid="{{val.specs_value_id}}">{{val.specs_value_name}}</a></li>
+							{{/each}}
 						</ul>
-						{@/each}
+						{{/each}}
 					</div>
 				</div>
+				{{/if}}
 			</script>
 		</section>
 	
 	
 		<!-- 买家口碑 -->
-		<section class="item-praise">
-			<script id="item-praise-template" type="text/template">
-				<div>
-					<div>
-						<h5>买家口碑(${rate_count})</h5>
-						<ul class="praise-button" id="praise-button-click">
-							{@each rate_tags as val}
-							<li>
-								<a id="praise-${val.tag_id}" class="J_praise-${val.tag_id}" data-id="${val.tag_id}">${val.name}
-									<span>${val.count}</span>
-								</a>
-							</li>
-							{@/each}
-						</ul>
-					</div>
-				</div>
-			</script>
-		</section>
-	
-		<!-- 查看更多 -->
 		<section class="item-discuss">
 			<script id="item-discuss-template" type="text/template">
-				{@each rate_items as val}
+				<h5>买家口碑({{goods_info.evaluation_count}})</h5>
+				{{each goodsevallist as value index}}
 				<div class="discuss">
 					<div class="discuss-title">
 						<div class="stars-grey">
-							<div class="stars-red stars-${val.rate_star * 2}"></div>
+							<div class="stars-red stars-{{value.geval_scores * 2}}"></div>
 						</div>
-						<div class="account">${val.display_name}</div>
+						<div class="account">{{value.geval_frommembername}}</div>
 					</div>
 					<p class="discuss-content">
-						${val.comment}
+						{{value.geval_content}}
 					</p>
 				</div>
-				{@/each}
+				{{/each}}
 				<div class="more-discuss">更多买家口碑</div>
 			</script>
 		</section>
@@ -207,56 +188,34 @@
 			<script id="item-special-template" type="text/template">
 				<div class="special-wrap">
 					<div class="special-top">
-						<img src="${logo}"/>
+						{{if brandsale.brand_name}}
+						<img src="{{brandsale.brand_pic_url}}"/>
 						<div class="special-desc">
-							<div class="special-title">${brand}</div>
-							<div class="special-content">${brand_sub_title}</div>
+							<div class="special-title">{{brandsale.brand_name}}</div>
+							<div class="special-content">{{brandsale.special_content}}</div>
 						</div>
-						{@if event_type == 'show'}
-						<a href="/list/list.html?eventId=${event_id}" class="special-button">进入专场</a>
-						{@else if event_type == 'oversea'}
-						<a href="/oversea/oversea-list.html?bid=${mart_oversea_show_id}" class="special-button">进入专场</a>
-						{@/if}
+						{{if brandsale.is_oversea}}
+						<a href="/brandsale.html?rec_id={{brandsale.rec_id}}" class="special-button">进入专场</a>
+						{{else if event_type == 'oversea'}}
+						<a href="/oversea.html?rec_id={{brandsale.rec_id}}" class="special-button">进入专场</a>
+						{{/if}}
+						{{/if}}
 					</div>
-					{@if event_type == 'show'}
 					<ul class="special-center">
-						<li>商品综合
-							<span>${total_rate}</span>
+						{{each store_info.store_credit as value index}}
+						<li>{{value.text}}
+							<span>{{value.credit}}</span>
 							<span class="special-brand">
-								{@if total_rate >= 4.5}
-								高
-								{@else}
-								低
-								{@/if}
+								{{value.percent_text}}
 							</span>
 						</li>
-						<li>发货速度
-							<span>${shipment_rate}</span>
-							<span class="special-brand">
-								{@if total_rate >= 4.5}
-								高
-								{@else}
-								低
-								{@/if}
-							</span>
-						</li>
-						<li>商品综合
-							<span>${shipping_rate}</span>
-							<span class="special-brand">
-								{@if total_rate >= 4.5}
-								高
-								{@else}
-								低
-								{@/if}
-							</span>
-						</li>
+						{{/each}}
 					</ul>
-					{@/if}
-					<div class="special-bottom">
-						{@each platform_advantages as val}
-						<span>${val}</span>
-						{@/each}
-					</div>
+					<div class="special-bottom">                                          
+						<span>100%正品保证</span>                                          
+						<span>全场包邮</span>                                          
+						<span>7天无理由退货</span>                                      
+					</div>				
 				</div>
 			</script>
 		</section>
@@ -274,20 +233,75 @@
 					</div>
 					<div id="detail-wrapper" class="J_tab">
 						<div class="detail-introduct">
-							{@each product_props as pro}
 							<div class="props">
-								<span class="pro-name">${pro.prop_name}</span>
-								<span>${pro.prop_value}</span>
+								<span class="pro-name">品牌</span>
+								<span>{{goods_info.brand_name}}</span>
 							</div>
-							{@/each}
+							{{each goods_info.goods_attr as value index}}
+							<div class="props">
+								{{each value as pro i}}
+								{{if i=='name'}}
+								<span class="pro-name">{{pro}}</span>
+								{{else}}
+								<span>{{pro}}</span>
+								{{/if}}
+								{{/each}}
+							</div>
+							{{/each}}
 						</div>
-						$${detail}
+					</div>
+					<div id="praise-wrapper" class="J_tab">
+						<div class="total-rate">
+							<span class="rate-title">商品满意度</span>
+							<span class="score">{{goods_info.evaluation_good_star}}.0</span>
+								<span class="rate-stars-contain">
+									<span class="rate-stars-grey">
+										<img src="/img/rate-stars-grey.png"/>
+									</span>
+									<span id="rate-stars-red" class="stars-{{goods_info.evaluation_good_star*2}}">
+										<img src="/img/rate-stars-red.png"/>
+									</span>
+								</span>
+						</div>
+						<ul class="praise-button">
+							<li><a class="active" data="0">全部</a></li>
+							<li><a data="1">好评</a></li>
+							<li><a data="2">中评</a></li>
+							<li><a data="3">差评</a></li>
+						</ul>
+						<div id="discuss-content"></div>
 					</div>
 					<div id="qa-wrapper" class="J_tab">
+						{{if goods_info.goods_type==0}}
+						<div>
+							<p class="question">商品有哪些正品保证方案？</p>
+							<p class="answer">亲亲网上所售卖的所有特卖商品均经过品牌授权，确保正品，CIC中华财险为您购买的每一件商品进行承保。若检验出非正品，保险公司将按实付金额的三倍进行赔偿。</p>
+						</div>
+						<div>
+							<p class="question">如何选择商品尺码？</p>
+							<p class="answer">品牌商在详情页面会放置所售商品的尺码表，可能会存在1-2cm的正常误差范围。建议您以平时购买尺码对照选择，买家口碑处其他妈妈的评价也可供参考。如果实在拿不准，买大不买小~</p>
+						</div>
+						<div>
+							<p class="question">订单什么时候发货？</p>
+							<p class="answer">用户下单完成系统通知品牌商开始发货。发货后，您可以在“我的订单”中查看发货状态。由于部分快递公司无法实时更新信息， 您看到的物流情况可能会有延迟。</p>
+						</div>
+						<div>
+							<p class="question">订单使用什么快递发货？包邮政策是什么？</p>
+							<p class="answer">
+								品牌商会在商品参数处填写默认快递，也会根据你的地址自动匹配当地运营较好的快递公司。如果您有特殊需求，可在提交订单时备注。
+								<br>亲亲网实行全场包邮，除部分偏远地区外（如新疆、西藏、内蒙古等），您无需承担邮费。
+							</p>
+						</div>
+						<div>
+							<p class="question">购买后不喜欢能退货吗？</p>
+							<p class="answer">
+							所有特卖商品，您签收之日起的7天内，未经穿着不影响二次销售的情况下，亲亲网为您提供七天无理由退货服务。</p>
+						</div>
+						{{else}}
 						<div class="page-wrapper">
 							<div class="diff-wrapper">
 								<ul>
-									<h4 class="title-fontSize color-purple"><img src="http://b0.hucdn.com/party/default/48b89b434c6be05e01b13a0b565cd146_43x43.png">贝贝海外购</h4>
+									<h4 class="title-fontSize color-purple"><img src="/img/color-purple.png">亲亲海外购</h4>
 									<li>全部中文介绍，招商团队全球精选</li>
 									<li>支付宝、网银、信用卡支付</li>
 									<li>保税区、海外仓、国内中转仓，三种方式直发，时效保障</li>
@@ -296,7 +310,7 @@
 									<li>贴心国内客服团队，政策统一，全程一站式服务</li>
 								</ul>
 								<ul>
-									<h4 class="title-fontSize"><img src="http://b0.hucdn.com/party/default/78a628a65f17d18647f502f6c5a05879_43x43.png">传统海淘</h4>
+									<h4 class="title-fontSize"><img src="/img/color-purple2.png">传统海淘</h4>
 									<li>外语很难看懂，商品繁杂无从下手</li>
 									<li>必须用国外信用卡、Paypal等外币支付</li>
 									<li>转运环节复杂，额外付款，运输长达45天，费时费力费钱</li>
@@ -305,8 +319,6 @@
 									<li>出现问题转运仓和商家互相推卸责任，外语客服沟通困难</li>
 								</ul>
 							</div>
-	
-	
 							<div class="help-wrapper">
 								<div class="help-info help-oversea-questions">
 									<div class="question-container">
@@ -322,7 +334,7 @@
 											<div class="question-title title-fontSize">为何商品从宁波等国内仓发出？<i class="down-arrow"></i>
 											</div>
 										</a>
-										<p class="hidden">保税区发货，是贝贝网与政府、海关、国检等部门合作的一种全新海外购模式：以批量运输方式进入中国境内，在保税区储存，当您在贝贝网成功下单后，商品会直接从保税区仓库用国内快递直接发出</p>
+										<p class="hidden">保税区发货，是亲亲网与政府、海关、国检等部门合作的一种全新海外购模式：以批量运输方式进入中国境内，在保税区储存，当您在亲亲网成功下单后，商品会直接从保税区仓库用国内快递直接发出</p>
 									</div>
 	
 									<div class="question-container">
@@ -359,10 +371,10 @@
 	
 									<div class="question-container">
 										<a class="show-question" href="javascript:void(0);">
-											<div class="question-title title-fontSize">贝贝海外购是否支持退货？<i class="down-arrow"></i>
+											<div class="question-title title-fontSize">亲亲海外购是否支持退货？<i class="down-arrow"></i>
 											</div>
 										</a>
-										<p class="hidden">支持退货，商品问题导致退货由贝贝提供提供运费补贴，同省补贴不超过10元，非同省不超过20元，特定地区不超过25元（特定地区指：新疆、西藏、内蒙古）。</p>
+										<p class="hidden">支持退货，商品问题导致退货由亲亲提供提供运费补贴，同省补贴不超过10元，非同省不超过20元，特定地区不超过25元（特定地区指：新疆、西藏、内蒙古）。</p>
 									</div>
 	
 									<div class="question-container">
@@ -373,93 +385,53 @@
 										<p class="hidden">有任何售前售后问题，可通过以下两种方式咨询：联系在线客服，或拨打客户电话：400-668-0000。客服工作时间：周一到周日9：00-22：00，法定假日除外。</p>
 									</div>
 								</div>
-								<div class="contact hidden"><a id="contact_link" href="#">点击咨询</a>购买前如有问题，请向贝贝客服咨询</div>
 							</div>
 						</div>
-					</div>
-					<div id="praise-wrapper" class="J_tab">
-						<div class="total-rate">
-							<span class="rate-title">商品满意度</span>
-							<span class="score">${total_rate}</span>
-								<span class="rate-stars-contain">
-									<span class="rate-stars-grey">
-										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAWCAMAAADU6N+kAAAAV1BMVEUAAADZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dl19SJdAAAAHHRSTlMA+e706eDZhGtGLCMdEQ3Kia+pl3t2dVJLOBgExat86AAAALxJREFUSMfF0EkOwyAQRNEyno3B89z3P2foSJZwnHV3LQD9twPRejymQRttgC5dBRUXoEoVEVXhViSfhZ55QJFK4pXhpUZt+u1pC2iQq5exoHvFuNROmMqc3stLSFL7t/M3CZLNXjmzCJOkxvxk03CWpSN95PTgKE11EuWk5iRPQ9QHDgrURb3joEAm6oaDPHmK5wEFaoiXdAnxmlDkaec6WdiJZQ9Fnioy/Qne2Ruqwi1P6+xwz81rOEXpA3WYeMQK2izyAAAAAElFTkSuQmCC"/>
-									</span>
-									<span id="rate-stars-red" class="stars-${total_rate_stars}">
-										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAWCAMAAADU6N+kAAAAV1BMVEUAAAD/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWVhjSTKAAAAHHRSTlMA+fTu6eDZhGtGLCMdEQ3Kia+pl3t2dVJLOBgEy+DTxwAAALtJREFUSMfF0EkOhDAMRNEizISEefb9z9lxS0ih6bVdG0f/7YJoPR7ToI02QJeugooLUKWKiKpwFclnoWceUKSSeGV4qVFrvt20gAa5ehkLuleMS+2EqczpvbyEJLV/O3+TINnslTOLMElq0p+cNpxl6TCPbA6O0lQnUU5qTvI0RH3goEBd1DsOCpRGPeUgT57ieUCBGuIlXUK8JhR52rlOFnZi2UORp4pMf4J39oaqcOVpnR3uuXnlI0kfRzB4xIQvyyUAAAAASUVORK5CYII="/>
-									</span>
-								</span>
-						</div>
-						<ul class="praise-button" id="praise2-button-click">
-							<li><a id="praise2-0" data-id="0" class="active J_praise-0">全部</a></li>
-							{@each rate_tags as val}
-							<li>
-								<a id="praise2-${val.tag_id}" class="J_praise-${val.tag_id}" data-id="${val.tag_id}">${val.name}
-									<span>${val.count}</span>
-								</a>
-							</li>
-							{@/each}
-						</ul>
-						<div id="discuss-content"></div>
+						{{/if}}
 					</div>
 				</div>
 			</script>
 		</section>
 	</section>
 	<script id="praise-discuss-template" type="text/template">
-		{@each rate_items as val}
+		{{each goodsevallist as val ind}}
 		<div class="discuss">
 			<div class="discuss-title">
 					<span class="discuss-stars-contain">
 						<span class="discuss-stars-grey">
-							<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAWCAMAAADU6N+kAAAAV1BMVEUAAADZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dl19SJdAAAAHHRSTlMA+e706eDZhGtGLCMdEQ3Kia+pl3t2dVJLOBgExat86AAAALxJREFUSMfF0EkOwyAQRNEyno3B89z3P2foSJZwnHV3LQD9twPRejymQRttgC5dBRUXoEoVEVXhViSfhZ55QJFK4pXhpUZt+u1pC2iQq5exoHvFuNROmMqc3stLSFL7t/M3CZLNXjmzCJOkxvxk03CWpSN95PTgKE11EuWk5iRPQ9QHDgrURb3joEAm6oaDPHmK5wEFaoiXdAnxmlDkaec6WdiJZQ9Fnioy/Qne2Ruqwi1P6+xwz81rOEXpA3WYeMQK2izyAAAAAElFTkSuQmCC"/>
+							<img src="/img/rate-stars-grey.png"/>
 						</span>
-						<span class="discuss-stars-red stars-${val.rate_star * 2}">
-							<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIMAAAAWCAMAAADU6N+kAAAAV1BMVEUAAAD/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWX/SWVhjSTKAAAAHHRSTlMA+fTu6eDZhGtGLCMdEQ3Kia+pl3t2dVJLOBgEy+DTxwAAALtJREFUSMfF0EkOhDAMRNEizISEefb9z9lxS0ih6bVdG0f/7YJoPR7ToI02QJeugooLUKWKiKpwFclnoWceUKSSeGV4qVFrvt20gAa5ehkLuleMS+2EqczpvbyEJLV/O3+TINnslTOLMElq0p+cNpxl6TCPbA6O0lQnUU5qTvI0RH3goEBd1DsOCpRGPeUgT57ieUCBGuIlXUK8JhR52rlOFnZi2UORp4pMf4J39oaqcOVpnR3uuXnlI0kfRzB4xIQvyyUAAAAASUVORK5CYII="/>
+						<span class="discuss-stars-red stars-{{val.geval_scores * 2}}">
+							<img src="/img/rate-stars-red.png"/>
 						</span>
 					</span>
-				<span class="discuss-account">${val.display_name}</span>
+				<span class="discuss-account">{{val.geval_frommembername}}</span>
 			</div>
 			<div class="show-img">
-				{@each val.imgs as img}
-				<img use-lazyload data-src="${img}!100x100.jpg" src="http://s0.husor.cn/image/app/beibei_loading.jpg"/>
-				{@/each}
+				{{each val.geval_image_arr as img i}}
+				<img class="lazy" src="/img/blank.png" data-original="{{img}}">
+				{{/each}}
 			</div>
 			<p class="discuss-content">
-				${val.comment}
+				{{val.geval_content}}
 			</p>
-			<div class="discuss-bottom">
-				<span>${val.sku_properties}</span>
-				<span>${val.baby_age}</span>
-			</div>
 		</div>
-		{@/each}
+		{{/each}}
 	</script>
 	
-	
-	
 	<!-- footer -->
-	<section class="footer J_footer">
-		<div class="info-line">
-			<a href="javascript:void(0);" class="J_login">登录</a>
-			<a href="javascript:void(0);" class="J_signup">注册</a>
-			<a href="http://t.beibei.com/h5dl">客户端</a>
-			<a href="javascript:void(0);" class="J_topc">电脑版</a>
-		</div>
-		<p class="info"></p>
-		<p class="tel">客服热线：<span>400-668-0000</span></p>
-		<p class="icp">2014 浙ICP备12005806号</p>
-	</section>
+	<section class="footer"></section>
+	<a href="javascript:;" class="backtop"></a>
 	<div class="cart-hint">
 		成功加入购物车<a href="/trade/cart.html">立即结算&nbsp;&nbsp;></a>
 	</div>
 	<section class="ft-bar">
 		<a class="cart" href="/trade/cart.html">
-				<span class="cart-num-cont">
-					<span class="cart-num">0</span>
-				</span>
+			<span class="cart-num-cont">
+				<span class="cart-num">0</span>
+			</span>
 		</a>
-		<a class="cart-add" href="javascript:void(0);"><span class="hasCollection"></span>加入购物车</a>
+		<a class="cart-add" href="javascript:void(0);">加入购物车</a>
 		<a class="cart-price"></a>
 	</section>
     <script type="text/javascript" src="/js/zepto.min.js"></script>
