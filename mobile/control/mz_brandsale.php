@@ -70,4 +70,69 @@ class mz_brandsaleControl extends mobileHomeControl{
         output_data(array('brandsale_list' => $brandsale_list));
     }
 
+    /**
+     * 获取详情
+     */
+    public function get_infoOp() {
+		$rec_id = intval($_GET['rec_id']);
+        $brandsale_model = Model('brandsale');
+        $brandsale = $brandsale_model->where(array('is_open'=>1,'rec_id'=>$rec_id))->find();
+		if(empty($brandsale)){
+            output_error('该品牌特卖未开启或不存在！');
+		}
+		$brandsale['image_url'] = UPLOAD_SITE_URL."/shop/brandsale/".$brandsale['image'];
+		if($brandsale['start_time']<=TIMESTAMP && $brandsale['end_time']>TIMESTAMP){
+			$brandsale['remaining_time'] = $brandsale['end_time']-TIMESTAMP;
+		}
+
+        $info = unserialize($brandsale['info']);
+		$brandsale['brandsale_cate'] = $info['data_cate'];
+
+        output_data(array('brandsale' => $brandsale));
+    }
+
+    /**
+     * 获取商品
+     */
+    public function get_goodsOp() {
+		$rec_id = intval($_GET['rec_id']);
+        $brandsale_model = Model('brandsale');
+        $brandsale = $brandsale_model->where(array('is_open'=>1,'rec_id'=>$rec_id))->find();
+		$goods_list = array();
+		if($brandsale){
+			$size = 10;
+			$condition = array();
+			$stock = intval($_GET['stock']);
+			if($stock)$condition['goods_storage'] = array('gt', 0);
+			$sort = intval($_GET['sort']);
+			switch($sort){
+				case '1':
+					$order = "goods_salenum desc";
+					break;
+				case '2':
+					$order = "goods_promotion_price asc";
+					break;
+				default:
+					$order = "goods_id desc";
+			}
+			$info = unserialize($brandsale['info']);
+	
+			$cate = intval($_GET['cate']);
+			$condition['goods_id'] = array('in', $info['data'][$cate]);
+			
+			$page = intval($_GET['page']);
+			$page = $page <= 0 ? 1 : $page;
+	
+			$goods_list = Model('goods')->field('goods_id,goods_storage,goods_name,goods_image,goods_marketprice,goods_promotion_price')->where($condition)->group('goods_commonid')->order($order)->limit((($page-1)*$size).','.$size)->select();
+			if($goods_list){
+				foreach($goods_list as $k=>$v){
+					$goods_list[$k]['img_url'] = thumb($v, 360);
+					$goods_list[$k]['discount'] = sprintf('%0.1f', $v['goods_promotion_price']/$v['goods_marketprice']*10);
+				}
+			}
+		}
+
+        output_data(array('goods_list' => $goods_list));
+    }
+
 }
