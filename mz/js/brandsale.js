@@ -95,6 +95,12 @@ $(function(){
 				if(!$(this).hasClass('selected')){
 					$(this).addClass('selected').siblings().removeClass('selected');
 					_cate = $(this).attr('data-filter');
+					if(_cate>0){
+						$('.item-filter').addClass('selected');
+					}else{
+						$('.item-filter').removeClass('selected');
+					}
+					$('.refinement').addClass('hidden');
 					page = 1;
 					clock = 0;
 					ajax_goods();
