@@ -204,8 +204,9 @@ $(function(){
 			$('.praise-button a').tap(function(){
 				$('.praise-button a').removeClass('active');
 				$(this).addClass('active');
+				page = 1;
+				clock = 0;
 				ajax_praise($(this).attr('data'));
-				$('.J_tab').hide().eq($(this).index()).show();
 			})
 			
 			$(window).scroll(function() {
@@ -266,6 +267,7 @@ $(function(){
 	function ajax_praise(type){
 		if(clock || !tab)return;
 		clock = 1;
+		if(page==1)$('#discuss-content').html('');
 		$.ajax({
 			url: ApiUrl + '/index.php?act=mz_goods&op=get_comments&goods_id='+goods_id+'&type='+type+'&page='+page,
 			type: 'get',
