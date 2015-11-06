@@ -16,7 +16,7 @@ html{background:#eee}body{background:#eee;-webkit-user-select:none;-ms-user-sele
 .my-info .head{float:left;width:3.41333333rem;height:3.41333333rem;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-border-radius:160px;border-radius:160px;background-color:rgba(255,255,255,.3);margin:auto .73394495rem;padding-top:.10666667rem}
 .my-info .head img{display:block;width:3.2rem;height:3.2rem;margin:0 auto;-webkit-border-radius:150px;border-radius:150px}
 .my-info .info{color:#fff}
-.my-info .info .my-account{padding-top:.64123116rem;font-size:.9rem;line-height:.7694774rem}
+.my-info .info .my-account{padding-top:.64123116rem;font-size:.9rem;line-height:2rem}
 .my-info .info .my-account span{display:inline-block;max-width:5rem;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;margin-right:.42748744rem;vertical-align:middle}
 .my-info .info .my-baby{max-width:8rem;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;margin-top:.6116208rem;font-size:.75rem}
 .my-info .info .my-grade{display:inline-block;width:2.98666667rem;height:.85333333rem;-webkit-background-size:100%;background-size:100%;background-repeat:no-repeat;background-position:center;vertical-align:middle}
