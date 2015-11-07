@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
+    <meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>订单-我的美站</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
+    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link rel="stylesheet" href="/css/common.css" />
+    <link rel="stylesheet" href="/css/orders.css" />
+</head>
+
+<body>
+    <section class="header">
+        <section class="navbar">
+            <a class="back-btn" href="javascript:history.back();"></a>
+            <h1 class="title"></h1>
+            <a class="home-btn" href="/"></a>
+        </section>
+    </section>
+    <section class="wrapper J_wrapper" id="wrapper">
+        <section class="grid-wrap orders">
+            <script id="order-list-template" type="text/template">
+                {{each data as order index}}
+                <section class="grid orders-list">
+                    <header class="row-1">
+                        订单编号：
+                        <span>{{order.order_sn}}</span>
+                        {{if order.order_state == 0}}
+                        <a onclick="delOrder({{order.order_id}})" href="javascript:void(0);" data-order-id="{{order.order_id}}">删除订单</a>
+                        {{/if}}
+                        {{if order.order_state == 10}}
+                        <a onclick="cancelOrder({{order.order_id}})" href="javascript:void(0);" data-order-id="{{order.order_id}}">取消订单</a>
+                         {{/if}}
+                    </header>
+                    {{each order.extend_order_goods as order_goods}}
+                    <div class="row-3 orders-item-list">
+                        <img class="col-3 lazy" src="/img/blank.png" data-original="{{order_goods.img_url}}" alt="{{order_goods.goods_name}}">
+                        <a onclick="open_url('orders','orderinfo',{{order.order_id}})" href="javascript:void(0)">
+                            <div class="col-9 orders-item-info">
+                                <p>订单时间：
+                                    <span class="order-no">{{order.add_time}}</span>
+                                </p>
+                                <p>金额：¥
+                                    <span class="order-price">{{order_goods.goods_price}}</span>
+                                    <span class="order-count">共{{order_goods.goods_num}}件&nbsp;&nbsp;&nbsp;&gt;</span>
+                                </p>
+                                <p>
+                                    <span class="order-status">{{order_goods.goods_spec}}</span>
+                                </p>
+                            </div>
+                            <!-- end .orders-item-list -->
+                        </a>
+                    </div>
+                    <!-- end .orders-item-list -->
+                    {{/each}}
+                    <footer>
+                        总计：¥
+                        <span>{{order.order_amount}}</span>
+                    </footer>
+                    <!-- end footer -->
+                    {{if order.order_state == 0}}
+                    <aside class="pay">
+                        <a class="J_payOrder" href="javascript:void(0)" data-tid="{{order.order_id}}" data-fee="{{order.order_amount}}">立即支付</a>
+                    </aside>
+                    {{/if}}
+                    <aside class="wave"></aside>
+                </section>
+                <!-- end orders-list -->
+                {{/each}}
+            </script>
+            <script id="order-empty-template" type="text/template">
+                <i class="order-img"></i>
+                <p class="order-hint">暂无订单</p>
+                <a class="order-btn" href="/">逛逛今日特卖</a>
+            </script>
+        </section>
+        <!-- end .orders -->
+        <div class="loading">
+            正在加载...
+        </div>
+        <section id="payment" class="payment-list hidden"></section>
+    </section>
+    <a href="javascript:;" class="backtop"></a>
+    <section class="order-refund-reason hidden">
+        <div class="title"><a href="javascript:;" class="btn btn-cancel">取消</a>请选择取消订单的原因？<a href="javascript:;" class="btn btn-ok">确定</a>
+        </div>
+        <ul class="box">
+            <li class="item" data-reason="买错了">买错了</li>
+            <li class="item" data-reason="不想买了">不想买了</li>
+            <li class="item" data-reason="信息填写错误，重新下单">信息填写错误，重新下单</li>
+            <li class="item" data-reason="重复购买">重复购买</li>
+            <li class="item" data-reason="支付遇到问题">支付遇到问题</li>
+            <li class="item" data-reason="其他原因">其他原因</li>
+        </ul>
+    </section>
+    <script type="text/javascript" src="/js/zepto.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/mine.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        var title = "全部订单";
+        var status = GetQueryString("status");
+        switch(status){
+            case '10':
+                title = "待付款";
+                break;
+            case '20':
+                title = "待发货";
+                break;
+            case '30':
+                title = "待收货";
+                break;
+            case '40':
+                title = "待评价";
+                break;
+        }
+        $(".title").html(title);
+        function ajax_getOrder(){        
+            if(stop)return;
+            var url = getUrl('mz_mine','getOrders',"type="+status+"&page=" + page++);
+            getAjaxResult(url,'order-list-template',".orders",'order-empty-template');
+        }
+        // 全部订单
+        ajax_getOrder();
+        $(window).scroll(function() {
+            if(!stop){
+                if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+                    $(".loading").show();
+                    ajax_getOrder();
+                }
+            }
+            if($('body').scrollTop() > 2000){
+                $('.backtop').show();
+            }else{
+                $('.backtop').hide();
+            }
+        });
+
+        $('.backtop').tap(function(){$('body').scrollTop(0);});
+    });
+    function delOrder(id){
+         if(window.confirm("确定要删除此订单吗？")){
+            var url = getUrl('mz_mine','recycleOrder','order_id='+id);
+            ajax_do(url);
+         }
+    }
+    function cancelOrder(id){
+        var d = "";
+        $(".order-refund-reason").removeClass("hidden");
+        $(".order-refund-reason").on("touchend", ".item",function(b) {
+                $(this).addClass("current").siblings().removeClass("current"),
+                d = $(this).attr("data-reason");
+            });
+        $(".order-refund-reason").on("touchend", ".btn-ok",function(a) {
+            if (d){
+                if (window.confirm("确定要取消订单吗？")) {
+                    var url = getUrl('mz_mine','cancelOrder','order_id='+id + '&reason=' + d);
+                    ajax_do(url);
+                };
+            }else{
+                alert("请选择取消订单的原因？");
+            }
+        });
+        $(".order-refund-reason").on("touchend", ".btn-cancel",function() {
+            $(".order-refund-reason").addClass("hidden").find("li").removeClass("current");
+            d = "";
+        });
+    }
+
+    </script>
+</body>
+
+</html>

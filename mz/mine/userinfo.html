@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
+<meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
+<!-- 全屏显示 WebApp，隐藏 Safari 导航栏以及工具栏 -->
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<!-- 屏蔽iPhone下的拨号链接-->
+<meta content="telephone=no" name="format-detection"/>
+<!-- 不让android识别邮箱 -->
+<meta content="email=no" name="format-detection" />
+<!-- 设置系统状态栏风格 -->
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<title>个人资料</title>
+<link rel="stylesheet" href="/css/common.css" />
+<link href="/css/perinfo.css" rel="stylesheet" media="all" />
+</head>
+<body>
+    <section class="header">
+        <section class="navbar">
+            <a class="back-btn" href="javascript:history.back();"></a>
+            <h1 class="title">个人资料</h1>
+            <a class="home-btn" href="/"></a>
+        </section>
+    </section>
+    <section class="uprows">
+        <div class="headicon">
+            <div class="headicon-inner">
+                <label>头像</label>
+                <img class="headpic" src =""/>
+            </div>
+        </div>
+        <div class="nickname">
+            <div class="nickname-inner">
+                <label>昵称</label>
+                <label class="answer"></label>
+            </div>
+        </div>
+        <div class="gender">
+            <div class="gender-inner">
+                <label>性别</label>
+                <label class="answer"></label>
+            </div>
+        </div>
+        <div class="introduce">
+            <div class="introduce-inner">
+                <label>自我介绍</label>
+                <label class="answer"></label>
+            </div>
+        </div>
+    </section>
+
+    <!-- <div class="save-info-btn">
+        保存
+    </div> -->
+    <div id="logout">
+        退出登录
+    </div>
+
+
+    <div class="mask hidden">
+        <div class="nick-pop popout">
+            <h2 class="pop-title">设定昵称</h2>
+            <input type="text"  class="nickedit"/>
+            <p class="nick-notification">
+                <label class="nick-alert hidden nick-alert-note">请输入正确格式的昵称</label>
+                <label class="nick-notion">昵称为2-16个字符</label>
+            </p>
+            <!-- <p class="nick-notification hidden nick-alert-note">
+            </p> -->
+            <div class="pop-sure">
+                <div class="pop-cancle">取消</div>
+                <div class="pop-confirm" data-type="nick">保存</div>
+            </div>
+        </div>
+        <div class="gender-pop popout hidden">
+            <h2 class="pop-title">设定性别</h2>
+            <select class="gender-select">
+                <option value=1>宝爸</option>
+                <option value=2>宝妈</option>
+            </select>
+            <!-- <p class="gender-row">
+                宝妈<input type="radio" name="gender" value="2" class="gender"/>
+            </p>
+            <p class="gender-row">
+                宝爸<input type="radio" name="gender" value="1" class="gender"/>
+            </p> -->
+            <div class="pop-sure">
+                <div class="pop-cancle">取消</div>
+                <div class="pop-confirm" data-type="gender">保存</div>
+            </div>
+        </div>
+        <div class="introduce-pop hidden  popout">
+            <h2 class="pop-title">设定简介</h2>
+            <!-- <input type="text" placeholder="未填写" class="introedit"/> -->
+            <textarea class="introedit-content"></textarea>
+            <p class="intro-notification">
+                <label class="hidden intro-alert-note">请输入正确格式的简介</label>
+                <label class="intro-notion">简介不多于64个字符</label>
+            </p>
+            <div class="pop-sure">
+                <div class="pop-cancle">取消</div>
+                <div class="pop-confirm" data-type="intro">保存</div>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript" src="/js/zepto.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/mine.js"></script>
+</body>
+</html>

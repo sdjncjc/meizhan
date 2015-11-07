@@ -34,31 +34,31 @@
             <ul class="sum-box" id="sum-orderinfo"></ul>
             <script id="tpl-sum-orderinfo" type="text/template">
                 <li>
-                    <a href="/orders/unpay-orders.html">
-                        <i class="icon pay"></i><i class="icon-num{{if datas.unpay <= 0 }} hidden{{/if}}">{{datas.unpay}}</i>
+                    <a onclick="open_url('orders','unpay')" href="javascript:void(0)">
+                        <i class="icon pay"></i><i class="icon-num{{if data.unpay <= 0 }} hidden{{/if}}">{{data.unpay}}</i>
                         <p class="">待付款</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/orders/shipping-orders.html">
-                        <i class="icon post"></i><i class="icon-num{{if datas.unpost <= 0 }} hidden{{/if}}">{{datas.unpost}}</i>
+                    <a onclick="open_url('orders','unpost')" href="javascript:void(0)">
+                        <i class="icon post"></i><i class="icon-num{{if data.unpost <= 0 }} hidden{{/if}}">{{data.unpost}}</i>
                         <p>待发货</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/orders/receipt-orders.html">
-                        <i class="icon get"></i><i class="icon-num{{if datas.unget <= 0 }} hidden{{/if}}">{{datas.unget}}</i>
+                    <a onclick="open_url('orders','unget')" href="javascript:void(0)">
+                        <i class="icon get"></i><i class="icon-num{{if data.unget <= 0 }} hidden{{/if}}">{{data.unget}}</i>
                         <p>待收货</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/orders/rate-orders.html">
-                        <i class="icon judge"></i><i class="icon-num{{if datas.unjudge <= 0 }} hidden{{/if}}">{{datas.unjudge}}</i>
+                    <a onclick="open_url('orders','unjudge')" href="javascript:void(0)">
+                        <i class="icon judge"></i><i class="icon-num{{if data.unjudge <= 0 }} hidden{{/if}}">{{data.unjudge}}</i>
                         <p>待评价</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/orders/refund-orders.html">
+                    <a onclick="open_url('orders','sold')" href="javascript:void(0)">
                         <i class="icon sold"></i>
                         <p>我的售后</p>
                     </a>
@@ -106,19 +106,19 @@
                 <li class="wallet-item">
                     <a href="/coupon/coupon.html">
                         <i class="icon coupon"></i>
-                        <span class="txt">积分</span><span id="my-coupon" class="num">{{datas.member_points}}</span>
+                        <span class="txt">积分</span><span id="my-coupon" class="num">{{data.member_points}}</span>
                     </a>
                 </li>
                 <li class="wallet-item">
                     <a href="/i/beike-detail.html">
                         <i class="icon shell"></i>
-                        <span class="txt">充值卡</span><span id="my-point" class="num">{{datas.available_rc_balance}}</span>
+                        <span class="txt">充值卡</span><span id="my-point" class="num">{{data.available_rc_balance}}</span>
                     </a>
                 </li>
                 <li class="wallet-item">
                     <a id="J_balance_tip" href="javascript:;">
                         <i class="icon left"></i>
-                        <span class="txt">余额</span><span id="my-balance" class="num">{{datas.available_predeposit}}</span>
+                        <span class="txt">余额</span><span id="my-balance" class="num">{{data.available_predeposit}}</span>
                     </a>
                 </li>
             </script>
@@ -186,13 +186,13 @@
     <script id="tpl-personal" type="text/template">
         <div class="my-info-cnt">
             <div class="head">
-                <div class="icon-gender" alt="my-pic"><img src="{{datas.member_avatar}}"></div>
+                <div class="icon-gender" alt="my-pic"><img src="{{data.member_avatar}}"></div>
             </div>
             <div class="info">
-                <p class="my-account"><span>{{datas.member_name}}</span><i class="my-grade my-grade-1"></i></p>
+                <p class="my-account"><span>{{data.member_name}}</span><i class="my-grade my-grade-1"></i></p>
             </div>
         </div>
-        <a class="personal" href="/i/perinfo.html">个人中心</a>
+        <a class="personal" onclick="open_url('userinfo')" href="javascript:void(0)">个人中心</a>
     </script>
     <script type="text/javascript" src="/js/zepto.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>

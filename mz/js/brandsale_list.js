@@ -40,6 +40,7 @@ $(function(){
 			dataType: 'json',
 			success: function(result) {
 				var html = '';
+				console.log(result);
 				if(result.datas.brandsale_list.length>0){
 					html = template('item-list-template', result.datas);
 					page++;
