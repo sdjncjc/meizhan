@@ -27,15 +27,15 @@
         <section class="slider"></section>
         <section class="catebox">
 			<div class="grid">
-				<a class="col-3" href="/group_list.html" title="限量购">
+				<a class="col-3" href="/tuan/group_list.html" title="限量购">
 					<i class="cate" style="background-image:url(/img/index_group.png)"></i>
 					限量购
 				</a>
-				<a class="col-3" href="/top.html" title="TOP排行">
+				<a class="col-3" href="/app/top.html" title="TOP排行">
 					<i class="cate" style="background-image:url(/img/index_top.png)"></i>
 					TOP排行   
 				</a>                   
-				<a class="col-3" href="http://m.beibei.com/oversea/oversea-index.html" title="海外购">
+				<a class="col-3" href="/oversea/oversea_index.html" title="海外购">
 					<i class="cate" style="background-image:url(/img/index_oversea.png)"></i>
 					海外购     
 				</a>                 
@@ -57,7 +57,6 @@
     <div class="toolbar">
         <a href="/trade/cart.html"></a>
     </div>
-	<a href="javascript:;" class="backtop"></a>
 
     <script id="slider-template" type="text/template">
         <img src="{{pic}}" />
@@ -113,7 +112,7 @@
     </script>
     <script id="item-list-template" type="text/template">
         {{each brandsale_list as value index}}
-        <a href="/brandsale.html?rec_id={{value.rec_id}}" class="item-box">
+        <a href="/brandsale/brandsale.html?rec_id={{value.rec_id}}" class="item-box">
             <div class="item-box-content">
                 <img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}">
 				{{if value.preferential!=''}}
@@ -158,7 +157,7 @@
 		<ul class="grid item-list">
 			{{each value.list as val key}}
 			<li class="col-6 row-8 item">
-				<a href="/goods.html?id={{val.goods_id}}">
+				<a href="/detail/detail.html?id={{val.goods_id}}">
 					<div class="row-6 item-img">
 						<img class="lazy" src="/img/blank.png" data-original="{{val.img_url}}" alt="{{val.goods_name}}" >
 						{{if val.goods_storage <= 0}}

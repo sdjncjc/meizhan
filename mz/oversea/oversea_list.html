@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
+    <meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>海外购 - 亲亲美站</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
+    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link rel="stylesheet" href="/css/common.css" />
+	<link rel="stylesheet" href="/css/oversea_list.css" />
+</head>
+<body>
+    <section class="header">
+        <section class="navbar">
+			<a class="back-btn" href="javascript:history.back();"></a>
+            <h1 class="title">海外购</h1>
+            <a class="home-btn" href="/"></a>
+        </section>
+    </section>
+    <section class="wrapper">
+        <section class="oversea-categorys-ads"></section>
+        <section class="filterbar oversea-filterbar"></section>
+        <section class="grid-wrap oversea-category-product">
+            <div class="grid item-list"></div>
+        </section>
+    </section>
+    <div class="loading">正在加载...</div>
+    <section class="footer"></section>
+    <div class="toolbar">
+        <a href="/trade/cart.html"></a>
+    </div>
+    <script id="ads-list-template" type="text/template">
+        <div class="oversea-categorys-ads-${oversea_categorys_ads_type}">
+            {@each oversea_categorys_ads as item}
+            <a class="item" href="//m.beibei.com/oversea/oversea-list.html?bid=${item.desc}">
+                <img src="${item.img}" alt="${item.title}" />
+                <p class="title">${item.title}</p>
+            </a>
+            {@/each}
+        </div>
+    </script>
+    <script id="filterbar-template" type="text/template">
+        <div class="filterbar-dropdown-mask hidden"></div>
+        <div class="filterbar-dropdown hidden" style="top: 0px;">
+            {@each sub_cats as item,index} {@if index==0}
+            <div class="filterbar-dropdown-item active" data-category="${item.value}" data-desc="${item.key}">
+                {@else}
+                <div class="filterbar-dropdown-item" data-category="${item.value}" data-desc="${item.key}">
+                    {@/if}
+                    <div class="filterbar-dropdown-item-inner">${item.key}</div>
+                </div>
+                {@/each}
+            </div>
+            <div class="filterbar-inner-container">
+                <div class="filterbar-inner-mask hidden">
+                    <p>分类列表</p>
+                </div>
+                <div class="filterbar-inner-wrapper">
+                    <div class="filterbar-inner">
+                        {@each sub_cats as item,index} {@if index==0}
+                        <div class="filterbar-inner-item active" data-category="${item.value}" data-desc="${item.key}">
+                            {@else}
+                            <div class="filterbar-inner-item" data-category="${item.value}" data-desc="${item.key}">{@/if} ${item.key}
+                            </div>
+                            {@/each}
+                        </div>
+                    </div>
+                    <div class="filterbar-more">
+                        <i class="show-more"></i>
+                    </div>
+                </div>
+    </script>
+    <script id="product-list-template" type="text/template">
+        {@each oversea_items as item}
+        <a class="col-6 row-8 item" href="${item.targetPage}">
+            <div class="row-6 item-img">
+                <img src="${item.img}" alt="${item.title}" data-src="http://s0.husor.cn/image/blank.png"> {@if item.stock === 0}
+                <i class="ico-sold-out"></i> {@/if}
+            </div>
+            <div class="row-2 item-info">
+                <div class="title">
+                    <img class="ico-national-flag" src="${item.country_icon}" />${item.title}
+                </div>
+                <div class="detail">
+                    <div class="price">
+                        <span class="price-discount"><span>&yen;</span>${item.price}
+                        </span>
+                        <span class="price-original"><span>&yen;</span>${item.price_ori}
+                        </span>
+                    </div>
+                    <div class="discount">${item.discount}折</div>
+                </div>
+            </div>
+            {@if item.label_img}
+            <img class="ico-label" src="${item.label_img}"> {@/if}
+        </a>
+        {@/each}
+    </script>
+    <script type="text/javascript" src="/js/zepto.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/oversea_list.js"></script>
+</body>
+</html>

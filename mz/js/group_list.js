@@ -57,7 +57,7 @@ $(function(){
 				$('.nextup .buy-btn').tap(function(){
 					var key = getcookie('key');//登录标记
 					if(key==''){
-						location.href = MzSiteUrl+'/login.html';
+						location.href = MzSiteUrl+'/login/login.html';
 					}else {
 						var goods_id = $(this).attr('data-iid');
 						$.ajax({
@@ -96,13 +96,5 @@ $(function(){
 				ajax_group();
 			}
 		}					  
-
-		if($('body').scrollTop() > 2000){
-			$('.backtop').show();
-		}else{
-			$('.backtop').hide();
-		}
 	});
-
-	$('.backtop').tap(function(){$('body').scrollTop(0);});
 })

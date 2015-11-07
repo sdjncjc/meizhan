@@ -44,7 +44,6 @@
     <div class="toolbar">
         <a href="/trade/cart.html"></a>
     </div>
-	<a href="javascript:;" class="backtop"></a>
 
     <script id="brand-story-template" type="text/template">
         <img class="lazy" src="/img/blank.png" data-original="{{brandsale.image_url}}">
@@ -61,7 +60,7 @@
     <script id="item-list-template" type="text/template">
         {{each goods_list as value index}}
         <li class="col-6 row-8 item">
-            <a href="/goods.html?id={{value.goods_id}}">
+            <a href="/detail/detail.html?id={{value.goods_id}}">
                 <div class="row-6 item-img">
 					<img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}" alt="{{value.goods_name}}" >
                     {{if value.goods_storage <= 0}}

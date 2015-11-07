@@ -26,7 +26,7 @@ $(function(){
 			$('.title').html($('.filterbar-inner .active').html());
 			
 			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
-				location.href=MzSiteUrl+'/brandsale_list.html?category='+$(this).attr('data-category');
+				location.href=MzSiteUrl+'/brandsale/brandsale_list.html?category='+$(this).attr('data-category');
 			})
         }
     });
@@ -61,13 +61,5 @@ $(function(){
 				ajax_brandsale();
 			}
 		}					  
-
-		if($('body').scrollTop() > 2000){
-			$('.backtop').show();
-		}else{
-			$('.backtop').hide();
-		}
 	});
-
-	$('.backtop').tap(function(){$('body').scrollTop(0);});
 })

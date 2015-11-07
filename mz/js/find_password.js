@@ -10,7 +10,7 @@ $(function(){
 				time: 2000
 			});			
 		}else if(reg.test(user)){ 
-			location.href=MzSiteUrl+"/find_password_phone.html?phone="+user;
+			location.href=MzSiteUrl+"/login/find_password_phone.html?phone="+user;
 		}else if(reg2.test(user)){ 
 			$.ajax({
 				type:'post',

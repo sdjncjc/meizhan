@@ -79,9 +79,11 @@ class mobileMemberControl extends mobileControl{
         if(empty($this->member_info)) {
             output_error('请登录', array('login' => '0'));
         } else {
+
             $this->member_info['client_type'] = $mb_user_token_info['client_type'];
             $this->member_info['openid'] = $mb_user_token_info['openid'];
             $this->member_info['token'] = $mb_user_token_info['token'];
+
             //读取卖家信息
             $seller_info = Model('seller')->getSellerInfo(array('member_id'=>$this->member_info['member_id']));
             $this->member_info['store_id'] = $seller_info['store_id'];

@@ -43,13 +43,5 @@ $(function(){
 				ajax_top();
 			}
 		}					  
-
-		if($('body').scrollTop() > 2000){
-			$('.backtop').show();
-		}else{
-			$('.backtop').hide();
-		}
 	});
-
-	$('.backtop').tap(function(){$('body').scrollTop(0);});
 })

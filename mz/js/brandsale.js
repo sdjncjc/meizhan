@@ -107,18 +107,6 @@ $(function(){
 				}
 			})
 			$('img.lazy').picLazyLoad();
-		},
-		complete: function(){
-//			$('.filter').each(function(){
-//				if($(this).attr('data') == cate){
-//					$(this).addClass('active');
-//				}else{
-//					$(this).removeClass('active');
-//				}
-//			});
-//			$('.filter').tap(function(){
-//				location.href=MzSiteUrl+'/top_filter.html?cate='+$(this).attr('data');
-//			})
         }
     });
 	//获取商品
@@ -151,13 +139,5 @@ $(function(){
 				ajax_goods();
 			}
 		}					  
-
-		if($('body').scrollTop() > 2000){
-			$('.backtop').show();
-		}else{
-			$('.backtop').hide();
-		}
 	});
-
-	$('.backtop').tap(function(){$('body').scrollTop(0);});
 })

@@ -84,7 +84,7 @@ $(function(){
 							title: "ok",
 							time: 1000
 						});			
-						window.setTimeout(function(){location.href = MzSiteUrl+'/login.html';},1000); 
+						window.setTimeout(function(){location.href = MzSiteUrl+'/login/login.html';},1000); 
 					}else{
 						$.dialog({
 							content: result.datas.error,
