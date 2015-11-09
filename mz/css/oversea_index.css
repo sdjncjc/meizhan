@@ -1,0 +1,66 @@
+@charset "utf-8";
+
+html,body{background:#f2f2f2}
+body{padding-top:2rem}
+
+
+.slider img{width:100%;height:100%;border:0}
+.product .item-list{background-color:#fff}
+.product .item{position:relative;display:block;margin:.512rem;margin-bottom:.4rem;border-bottom:1px solid #e4e4e4;background:#fff url(http://s0.husor.cn/image/blank.png) no-repeat center;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}
+.product .item .img-cnt{display:block;width:100%;height:7.125rem}
+.product .item .ico-label{position:absolute;top:0;right:0;width:2.13333333rem;height:1.088rem}
+.product .item-brand-status{position:absolute;bottom:2.13333333rem;left:0;height:1rem;font-size:.55466667rem;background-color:rgba(255,255,255,.8)}
+.product .item-brand-status .national-flag{float:left;width:.8rem;height:.5rem;margin:.25rem .3rem}
+.product .item-brand-status .desc{float:left;height:1rem;padding-right:.04rem;font-size:.55rem;font-size:.512rem;line-height:1rem;text-align:left;vertical-align:middle;color:#666}
+.product .item-brand-status .end{float:left;width:.5rem;height:1rem;margin-right:-2rem;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoAgMAAACDXzJIAAAABGdBTUEAALGPC/xhBQAAAAxQTFRF////////AAAA////BQBkwgAAAAR0Uk5TmjIAzaNU6KkAAABYSURBVAjXTc+xEQAhCERR66E0SrMUSqAMAiMd7/gYYPASB9gd9382UkdBTfdMDwYuNHQU1HTP9GDgQkNHQW1K+7U2FW1bba4r76K3JKslrLSVvFq8RtXOPurerEVls0aUAAAAAElFTkSuQmCC");background-size:cover}
+.product .item-header{padding:.4rem 0;font-size:.59733333rem}
+.product .item-header .brand-price{float:left;color:#984aff}
+.product .item-header .brand-title{float:left;width:9rem;margin-left:.4rem;color:#333;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.product .item-header .items-count{float:right;font-size:.59733333rem;color:#666}
+.slider-status{position:relative;margin-top:-1rem}
+.slider{margin:0 auto .384rem}
+.hwg-cnt{padding-top:.512rem;background-color:#fff}
+.hwg-cnt .tit{padding-left:.256rem;margin:0 .512rem .46933333rem;line-height:1;vertical-align:middle;border-left:.128rem solid #984aff}
+.hwg-cnt .tit .main{margin-right:.384rem;font-size:.64rem;color:#333}
+.hwg-cnt .tit .sub{font-size:.512rem;color:#666}
+.hwg-cnt .tit .hour,.hwg-cnt .tit .mins,.hwg-cnt .tit .sec{display:inline-block;padding:.15rem;font-size:.42666667rem;vertical-align:.064rem;color:#fff;background-color:#666;-webkit-border-radius:.2rem;-moz-border-radius:.2rem;border-radius:.2rem}
+.hwg-cnt .tit .hour{margin-left:.21333333rem}
+.hwg-cnt .tit .sec{margin-right:.21333333rem}
+.hwg-cnt .tit .more{float:right;font-size:.512rem;vertical-align:middle;color:#666}
+.hwg-cnt .tit .ico-arrow-more{position:relative;top:.04266667rem;display:inline-block;margin-left:.128rem;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAUVBMVEUAAACYSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv+YSv/DytOaAAAAGnRSTlMA+XcdH61b87lYUuSkJX2ne3AHgKaGMA0F1wr87kgAAAC6SURBVCjPdZLZEsIgDEUTCoWyiK3V1vv/H6pdWJzKfYHkzGSnU50wjvXbCEm1upmRNHfFbzVY9XJaQq8Yekj+EVAhGUEB4/EdwIIqCcawx9fY/c97JtBbHg+1WS9GJgqRSIKPMvpCOoYkAU+UyO38eggysHQhFoYcJF2IhCPGRFkD47G9E/gLlv/AIfz4U6hm8na5dYO3ukGKjZE0htgae3tRZbXeynWV1jN0Xx1DRFbMx1DOh50RKeYHlV8NX0n74FkAAAAASUVORK5CYII=);background-repeat:no-repeat;background-position:center;-webkit-background-size:100% auto;background-size:100% auto;width:.512rem;height:.512rem}
+.trendy{margin-bottom:.384rem}
+.trendy .list{display:block;height:100%;text-align:center;border-top:1px solid #e4e4e4;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
+.trendy .item{position:relative;width:50%;padding:.384rem;-webkit-box-flex:0 1 auto;-moz-box-flex:0 1 auto;-webkit-flex:0 1 auto;-ms-flex:0 1 auto;flex:0 1 auto;box-sizing:border-box;display:block}
+.trendy .item:first-child{border-right:1px solid #e4e4e4}
+.trendy .item .img-cnt{margin:0 auto;width:5.76rem;height:5.76rem}
+.trendy .item .img-cnt img{display:block;width:100%;height:100%}
+.trendy .item .title{width:100%;margin-top:.384rem;font-size:.512rem;line-height:1;text-align:left;color:#333;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.trendy .item .ico-flag{float:right;margin-top:.49066667rem;width:.8rem;height:.5rem}
+.trendy .item .price{float:left;margin-top:.384rem}
+.trendy .item .now{margin-right:.21333333rem;font-size:.64rem;color:#984aff}
+.trendy .item .original{font-size:.46933333rem;text-decoration:line-through;color:#999}
+.trendy .item .btn-buy{position:absolute;top:5.44rem;right:1.17333333rem;padding:.10666667rem .32rem;font-size:.46933333rem;color:#fff;background-color:#ff4965;-webkit-border-radius:.512rem;-moz-border-radius:.512rem;border-radius:.512rem}
+.trendy .item .tag{position:absolute;top:.384rem;left:.384rem;z-index:2;height:.768rem;overflow-y:hidden;background-color:#fff}
+.trendy .item .tag .ico-day,.trendy .item .tag .ico-night{float:left;background-repeat:no-repeat;-webkit-background-size:100% auto;background-size:100% auto;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;width:.896rem;height:.768rem}
+.trendy .item .tag .ico-day{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAkCAMAAADIF1gZAAAAWlBMVEX/xkr////5+fn/03P//fr/57H/0Wz/yVL/6LT/0Gn59/L/9uP757z75rf92Ib/+e367dH/8ND768n84KT835391Hj5+Pb59ev69Of/9eD91X7+zF/+y1392IeLkv/FAAAA2klEQVQ4y82U6w6CMAyFabsx7vc7+P6v6VBUXBEIxIT+IGX5aE67U6xLRpLsRhEPoOcFFA2ZR9QUi2iOHhmkh/ly2RCD74MAw18Sol4/XOkL4UtXp/1tVbEDUzhqo7cUhCSlSApIrY2asf3M7BicNdIFocmJFeCuoBKk8cJDleVYzgeaTRX8sXhZKmOkiJoVMP8chCYRjeF2WRaoJVQFWdYxEVxAe7St7WGdvwJ+seftQnXxMmH7MGFRE6e45/lecM/zveAxRO9t+GTDRmtV9Y9fhuftRomsK8YdLsMHCH1GnY8AAAAASUVORK5CYII=)}
+.trendy .item .tag .ico-night{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAkCAMAAADIF1gZAAAAXVBMVEVvtev////9/v+z2PXk8fuXyvGNxe98vO34/P7y+P2u1vS42/V3uexzt+zV6vnK5PjI4/er1POBvu7O5vigzvKdzfL0+v7u9v3r9fzm8/yn0vOQx/CGwe7d7vqKw+8PJbo0AAAA8ElEQVQ4y+2T6W6EIBhFOYgIuOu4277/Y9alTaeJQdKfk7kJa05u+C4gXkBpMBkT3yHNR731c2mx5ewlPy3L7ikBGXs9LST7JAIir6kCxIlKP+oYJflRv8ucL4PcEvckIkAdk1AsIWhFtDUXgiq0mClC0J5MJFKGHPYIquVv5fHlRZi9eo15to2G4SrfCb31Be3TngZ9gZ7VN4b6d28ty/UCfaDOQT6O9c1tfT+A+o6NGLNjlLTJja2iOBMymNQPr4bi8G1akIVbPLi2jN05Kw2gfP9AgXI6E5lOJfijqC0/Guq7zLpqMvSq6nLx1n/1BeKvB6wn/+baAAAAAElFTkSuQmCC)}
+.trendy .item .tag .txt-day{border:1px solid #ffc64a}
+.trendy .item .tag .txt-night{border:1px solid #6fb5eb}
+.trendy .item .tag .txt-day,.trendy .item .tag .txt-night{float:left;height:.768rem;padding:0 .21333333rem;font-size:.46933333rem;line-height:.768rem;color:#666;border-left:0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}
+.theme{margin-bottom:.384rem;overflow:hidden}
+.theme .list{width:100%;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;*zoom:1}
+.theme .list:before,.theme .list:after{display:table;content:""}
+.theme .list:after{clear:both}
+.theme .item{position:relative;float:left;width:50%;height:3.2rem;overflow:hidden;border-top:1px solid #e4e4e4;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}
+.theme .item:nth-child(2n){border-left:1px solid #e4e4e4}
+.theme .item img{display:block;width:100%}
+.broadcast{padding:.384rem;margin-bottom:.384rem;background-color:#fff;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}
+.broadcast .img-cnt{display:block;width:100%;margin-bottom:.384rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}
+.broadcast .img-cnt:last-child{margin-bottom:0}
+.broadcast .img-cnt img{display:block;width:100%;height:100%;height:auto}
+.loading{font-size:.6rem;line-height:1.2rem;text-align:center;color:#999}
+.last-page-hint{text-align:center}
+.last-page-hint .hint{margin:.65rem 0 .975rem;text-align:center;color:#999}
+.last-page-hint .hint span{text-decoration:line-through}
+.last-page-hint .goTomorrow{display:inline-block;padding:.35rem .375rem;margin-bottom:1rem;font-family:"Microsoft YaHei";font-size:.8rem;line-height:.75;color:#984aff;border:2px solid #984aff;border-radius:6px}
+.util-ellipsis{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis}

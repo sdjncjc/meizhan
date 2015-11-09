@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
+    <meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>品牌专场 - 亲亲美站</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
+    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link rel="stylesheet" href="/css/common.css" />
+	<link rel="stylesheet" href="/css/brandsale.css" />
+</head>
+<body>
+    <section class="navbar">
+		<a class="back-btn" href="javascript:history.back();"></a>
+		<h1 class="title">品牌专场</h1>
+		<a class="home-btn" href="/"></a>
+    </section>
+
+    <section class="grid-wrap item-nav">
+        <nav class="grid">
+            <a class="col-3 row-1 item-show-stock">有货</a>
+            <a class="col-3 row-1 item-sorted-popularity">人气</a>
+            <a class="col-3 row-1 item-sorted-price">价格</a>
+            <a class="col-3 row-1 item-filter">筛选</a>
+        </nav>
+    </section>
+
+    <section class="wrapper">
+
+        <section class="brand-story"></section>
+
+        <section class="grid-wrap">
+            <ul class="grid item-list"></ul>
+        </section>
+    </section>
+    <div class="loading">正在加载...</div>
+
+    <section class="footer"></section>
+    <div class="toolbar">
+        <a href="/trade/cart.html"></a>
+    </div>
+
+    <script id="brand-story-template" type="text/template">
+        <img class="lazy" src="/img/blank.png" data-original="{{brandsale.image_url}}">
+        <div class="brand-status">
+			<div class="item-promotion">{{if brandsale.preferential}}<p class="mj">满减</p><p class="mj-content marquee"><span>{{brandsale.preferential}}</span></p>{{/if}}</div>
+            <div class="item-countdown"></div>
+        </div>
+        <p class="brand-intro">{{brandsale.intro}}</p>
+        <div class="show-control show-more"></div>
+        <div class="show-control show-less"></div>
+        <div style="clear: both"></div>
+    </script>
+
+    <script id="item-list-template" type="text/template">
+        {{each goods_list as value index}}
+        <li class="col-6 row-8 item">
+            <a href="/detail/detail.html?id={{value.goods_id}}">
+                <div class="row-6 item-img">
+					<img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}" alt="{{value.goods_name}}" >
+                    {{if value.goods_storage <= 0}}
+					<i class="sold-out"></i>
+					{{/if}}
+                </div>
+                <div class="row-2 item-info">
+                    <div class="title util-ellipsis">{{value.goods_name}}</div>
+                    <div class="item-detail">
+                        <div class="price">
+                            <span class="price-discount">
+                                <span>¥</span>
+                                <b>{{value.goods_promotion_price*1}}</b>
+                            </span>
+                            <span class="price-original">
+                                <span>¥</span>
+                                <b>{{value.goods_marketprice*1}}</b>
+                            </span>
+                        </div>
+                        <div class="discount">{{value.discount}}折</div>
+                    </div>
+                </div>
+            </a>
+        </li>
+        {{/each}}
+    </script>
+
+    <script id="refinements-template" type="text/template">
+        <ul class="refinement hidden">
+            {{each brandsale.brandsale_cate as value index}}
+            <li {{if index==0 }}class="selected" {{/if}} data-filter="{{index}}">{{value.gc_name}}({{value.num}})</li>
+            {{/each}}
+        </ul>
+    </script>
+	
+    <script type="text/javascript" src="/js/zepto.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/brandsale.js"></script>
+</body>
+</html>

@@ -23,7 +23,7 @@ $(function(){
 				}
 			});
 			$('.filter').tap(function(){
-				location.href=MzSiteUrl+'/top_filter.html?cate='+$(this).attr('data');
+				location.href=MzSiteUrl+'/app/top_filter.html?cate='+$(this).attr('data');
 			})
         }
     });
@@ -56,13 +56,5 @@ $(function(){
 				ajax_top();
 			}
 		}					  
-
-		if($('body').scrollTop() > 2000){
-			$('.backtop').show();
-		}else{
-			$('.backtop').hide();
-		}
 	});
-
-	$('.backtop').tap(function(){$('body').scrollTop(0);});
 })

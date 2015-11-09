@@ -289,7 +289,7 @@ class mz_loginControl extends mobileHomeControl {
         $param['site_name'] = C('site_name');
         $param['user_name'] = $member['member_name'];
         $param['site_url'] = $_POST['site_url'];
-        $param['verify_url'] = $param['site_url'].'/find_password_email.html?uid='.base64_encode(encrypt($member['member_id'].' '.$email)).'&hash='.md5($seed);
+        $param['verify_url'] = $param['site_url'].'/login/find_password_email.html?uid='.base64_encode(encrypt($member['member_id'].' '.$email)).'&hash='.md5($seed);
         $subject    = ncReplaceText($tpl_info['title'],$param);
         $message    = ncReplaceText($tpl_info['content'],$param);
 

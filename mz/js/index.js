@@ -13,7 +13,7 @@ $(function(){
 		complete: function(){
 			show_filterbar();
 			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
-				location.href=MzSiteUrl+'/brandsale_list.html?category='+$(this).attr('data-category');
+				location.href=MzSiteUrl+'/brandsale/brandsale_list.html?category='+$(this).attr('data-category');
 			})
         }
     });
@@ -63,6 +63,4 @@ $(function(){
 			$('img.lazy').picLazyLoad();
         }
     });
-
-	$('.backtop').tap(function(){$('body').scrollTop(0);});
 })

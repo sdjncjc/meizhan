@@ -57,7 +57,7 @@ function ajax_do(url){
 
 function open_url(type,sub,id){
 	var key = getcookie('key');
-	var url = "/login.html";
+	var url = "/login/login.html";
 	if (key) {
 		switch(type){
 			case 'userinfo':

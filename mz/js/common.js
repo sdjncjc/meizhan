@@ -69,7 +69,7 @@ function get_footer(){
 	if (key){
 		html += '<a href="/member.html">我的亲亲</a><a href="javascript:void(0);" class="logout">退出</a>';
 	}else{
-		html += '<a href="/login.html">登录</a><a href="/register.html">注册</a>';
+		html += '<a href="/login/login.html">登录</a><a href="/login/register.html">注册</a>';
 	}
 	html += '<a href="">客户端</a><a href="http://www.qinqin.net">电脑版</a></div><p class="info"></p><p class="tel">客服热线：<span>4000-500-775</span></p><p class="icp">2015 京ICP备08031978号</p>';
 	$('.footer').html(html);
@@ -139,7 +139,7 @@ function delCookie(name){//删除cookie
 
 function checklogin(state){
 	if(state == 0){
-		location.href = MzSiteUrl+'/login.html';
+		location.href = MzSiteUrl+'/login/login.html';
 		return false;
 	}else {
 		return true;
@@ -148,4 +148,14 @@ function checklogin(state){
 
 $(function(){
 	if($('.footer').length)get_footer();
+
+	$('body').append('<a href="javascript:;" class="backtop"></a>');
+	$('.backtop').tap(function(){$('body').scrollTop(0);});
+	$(window).scroll(function() {
+		if($('body').scrollTop() > 2000){
+			$('.backtop').show();
+		}else{
+			$('.backtop').hide();
+		}
+	});
 });

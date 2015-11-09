@@ -95,24 +95,18 @@ $(function(){
 				if(!$(this).hasClass('selected')){
 					$(this).addClass('selected').siblings().removeClass('selected');
 					_cate = $(this).attr('data-filter');
+					if(_cate>0){
+						$('.item-filter').addClass('selected');
+					}else{
+						$('.item-filter').removeClass('selected');
+					}
+					$('.refinement').addClass('hidden');
 					page = 1;
 					clock = 0;
 					ajax_goods();
 				}
 			})
 			$('img.lazy').picLazyLoad();
-		},
-		complete: function(){
-//			$('.filter').each(function(){
-//				if($(this).attr('data') == cate){
-//					$(this).addClass('active');
-//				}else{
-//					$(this).removeClass('active');
-//				}
-//			});
-//			$('.filter').tap(function(){
-//				location.href=MzSiteUrl+'/top_filter.html?cate='+$(this).attr('data');
-//			})
         }
     });
 	//获取商品
@@ -145,13 +139,5 @@ $(function(){
 				ajax_goods();
 			}
 		}					  
-
-		if($('body').scrollTop() > 2000){
-			$('.backtop').show();
-		}else{
-			$('.backtop').hide();
-		}
 	});
-
-	$('.backtop').tap(function(){$('body').scrollTop(0);});
 })
