@@ -60,6 +60,12 @@ function open_url(type,sub,id){
 	var url = "/login/login.html";
 	if (key) {
 		switch(type){
+			case 'login':
+				url = "/login/login.html";
+				break;
+			case 'register':
+				url = "/login/register.html";
+				break;
 			case 'userinfo':
 				url = "/mine/userinfo.html";
 				break;

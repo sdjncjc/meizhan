@@ -120,7 +120,7 @@
                 title = "待评价";
                 break;
         }
-        $(".title").html(title);
+        $(".navbar .title").html(title);
         function ajax_getOrder(){        
             if(stop)return;
             var url = getUrl('mz_mine','getOrders',"type="+status+"&page=" + page++);
@@ -153,7 +153,7 @@
     function cancelOrder(id){
         var d = "";
         $(".order-refund-reason").removeClass("hidden");
-        $(".order-refund-reason").on("touchend", ".item",function(b) {
+        $(".order-refund-reason .item").tap(function(b) {
                 $(this).addClass("current").siblings().removeClass("current"),
                 d = $(this).attr("data-reason");
             });
