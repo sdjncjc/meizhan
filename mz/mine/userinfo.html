@@ -37,6 +37,12 @@
                 <label class="answer"></label>
             </div>
         </div>
+        <div class="truename">
+            <div class="truename-inner">
+                <label>真实姓名</label>
+                <label class="answer"></label>
+            </div>
+        </div>
         <div class="gender">
             <div class="gender-inner">
                 <label>性别</label>
@@ -109,5 +115,14 @@
 <script type="text/javascript" src="/js/zepto.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript" src="/js/mine.js"></script>
+<script type="text/javascript">
+    // 显示用户基本信息
+    getAjaxResult(getUrl('mz_mine','getUserInfo'),'','','',"setuserinfo(function_data)");
+    function setuserinfo(data){
+        $(".headpic").attr("src",data.member_avatar);
+        $(".nickname-inner").find(".answer").text(data.member_name);
+        $(".truename-inner").find(".answer").text(data.member_truename);
+    }
+</script>
 </body>
 </html>

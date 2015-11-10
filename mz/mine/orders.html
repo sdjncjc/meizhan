@@ -150,29 +150,30 @@
             ajax_do(url);
          }
     }
-    function cancelOrder(id){
         var d = "";
+    function cancelOrder(id){
+        d = "";
         $(".order-refund-reason").removeClass("hidden");
-        $(".order-refund-reason .item").tap(function(b) {
+        $(".order-refund-reason .item").tap(function() {
                 $(this).addClass("current").siblings().removeClass("current"),
                 d = $(this).attr("data-reason");
-            });
-        $(".order-refund-reason").on("touchend", ".btn-ok",function(a) {
-            if (d){
-                if (window.confirm("确定要取消订单吗？")) {
-                    var url = getUrl('mz_mine','cancelOrder','order_id='+id + '&reason=' + d);
-                    ajax_do(url);
-                };
-            }else{
-                alert("请选择取消订单的原因？");
-            }
         });
-        $(".order-refund-reason").on("touchend", ".btn-cancel",function() {
-            $(".order-refund-reason").addClass("hidden").find("li").removeClass("current");
-            d = "";
-        });
+ 
     }
-
+   $(".order-refund-reason .btn-ok").tap(function() {
+        if (d){
+            if (window.confirm("确定要取消订单吗？")) {
+                var url = getUrl('mz_mine','cancelOrder','order_id='+id + '&reason=' + d);
+                ajax_do(url);
+            };
+        }else{
+            alert("请选择取消订单的原因？");
+        }
+    });
+    $(".order-refund-reason").on("touchend", ".btn-cancel",function() {
+        $(".order-refund-reason").addClass("hidden").find("li").removeClass("current");
+        d = "";
+    });
     </script>
 </body>
 

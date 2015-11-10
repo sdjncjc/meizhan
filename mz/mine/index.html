@@ -66,31 +66,31 @@
             </script>
             <script id="tpl-sum-orderinfo-logout" type="text/template">
                 <li>
-                    <a href="/orders/unpay-orders.html">
+                    <a onclick="open_url('orders','unpay')" href="javascript:void(0)">
                         <i class="icon pay"></i><i class="icon-num hidden"></i>
                         <p class="">待付款</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/orders/shipping-orders.html">
+                    <a onclick="open_url('orders','unpost')" href="javascript:void(0)">
                         <i class="icon post"></i><i class="icon-num hidden"></i>
                         <p>待发货</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/orders/receipt-orders.html">
+                    <a onclick="open_url('orders','unget')" href="javascript:void(0)">
                         <i class="icon get"></i><i class="icon-num hidden"></i>
                         <p>待收货</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/orders/rate-orders.html">
+                    <a onclick="open_url('orders','unjudge')" href="javascript:void(0)">
                         <i class="icon judge"></i><i class="icon-num hidden"></i>
                         <p>待评价</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/orders/refund-orders.html">
+                    <a onclick="open_url('orders','sold')" href="javascript:void(0)">
                         <i class="icon sold"></i>
                         <p>我的售后</p>
                     </a>
@@ -143,14 +143,6 @@
                 </li>
             </script>
             <ul class="my-list other-list">
-                <!-- 日后有用
-                <li class="sale">
-                    <a href="/i/favourite.html" class="div-line">
-                        51大促
-                        <span class="next-page"></span>
-                        </a>
-                </li>
-                -->
                 <li class="address">
                     <a href="/mine/address-manage.html" class="div-line">
                          收货地址

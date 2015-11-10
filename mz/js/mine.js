@@ -1,21 +1,26 @@
 var page = 1;
 var stop = false;
-function getAjaxResult(url,tpl,obj,empty_tpl){
+function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
 	var html = "";
+	var function_data;
     $.ajax({
         url: url,
-        type: 'get',
+        type: 'post',
         dataType: 'json',
         success: function(result) {
-        	console.log(result);
-        	if(result.code == 200 && typeof(result.datas) == 'object'){
-	        	html = template(tpl, result.datas);
-	        	if (typeof(result.datas.data_info) == 'object') {
-	        		if (result.datas.data_info.thispage >= result.datas.data_info.totalpage) {
-	        			stop = true;
-                    	$(".loading").hide();
-	        		};
-	        	};
+        	console.log(result.datas)
+        	if(result.code == 200 && (result.datas.data != undefined && result.datas.data != '')){
+        		if (tpl != "" && empty_tpl != undefined) {
+		        	html = template(tpl, result.datas);
+		        	if (typeof(result.datas.data_info) == 'object') {
+		        		if (result.datas.data_info.thispage >= result.datas.data_info.totalpage) {
+		        			stop = true;
+	                    	$(".loading").hide();
+		        		};
+		        	};
+        		}else{
+        			function_data =  result.datas.data;
+        		}
 	        }else{
 	        	if (empty_tpl != undefined) {
 	        		html = template(empty_tpl, {});
@@ -23,11 +28,15 @@ function getAjaxResult(url,tpl,obj,empty_tpl){
 	        		alert(result.datas.error);
 	        		history.go(-1);
 	        	}
+	        	$(".loading").hide();
 	        }
 	        $(obj).append(html);
 			$('img.lazy').picLazyLoad();
 		},
 		complete: function(){
+			if (myfun !='' && myfun != undefined) {
+				eval(myfun);	
+			};
         }
     });
 }
@@ -86,6 +95,10 @@ function open_url(type,sub,id){
 					url = "/mine/orderinfo.html?id="+id;
 				};
 				break;
+			case 'goods':
+				if (sub == 'detial') {
+					url = "/detail/detail.html?id="+id;
+				};
 		}
 	}
 	window.location.href = url;

@@ -96,7 +96,7 @@
                     <div class="info-part part4">
                         <div class="title">商品详情</div>
                         {{each data.extend_order_goods as order_goods}}
-                        <a href='/goods.html?id={{order_goods.goods_id}}' style="display:block">
+                        <a href="javascript:open_url('goods','detial',{{order_goods.goods_id}})" style="display:block">
                             <div class="info-box">
                                 <div class="left-box">
                                     <img class="item-img" src="{{order_goods.img_url}}">

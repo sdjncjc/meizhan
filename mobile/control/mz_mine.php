@@ -27,11 +27,12 @@ class mz_mineControl extends mobileMemberControl {
      * 获取用户信息
      */
     public function getUserInfoOp() {
+        $member_info = $this->member_info;
         $member_info['member_avatar'] = getMemberAvatar($this->member_info['member_avatar']);
-        $member_info['member_name'] = $this->member_info['member_name'];
-        $member_info['member_points'] = $this->member_info['member_points'];
-        $member_info['available_rc_balance'] = $this->member_info['available_rc_balance'];
-        $member_info['available_predeposit'] = $this->member_info['available_predeposit'];
+        // $member_info['member_name'] = $this->member_info['member_name'];
+        // $member_info['member_points'] = $this->member_info['member_points'];
+        // $member_info['available_rc_balance'] = $this->member_info['available_rc_balance'];
+        // $member_info['available_predeposit'] = $this->member_info['available_predeposit'];
         output_data(array('data'=>$member_info));
     }
     /**
@@ -55,8 +56,7 @@ class mz_mineControl extends mobileMemberControl {
                 }
             }
         }
-        output_data(array('data'=>$simpleOrderInfo));
-
+        output_data(array('data'=>$simpleOrderInfo));        
     }
     /**
      * 获取订单列表
@@ -70,11 +70,24 @@ class mz_mineControl extends mobileMemberControl {
 
         //查询条件
         $condition = array();
-        if (in_array($status, array(10,20,30,40))) {
-            if ($status == 40) {
-                $condition['evaluation_state'] = 0;
+        if ($status == 'sold') {
+            // 获取售后信息
+            $refund_order_ids = array();
+            $model_refund = Model('refund_return');
+            $refundOrderList = $model_refund->getRefundReturnList(array('buyer_id'=>$this->member_info['member_id']),'','order_id');
+            if (!empty($refundOrderList)) {
+                foreach ($refundOrderList as $key => $value) {
+                    $refund_order_ids[] = $value['order_id'];
+                }
             }
-            $condition['order_state'] = $status;
+            $condition['order_id'] = array('in',$refund_order_ids);
+        }else{
+            if (in_array($status, array(10,20,30,40))) {
+                if ($status == 40) {
+                    $condition['evaluation_state'] = 0;
+                }
+                $condition['order_state'] = $status;
+            }
         }
         $condition['delete_state'] = 0;
         $condition['buyer_id'] = $this->member_info['member_id'];
@@ -96,7 +109,7 @@ class mz_mineControl extends mobileMemberControl {
 
             }
         }
-        output_data(array('data_info'=>$data_info,'data'=>$orders));
+        output_data(array('data'=>$orders,'data_info'=>$data_info));
     }
     /**
      * 取消订单
@@ -164,9 +177,14 @@ class mz_mineControl extends mobileMemberControl {
      * 获取订单详情
      */
     public function getOrderInfoOp(){
-        $order_id = $_GET['order_id'];
+        $order_id = intval($_GET['order_id']);
+        // 查询条件
+        $condition = array();
+        $condition['order_id'] = $order_id;
+        $condition['buyer_id'] = $this->member_info['member_id'];
+
         $order_model = Model('order');
-        $order_info = $order_model->getOrderInfo(array('order_id'=>$order_id,'buyer_id'=>$this->member_info['member_id']),array('order_common','order_goods','member'));
+        $order_info = $order_model->getOrderInfo($condition,array('order_common','order_goods','member'));
         if (empty($order_info)) {
             output_error("订单不存在！");
         }
