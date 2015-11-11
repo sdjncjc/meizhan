@@ -1,9 +1,4 @@
 $(function(){
-	var key = getcookie('key');
-	if (key) {
-		$.dialog({content: '已成功登录',title: "ok",time: 1000});			
-		window.location.href = "/mine/index.html";
-	};
 	$('.login-btn').tap(function(){
 		var user_name = $('.user-name-input').val();
 		var password = $('.password-input').val();
@@ -40,8 +35,8 @@ $(function(){
 								content: '登录成功',
 								title: "ok",
 								time: 1000
-							});			
-							window.setTimeout(function(){window.location.href = "/mine/index.html";},1000); 
+							});		
+							window.setTimeout(function(){window.location.href="/mine/index.html";},1000); 
 						}
 					}else{
 						$.dialog({
