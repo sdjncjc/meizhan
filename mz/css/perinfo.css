@@ -210,7 +210,10 @@ body {
   margin: 0 auto;
   display: block;
   margin-top: 1.5rem;
+  border: 0;
+  border: .05rem solid #e4e4e4;
   font-size: .7rem;
+  background-color: #f2f2f2;
   padding-left: .4rem;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -307,6 +310,11 @@ body {
   background-color: #f2f2f2;
   -webkit-appearance: none;
 }
+.mask .headicon-pop .headicon-notification,
+.mask .truename-pop .headicon-notification,
+.mask .gender-pop .headicon-notification,
+.mask .date-pop .headicon-notification,
+.mask .password-pop .headicon-notification,
 .mask .headicon-pop .truename-notification,
 .mask .truename-pop .truename-notification,
 .mask .gender-pop .truename-notification,
@@ -322,6 +330,26 @@ body {
   margin-right: 1.2rem;
   margin-top: 0.1rem;
 }
+.mask .headicon-pop .headicon-notification .headicon-alert,
+.mask .truename-pop .headicon-notification .headicon-alert,
+.mask .gender-pop .headicon-notification .headicon-alert,
+.mask .date-pop .headicon-notification .headicon-alert,
+.mask .password-pop .headicon-notification .headicon-alert,
+.mask .headicon-pop .truename-notification .headicon-alert,
+.mask .truename-pop .truename-notification .headicon-alert,
+.mask .gender-pop .truename-notification .headicon-alert,
+.mask .date-pop .truename-notification .headicon-alert,
+.mask .password-pop .truename-notification .headicon-alert,
+.mask .headicon-pop .date-notification .headicon-alert,
+.mask .truename-pop .date-notification .headicon-alert,
+.mask .gender-pop .date-notification .headicon-alert,
+.mask .date-pop .date-notification .headicon-alert,
+.mask .password-pop .date-notification .headicon-alert,
+.mask .headicon-pop .headicon-notification .truename-alert,
+.mask .truename-pop .headicon-notification .truename-alert,
+.mask .gender-pop .headicon-notification .truename-alert,
+.mask .date-pop .headicon-notification .truename-alert,
+.mask .password-pop .headicon-notification .truename-alert,
 .mask .headicon-pop .truename-notification .truename-alert,
 .mask .truename-pop .truename-notification .truename-alert,
 .mask .gender-pop .truename-notification .truename-alert,
@@ -332,6 +360,11 @@ body {
 .mask .gender-pop .date-notification .truename-alert,
 .mask .date-pop .date-notification .truename-alert,
 .mask .password-pop .date-notification .truename-alert,
+.mask .headicon-pop .headicon-notification .date-alert-note,
+.mask .truename-pop .headicon-notification .date-alert-note,
+.mask .gender-pop .headicon-notification .date-alert-note,
+.mask .date-pop .headicon-notification .date-alert-note,
+.mask .password-pop .headicon-notification .date-alert-note,
 .mask .headicon-pop .truename-notification .date-alert-note,
 .mask .truename-pop .truename-notification .date-alert-note,
 .mask .gender-pop .truename-notification .date-alert-note,

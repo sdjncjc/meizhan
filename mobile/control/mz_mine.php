@@ -239,6 +239,39 @@ class mz_mineControl extends mobileMemberControl {
         }
     }
     /**
+     * 上传头像
+     * @return [type] [description]
+     */
+    public function uploadHeadIconOp(){
+        //上传图片
+        $upload = new UploadFile();
+        $upload->set('thumb_width', 500);
+        $upload->set('thumb_height',499);
+        $ext = strtolower(pathinfo($_FILES['headiconedit']['name'], PATHINFO_EXTENSION));
+        $upload->set('file_name',"avatar_".$this->member_info['member_id'].".$ext");
+        $upload->set('thumb_ext','_new');
+        $upload->set('ifremove',true);
+        $upload->set('default_dir',ATTACH_AVATAR);
+        if (!empty($_FILES['headiconedit']['tmp_name'])){
+            $result = $upload->upfile('headiconedit');
+            if (!$result){
+                output_error($upload->error);
+            }
+        }else{
+            output_error("上传失败，请尝试更换图片格式或小图片");
+        }
+
+        $condition = $data =  array();
+        $condition['member_id'] = $this->member_info['member_id'];
+        $data["member_avatar"] = $upload->thumb_image;
+
+        if (Model("member")->editMember($condition,$data)){
+            output_data("修改成功");
+        }else{
+            output_error("系统错误");
+        }
+    }
+    /**
      * 调试
      * @param  [type]  $arr  [description]
      * @param  boolean $stop [description]

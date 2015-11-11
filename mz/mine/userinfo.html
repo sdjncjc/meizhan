@@ -82,11 +82,15 @@
     <div class="mask hidden">
         <div class="headicon-pop popout">
             <h2 class="pop-title">设定头像</h2>
-            <input accept="image/*" type="file" class="headiconedit">
+            <input accept="image/*" name="headiconedit" id="headiconedit" type="file" class="headiconedit">
+            <p class="headicon-notification">
+                <label class="headicon-alert hidden headicon-alert-note">文件上传中……</label>
+            </p>
             <div class="pop-sure">
                 <div class="pop-cancle">取消</div>
-                <div class="pop-confirm" data-type="truename">保存</div>
+                <div class="pop-confirm" data-type="headicon">保存</div>
             </div>
+            <iframe id='frameFile' name='frameFile' style='display: none;'></iframe>
         </div>
         <div class="truename-pop popout">
             <h2 class="pop-title">设定真实姓名</h2>
@@ -104,8 +108,8 @@
             <h2 class="pop-title">设定性别</h2>
             <select class="gender-select">
                 <option value=1 text="男">男</option>
-                <option value=1 text="女">女</option>
-                <option value=2 text="保密">保密</option>
+                <option value=2 text="女">女</option>
+                <option value=3 text="保密">保密</option>
             </select>
             <div class="pop-sure">
                 <div class="pop-cancle">取消</div>
@@ -140,6 +144,8 @@
 <script type="text/javascript" src="/js/zepto.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript" src="/js/mine.js"></script>
+<script src="/js/CJL.0.1.min.js"></script>
+<script type="text/javascript" src="/js/upload.js"></script>
 <script type="text/javascript">
     // 显示用户基本信息
     var username;
@@ -161,7 +167,7 @@
         showMask();
         var b=$(".truename-inner").find(".answer").text();
         $(".truename-pop").removeClass("hidden").find(".truename-alert-note").addClass("hidden");
-        $(".truename-pop").find(".gender-select").val(b);
+        $(".truename-pop").find(".truenameedit").val(b);
     });
     $(".gender").tap(function(){
         showMask();
@@ -194,6 +200,10 @@
         var d;
         var c=$(this).data("type");
         switch(c){
+            case "headicon":
+                $(".headicon-pop").removeClass("hidden").find(".headicon-alert-note").addClass("hidden");
+                uploadfile("headiconedit");
+                break;
             case "truename":
                 d=$(".truenameedit").val().trim();
                 if(d.length<2||d.length>16){
@@ -201,11 +211,11 @@
                 }else{
                     $(".truename-alert-note").addClass("hidden");
                 }
-                params = {member_truename:d};
+                ajax_do(getUrl('mz_mine','editUser'),{member_truename:d});
                 break;
             case "gender":
-                d = $("gender-select").val();
-                params = {member_sex:d};
+                d = $(".gender-select").val();
+                ajax_do(getUrl('mz_mine','editUser'),{member_sex:d});
                 break;
             case "date":
                 var b = $(".date-pop");
@@ -218,14 +228,19 @@
                 }else{
                     return void $(".date-alert-note").removeClass("hidden");
                 }
-                params = {member_birthday:d};
+                ajax_do(getUrl('mz_mine','editUser'),{member_birthday:d});
                 break;
             case "password":
                 params = {member_passwd:$(".password-pop").find(".passwordedit").val(),member_repasswd:$(".password-pop").find(".repasswordedit").val()};
+                ajax_do(getUrl('mz_mine','editUser'),params);
                 break;
         }
-        ajax_do(getUrl('mz_mine','editUser'),params);
         hideEditPage();
+    });
+    $(".pop-cancle").tap(function(){hideEditPage()});
+    $("#logout").tap(function(){
+        ajax_do(getUrl('mz_logout','index'),{username:username,client:'mz'});
+        delCookie("key");
     });
     function showMask(){
         $(".mask").removeClass("hidden");
@@ -235,10 +250,20 @@
         $(".mask").addClass("hidden").css({opacity:1});
         $(".popout").addClass("hidden");
     }
-    $(".pop-cancle").tap(function(){hideEditPage()});
-    $("#logout").tap(function(){
-        ajax_do(getUrl('mz_logout','index'),{username:username,client:'mz'});
-    });
+    function uploadfile(input_file){
+        var file = $$("headiconedit"), fu = new QuickUpload(file, {
+            action: getUrl('mz_mine','uploadHeadIcon'),
+            timeout: 6,
+            onFinish: function(iframe)
+            {
+                $.dialog({content:"设置成功",title: "提示",time: 1000});
+                window.setTimeout(function(){location.reload();},1000); 
+            },
+            onStop: function(){ alert("已经停止"); stop(); },
+            onTimeout: function(){ alert("上传超时"); stop(); }
+        });
+        fu.upload();
+    }
 </script>
 </body>
 </html>

@@ -26,8 +26,14 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
 	        	if (empty_tpl != "" && empty_tpl != undefined) {
 	        		html = template(empty_tpl, {});
 	        	}else{
-	        		alert(result.datas.error);
-	        		history.go(-1);
+					$.dialog({content:result.datas.error,title: "ok",time: 1000});
+					if (getcookie('lastvisit')) {
+						window.setTimeout(function(){
+							window.location.href = decodeURIComponent(getcookie('lastvisit'));
+						},1000); 
+					}else{
+						window.setTimeout(function(){history.go(-1);},1000); 
+					}
 	        	}
 	        	$(".loading").hide();
 	        }
@@ -51,10 +57,10 @@ function getUrl(act,op,params){
 function ajax_do(url,params){
 	$.post(url,params,function(result){
     	if(result.code == 200){
-    		alert(result.datas);
-    		location.reload();
+			$.dialog({content:result.datas,title: "提示",time: 1000});
+			window.setTimeout(function(){location.reload();},1000); 
         }else{
-        	alert(result.datas.error);
+			$.dialog({content:result.datas.error,title: "ok",time: 1000});
         }
 	},'json');
 }
@@ -64,12 +70,6 @@ function open_url(type,sub,id){
 	var url = "/login/login.html";
 	if (key) {
 		switch(type){
-			case 'login':
-				url = "/login/login.html";
-				break;
-			case 'register':
-				url = "/login/register.html";
-				break;
 			case 'userinfo':
 				url = "/mine/userinfo.html";
 				break;
@@ -95,6 +95,16 @@ function open_url(type,sub,id){
 					url = "/detail/detail.html?id="+id;
 				};
 		}
+	}else{
+		switch(type){
+			case 'login':
+				url = "/login/login.html";
+				break;
+			case 'register':
+				url = "/login/register.html";
+				break;
+		}
 	}
+	addcookie('lastvisit',window.location.href);
 	window.location.href = url;
 }
