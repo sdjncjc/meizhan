@@ -8,9 +8,9 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
         type: 'post',
         dataType: 'json',
         success: function(result) {
-        	console.log(result.datas)
+        	console.log(result);
         	if(result.code == 200 && (result.datas.data != undefined && result.datas.data != '')){
-        		if (tpl != "" && empty_tpl != undefined) {
+        		if (tpl != "" && tpl != undefined) {
 		        	html = template(tpl, result.datas);
 		        	if (typeof(result.datas.data_info) == 'object') {
 		        		if (result.datas.data_info.thispage >= result.datas.data_info.totalpage) {
@@ -22,7 +22,8 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
         			function_data =  result.datas.data;
         		}
 	        }else{
-	        	if (empty_tpl != undefined) {
+	        	console.log(empty_tpl);
+	        	if (empty_tpl != "" && empty_tpl != undefined) {
 	        		html = template(empty_tpl, {});
 	        	}else{
 	        		alert(result.datas.error);
@@ -35,7 +36,7 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
 		},
 		complete: function(){
 			if (myfun !='' && myfun != undefined) {
-				eval(myfun);	
+				eval(myfun + "(function_data)");	
 			};
         }
     });
@@ -47,21 +48,15 @@ function getUrl(act,op,params){
 	}
 	return ApiUrl + "/index.php?act=" + act + "&op=" + op + "&" + params;
 }
-function ajax_do(url){
-    $.ajax({
-        url: url,
-        type: 'get',
-        dataType: 'json',
-        success: function(result) {
-        	if(result.code == 200){
-        		location.reload();
-	        }else{
-	        	alert(result.message);
-	        }
-		},
-		complete: function(){
+function ajax_do(url,params){
+	$.post(url,params,function(result){
+    	if(result.code == 200){
+    		alert(result.datas);
+    		location.reload();
+        }else{
+        	alert(result.datas.error);
         }
-    });
+	},'json');
 }
 
 function open_url(type,sub,id){

@@ -49,9 +49,23 @@
                 <label class="answer"></label>
             </div>
         </div>
-        <div class="introduce">
-            <div class="introduce-inner">
-                <label>自我介绍</label>
+        <div class="birthday">
+            <div class="birthday-inner">
+                <label>生日</label>
+                <label class="answer"></label>
+            </div>
+        </div>
+    </section>
+    <section class="downrows">
+        <div class="promotion_group">
+            <div class="promotion_group-inner">
+                <label>专属客服</label>
+                <label class="answer"></label>
+            </div>
+        </div>
+        <div class="password">
+            <div class="password-inner">
+                <label>修改密码</label>
                 <label class="answer"></label>
             </div>
         </div>
@@ -66,48 +80,59 @@
 
 
     <div class="mask hidden">
-        <div class="nick-pop popout">
-            <h2 class="pop-title">设定昵称</h2>
-            <input type="text"  class="nickedit"/>
-            <p class="nick-notification">
-                <label class="nick-alert hidden nick-alert-note">请输入正确格式的昵称</label>
-                <label class="nick-notion">昵称为2-16个字符</label>
-            </p>
-            <!-- <p class="nick-notification hidden nick-alert-note">
-            </p> -->
+        <div class="headicon-pop popout">
+            <h2 class="pop-title">设定头像</h2>
+            <input accept="image/*" type="file" class="headiconedit">
             <div class="pop-sure">
                 <div class="pop-cancle">取消</div>
-                <div class="pop-confirm" data-type="nick">保存</div>
+                <div class="pop-confirm" data-type="truename">保存</div>
+            </div>
+        </div>
+        <div class="truename-pop popout">
+            <h2 class="pop-title">设定真实姓名</h2>
+            <input type="text"  class="truenameedit"/>
+            <p class="truename-notification">
+                <label class="truename-alert hidden truename-alert-note">请输入正确格式的姓名</label>
+                <label class="truename-notion">姓名为2-16个字符</label>
+            </p>
+            <div class="pop-sure">
+                <div class="pop-cancle">取消</div>
+                <div class="pop-confirm" data-type="truename">保存</div>
             </div>
         </div>
         <div class="gender-pop popout hidden">
             <h2 class="pop-title">设定性别</h2>
             <select class="gender-select">
-                <option value=1>宝爸</option>
-                <option value=2>宝妈</option>
+                <option value=1 text="男">男</option>
+                <option value=1 text="女">女</option>
+                <option value=2 text="保密">保密</option>
             </select>
-            <!-- <p class="gender-row">
-                宝妈<input type="radio" name="gender" value="2" class="gender"/>
-            </p>
-            <p class="gender-row">
-                宝爸<input type="radio" name="gender" value="1" class="gender"/>
-            </p> -->
             <div class="pop-sure">
                 <div class="pop-cancle">取消</div>
                 <div class="pop-confirm" data-type="gender">保存</div>
             </div>
         </div>
-        <div class="introduce-pop hidden  popout">
-            <h2 class="pop-title">设定简介</h2>
-            <!-- <input type="text" placeholder="未填写" class="introedit"/> -->
-            <textarea class="introedit-content"></textarea>
-            <p class="intro-notification">
-                <label class="hidden intro-alert-note">请输入正确格式的简介</label>
-                <label class="intro-notion">简介不多于64个字符</label>
+
+        <div class="date-pop hidden popout">
+            <h2 class="pop-title">设定生日</h2>
+            <input type="text" class="birthyear birthday" />&nbsp;年
+            <input type="text" class="birthmonth birthday" />&nbsp;月
+            <input type="text" class="birthdate birthday" />&nbsp;日
+            <p class="date-notification">
+                <label class="date-alert hidden date-alert-note">请输入正确格式的日期时间</label>
             </p>
             <div class="pop-sure">
                 <div class="pop-cancle">取消</div>
-                <div class="pop-confirm" data-type="intro">保存</div>
+                <div class="pop-confirm" data-type="date">保存</div>
+            </div>
+        </div>
+        <div class="password-pop popout">
+            <h2 class="pop-title">修改密码</h2>
+            &nbsp;原密码：<input type="password" class="passwordedit"/><br/>
+            &nbsp;新密码：<input type="password" class="repasswordedit"/>
+            <div class="pop-sure">
+                <div class="pop-cancle">取消</div>
+                <div class="pop-confirm" data-type="password">保存</div>
             </div>
         </div>
     </div>
@@ -117,12 +142,103 @@
 <script type="text/javascript" src="/js/mine.js"></script>
 <script type="text/javascript">
     // 显示用户基本信息
-    getAjaxResult(getUrl('mz_mine','getUserInfo'),'','','',"setuserinfo(function_data)");
+    var username;
+    getAjaxResult(getUrl('mz_mine','getUserInfo'),'','','',"setuserinfo");
     function setuserinfo(data){
+        username = data.member_name;
         $(".headpic").attr("src",data.member_avatar);
         $(".nickname-inner").find(".answer").text(data.member_name);
         $(".truename-inner").find(".answer").text(data.member_truename);
+        $(".gender-inner").find(".answer").text((data.member_sex==3)?'保密':(data.member_sex==2)?'女':'男');
+        $(".birthday-inner").find(".answer").text(data.member_birthday);
+        $(".promotion_group-inner").find(".answer").text(data.group_name);
     }
+    $(".headicon").tap(function(){
+        showMask();
+        $(".headicon-pop").removeClass("hidden");
+    });
+    $(".truename").tap(function(){
+        showMask();
+        var b=$(".truename-inner").find(".answer").text();
+        $(".truename-pop").removeClass("hidden").find(".truename-alert-note").addClass("hidden");
+        $(".truename-pop").find(".gender-select").val(b);
+    });
+    $(".gender").tap(function(){
+        showMask();
+        var b=$(".gender-inner").find(".answer").text();
+        $(".gender-pop").removeClass("hidden");
+        $(".gender-pop").find(".gender-select").find("option[text='"+b+"']").attr("selected",true); 
+
+    });
+    $(".uprows .birthday").tap(function(){
+        showMask();
+        var b=$(".birthday-inner").find(".answer").text();
+        c=/^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(b);
+        d=$(".date-pop").removeClass("hidden");
+        if (c) {
+            d.find(".birthyear").val(c[1]);
+            d.find(".birthmonth").val(c[2]);
+            d.find(".birthdate").val(c[3]);
+        }else{
+            d.find(".birthyear").val("");
+            d.find(".birthmonth").val("");
+            d.find(".birthdate").val("");
+        }
+    });
+    $(".password").tap(function(){
+        showMask();
+        $(".password-pop").removeClass("hidden");
+    })
+    $(".pop-confirm").tap(function(){
+        var params = "";
+        var d;
+        var c=$(this).data("type");
+        switch(c){
+            case "truename":
+                d=$(".truenameedit").val().trim();
+                if(d.length<2||d.length>16){
+                    return void $(".truename-alert-note").removeClass("hidden");
+                }else{
+                    $(".truename-alert-note").addClass("hidden");
+                }
+                params = {member_truename:d};
+                break;
+            case "gender":
+                d = $("gender-select").val();
+                params = {member_sex:d};
+                break;
+            case "date":
+                var b = $(".date-pop");
+                if (/^(\d{4})$/.test(b.find(".birthyear").val()) || /^(\d{1,2})$/.test(b.find(".birthmonth").val()) || /^(\d{1,2})$/.test(b.find(".birthdate").val())) {
+                    if (b.find(".birthmonth").val() > 12 || b.find(".birthdate").val() > 31) {
+                        return void $(".date-alert-note").removeClass("hidden");
+                    }else{
+                        d = b.find(".birthyear").val() + "-" + b.find(".birthmonth").val() + "-" + b.find(".birthdate").val();
+                    }
+                }else{
+                    return void $(".date-alert-note").removeClass("hidden");
+                }
+                params = {member_birthday:d};
+                break;
+            case "password":
+                params = {member_passwd:$(".password-pop").find(".passwordedit").val(),member_repasswd:$(".password-pop").find(".repasswordedit").val()};
+                break;
+        }
+        ajax_do(getUrl('mz_mine','editUser'),params);
+        hideEditPage();
+    });
+    function showMask(){
+        $(".mask").removeClass("hidden");
+        $(".popout").addClass("hidden");
+    }
+    function hideEditPage(){
+        $(".mask").addClass("hidden").css({opacity:1});
+        $(".popout").addClass("hidden");
+    }
+    $(".pop-cancle").tap(function(){hideEditPage()});
+    $("#logout").tap(function(){
+        ajax_do(getUrl('mz_logout','index'),{username:username,client:'mz'});
+    });
 </script>
 </body>
 </html>

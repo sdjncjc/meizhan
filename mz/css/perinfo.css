@@ -58,12 +58,16 @@ body {
 }
 .uprows .nickname,
 .downrows .nickname,
+.uprows .truename,
+.downrows .truename,
 .uprows .gender,
 .downrows .gender,
-.uprows .introduce,
-.downrows .introduce,
-.uprows .truename,
-.downrows .truename {
+.uprows .birthday,
+.downrows .birthday,
+.uprows .promotion_group,
+.downrows .promotion_group,
+.uprows .password,
+.downrows .password {
   padding-left: .5rem;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -73,33 +77,45 @@ body {
 }
 .uprows .nickname label,
 .downrows .nickname label,
+.uprows .truename label,
+.downrows .truename label,
 .uprows .gender label,
 .downrows .gender label,
-.uprows .introduce label,
-.downrows .introduce label,
-.uprows .truename label,
-.downrows .truename label {
+.uprows .birthday label,
+.downrows .birthday label,
+.uprows .promotion_group label,
+.downrows .promotion_group label,
+.uprows .password label,
+.downrows .password label {
   font-size: 0.7rem;
 }
 .uprows .nickname-inner,
 .downrows .nickname-inner,
+.uprows .truename-inner,
+.downrows .truename-inner,
 .uprows .gender-inner,
 .downrows .gender-inner,
-.uprows .introduce-inner,
-.downrows .introduce-inner,
-.uprows .truename-inner,
-.downrows .truename-inner {
+.uprows .birthday-inner,
+.downrows .birthday-inner,
+.uprows .promotion_group-inner,
+.downrows .promotion_group-inner,
+.uprows .password-inner,
+.downrows .password-inner {
   position: relative;
   border-bottom: 0.05rem solid #eeeeee;
 }
 .uprows .nickname-inner .answer,
 .downrows .nickname-inner .answer,
+.uprows .truename-inner .answer,
+.downrows .truename-inner .answer,
 .uprows .gender-inner .answer,
 .downrows .gender-inner .answer,
-.uprows .introduce-inner .answer,
-.downrows .introduce-inner .answer,
-.uprows .truename-inner .answer,
-.downrows .truename-inner .answer {
+.uprows .birthday-inner .answer,
+.downrows .birthday-inner .answer,
+.uprows .promotion_group-inner .answer,
+.downrows .promotion_group-inner .answer,
+.uprows .password-inner .answer,
+.downrows .password-inner .answer {
   position: absolute;
   -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);
@@ -115,12 +131,16 @@ body {
 }
 .uprows .nickname-inner label,
 .downrows .nickname-inner label,
+.uprows .truename-inner label,
+.downrows .truename-inner label,
 .uprows .gender-inner label,
 .downrows .gender-inner label,
-.uprows .introduce-inner label,
-.downrows .introduce-inner label,
-.uprows .truename-inner label,
-.downrows .truename-inner label {
+.uprows .birthday-inner label,
+.downrows .birthday-inner label,
+.uprows .promotion_group-inner label,
+.downrows .promotion_group-inner label,
+.uprows .password-inner label,
+.downrows .password-inner label {
   color: #333333;
 }
 .uprows {
@@ -165,10 +185,11 @@ body {
   z-index: 999;
   opacity: 1;
 }
-.mask .nick-pop,
+.mask .headicon-pop,
+.mask .truename-pop,
 .mask .gender-pop,
-.mask .introduce-pop,
-.mask .date-pop {
+.mask .date-pop,
+.mask .password-pop {
   background-color: #fff;
   -webkit-border-radius: .2rem;
   border-radius: .2rem;
@@ -180,14 +201,28 @@ body {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-.mask .nick-pop .nickedit,
-.mask .gender-pop .nickedit,
-.mask .introduce-pop .nickedit,
-.mask .date-pop .nickedit,
-.mask .nick-pop .introedit,
-.mask .gender-pop .introedit,
-.mask .introduce-pop .introedit,
-.mask .date-pop .introedit {
+.mask .headicon-pop .headiconedit,
+.mask .truename-pop .headiconedit,
+.mask .gender-pop .headiconedit,
+.mask .date-pop .headiconedit,
+.mask .password-pop .headiconedit {
+  width: 80%;
+  margin: 0 auto;
+  display: block;
+  margin-top: 1.5rem;
+  font-size: .7rem;
+  padding-left: .4rem;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #333;
+  border-radius: .15rem;
+  -webit-appearance: none;
+}
+.mask .headicon-pop .truenameedit,
+.mask .truename-pop .truenameedit,
+.mask .gender-pop .truenameedit,
+.mask .date-pop .truenameedit,
+.mask .password-pop .truenameedit {
   width: 80%;
   margin: 0 auto;
   display: block;
@@ -204,10 +239,11 @@ body {
   border-radius: .15rem;
   -webit-appearance: none;
 }
-.mask .nick-pop .gender-row,
+.mask .headicon-pop .gender-row,
+.mask .truename-pop .gender-row,
 .mask .gender-pop .gender-row,
-.mask .introduce-pop .gender-row,
-.mask .date-pop .gender-row {
+.mask .date-pop .gender-row,
+.mask .password-pop .gender-row {
   position: relative;
   font-size: .8rem;
   margin-top: 1rem;
@@ -215,10 +251,11 @@ body {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-.mask .nick-pop .gender,
+.mask .headicon-pop .gender,
+.mask .truename-pop .gender,
 .mask .gender-pop .gender,
-.mask .introduce-pop .gender,
-.mask .date-pop .gender {
+.mask .date-pop .gender,
+.mask .password-pop .gender {
   position: absolute;
   right: 2rem;
   width: .8rem;
@@ -227,10 +264,11 @@ body {
   -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);
 }
-.mask .nick-pop .birthday,
+.mask .headicon-pop .birthday,
+.mask .truename-pop .birthday,
 .mask .gender-pop .birthday,
-.mask .introduce-pop .birthday,
-.mask .date-pop .birthday {
+.mask .date-pop .birthday,
+.mask .password-pop .birthday {
   width: 2.5rem;
   height: 1.5rem;
   margin-left: .6rem;
@@ -241,20 +279,23 @@ body {
   background-color: #f2f2f2;
   -webit-appearance: none;
 }
-.mask .nick-pop .birthmonth,
+.mask .headicon-pop .birthmonth,
+.mask .truename-pop .birthmonth,
 .mask .gender-pop .birthmonth,
-.mask .introduce-pop .birthmonth,
 .mask .date-pop .birthmonth,
-.mask .nick-pop .birthdate,
+.mask .password-pop .birthmonth,
+.mask .headicon-pop .birthdate,
+.mask .truename-pop .birthdate,
 .mask .gender-pop .birthdate,
-.mask .introduce-pop .birthdate,
-.mask .date-pop .birthdate {
+.mask .date-pop .birthdate,
+.mask .password-pop .birthdate {
   width: 2rem;
 }
-.mask .nick-pop .gender-select,
+.mask .headicon-pop .gender-select,
+.mask .truename-pop .gender-select,
 .mask .gender-pop .gender-select,
-.mask .introduce-pop .gender-select,
-.mask .date-pop .gender-select {
+.mask .date-pop .gender-select,
+.mask .password-pop .gender-select {
   width: 8rem;
   margin: 0 auto;
   display: block;
@@ -266,61 +307,78 @@ body {
   background-color: #f2f2f2;
   -webkit-appearance: none;
 }
-.mask .nick-pop .nick-notification,
-.mask .gender-pop .nick-notification,
-.mask .introduce-pop .nick-notification,
-.mask .date-pop .nick-notification,
-.mask .nick-pop .intro-notification,
-.mask .gender-pop .intro-notification,
-.mask .introduce-pop .intro-notification,
-.mask .date-pop .intro-notification {
+.mask .headicon-pop .truename-notification,
+.mask .truename-pop .truename-notification,
+.mask .gender-pop .truename-notification,
+.mask .date-pop .truename-notification,
+.mask .password-pop .truename-notification,
+.mask .headicon-pop .date-notification,
+.mask .truename-pop .date-notification,
+.mask .gender-pop .date-notification,
+.mask .date-pop .date-notification,
+.mask .password-pop .date-notification {
   text-align: right;
   font-size: .5rem;
   margin-right: 1.2rem;
   margin-top: 0.1rem;
 }
-.mask .nick-pop .nick-notification .nick-alert,
-.mask .gender-pop .nick-notification .nick-alert,
-.mask .introduce-pop .nick-notification .nick-alert,
-.mask .date-pop .nick-notification .nick-alert,
-.mask .nick-pop .intro-notification .nick-alert,
-.mask .gender-pop .intro-notification .nick-alert,
-.mask .introduce-pop .intro-notification .nick-alert,
-.mask .date-pop .intro-notification .nick-alert,
-.mask .nick-pop .nick-notification .intro-alert-note,
-.mask .gender-pop .nick-notification .intro-alert-note,
-.mask .introduce-pop .nick-notification .intro-alert-note,
-.mask .date-pop .nick-notification .intro-alert-note,
-.mask .nick-pop .intro-notification .intro-alert-note,
-.mask .gender-pop .intro-notification .intro-alert-note,
-.mask .introduce-pop .intro-notification .intro-alert-note,
-.mask .date-pop .intro-notification .intro-alert-note {
+.mask .headicon-pop .truename-notification .truename-alert,
+.mask .truename-pop .truename-notification .truename-alert,
+.mask .gender-pop .truename-notification .truename-alert,
+.mask .date-pop .truename-notification .truename-alert,
+.mask .password-pop .truename-notification .truename-alert,
+.mask .headicon-pop .date-notification .truename-alert,
+.mask .truename-pop .date-notification .truename-alert,
+.mask .gender-pop .date-notification .truename-alert,
+.mask .date-pop .date-notification .truename-alert,
+.mask .password-pop .date-notification .truename-alert,
+.mask .headicon-pop .truename-notification .date-alert-note,
+.mask .truename-pop .truename-notification .date-alert-note,
+.mask .gender-pop .truename-notification .date-alert-note,
+.mask .date-pop .truename-notification .date-alert-note,
+.mask .password-pop .truename-notification .date-alert-note,
+.mask .headicon-pop .date-notification .date-alert-note,
+.mask .truename-pop .date-notification .date-alert-note,
+.mask .gender-pop .date-notification .date-alert-note,
+.mask .date-pop .date-notification .date-alert-note,
+.mask .password-pop .date-notification .date-alert-note {
   color: #ff4965;
   margin-right: 0.3rem;
 }
-.mask .nick-pop .date-alert,
+.mask .headicon-pop .date-alert,
+.mask .truename-pop .date-alert,
 .mask .gender-pop .date-alert,
-.mask .introduce-pop .date-alert,
-.mask .date-pop .date-alert {
+.mask .date-pop .date-alert,
+.mask .password-pop .date-alert {
   color: #ff4965;
   font-size: .5rem;
   padding-left: .6rem;
   padding-top: 0.4rem;
 }
-.mask .nick-pop .introedit-content,
-.mask .gender-pop .introedit-content,
-.mask .introduce-pop .introedit-content,
-.mask .date-pop .introedit-content {
-  width: 10rem;
-  height: 3.1rem;
+.mask .headicon-pop .passwordedit,
+.mask .truename-pop .passwordedit,
+.mask .gender-pop .passwordedit,
+.mask .date-pop .passwordedit,
+.mask .password-pop .passwordedit,
+.mask .headicon-pop .repasswordedit,
+.mask .truename-pop .repasswordedit,
+.mask .gender-pop .repasswordedit,
+.mask .date-pop .repasswordedit,
+.mask .password-pop .repasswordedit {
+  width: 70%;
   margin: 0 auto;
-  display: block;
-  margin-top: .4rem;
-  -webkit-appearance: none;
+  height: 1.5rem;
+  margin-top: 0.5rem;
   border: 0;
   border: .05rem solid #e4e4e4;
+  font-size: .7rem;
+  background-color: #f2f2f2;
+  padding-left: .4rem;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #333;
   border-radius: .15rem;
-  padding: 0.2rem;
+  -webit-appearance: none;
 }
 .mask .pop-title {
   height: 2rem;
@@ -351,7 +409,7 @@ body {
   box-sizing: border-box;
   display: inline-block;
 }
-.mask .pop-confirm {
+.mask .pop-cancle {
   border-right: .05rem solid #e4e4e4;
   left: 0;
   color: #666666;

@@ -29,6 +29,8 @@ class mz_mineControl extends mobileMemberControl {
     public function getUserInfoOp() {
         $member_info = $this->member_info;
         $member_info['member_avatar'] = getMemberAvatar($this->member_info['member_avatar']);
+        $promotionGroupInfo = Model("seller_promotion_group")->getSellerPromotionGroupInfo(array('group_id'=>$this->member_info['group_id']));
+        $member_info['group_name'] = $promotionGroupInfo['group_name'];
         // $member_info['member_name'] = $this->member_info['member_name'];
         // $member_info['member_points'] = $this->member_info['member_points'];
         // $member_info['available_rc_balance'] = $this->member_info['available_rc_balance'];
@@ -205,12 +207,45 @@ class mz_mineControl extends mobileMemberControl {
         output_data(array('data'=>$order_info));
     }
     /**
+     * 修改用户信息
+     * @return [type] [description]
+     */
+    public function editUserOp(){
+        $editFields = array('member_truename','member_avatar','member_sex','member_birthday','member_passwd');
+        $data = array();
+        if (!empty($_POST)) {
+            $condition = array();
+            $condition['member_id'] = $this->member_info['member_id'];
+            if (isset($_POST['member_passwd'])) {
+                if ($this->member_info['member_passwd'] == md5($_POST['member_passwd'])) {
+                    $_POST['member_passwd'] = md5($_POST['member_repasswd']);
+                    unset($_POST['member_repasswd']);
+                }else{
+                    output_error('原密码错误');
+                }
+            }
+            foreach ($_POST as $key => $value) {
+                if (in_array($key, $editFields)) {
+                    $data[$key] = $value;
+                }
+            }
+            if (Model("member")->editMember($condition,$data)){
+                output_data("修改成功");
+            }else{
+                output_error("系统错误");
+            }
+        }else{
+            output_error("非法操作");
+        }
+    }
+    /**
      * 调试
      * @param  [type]  $arr  [description]
      * @param  boolean $stop [description]
      * @return [type]        [description]
      */
     private function debuger($arr,$stop = true){
+        header("Access-Control-Allow-Origin:*");
         echo "<pre>";
         print_r($arr);
         if ($stop) {
