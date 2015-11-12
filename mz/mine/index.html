@@ -144,7 +144,7 @@
             </script>
             <ul class="my-list other-list">
                 <li class="address">
-                    <a href="/mine/address-manage.html" class="div-line">
+                    <a href="javascript:open_url('address')" class="div-line">
                          收货地址
                         <span class="next-page"></span>
                     </a>
@@ -193,7 +193,7 @@
         // 显示用户基本信息
         getAjaxResult(getUrl('mz_mine','getUserInfo'),'tpl-personal',".my-info",'tpl-login');
         // 显示订单概况
-        getAjaxResult(getUrl('mz_mine','getSimpleOrderInfo'),'tpl-sum-orderinfo','#sum-orderinfo','tpl-sum-orderinfo-logout');
+        getAjaxResult(getUrl('mz_member_order','getSimpleOrderInfo'),'tpl-sum-orderinfo','#sum-orderinfo','tpl-sum-orderinfo-logout');
         // 我的钱包
         getAjaxResult(getUrl('mz_mine','getUserInfo'),'tpl-sum-mywallet',"#sum-mywallet",'tpl-sum-mywallet-logout');
     </script>

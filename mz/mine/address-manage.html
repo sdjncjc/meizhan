@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
+<meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="email=no" name="format-detection" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<title>地址管理</title>
+<link href="/css/address.css" rel="stylesheet" media="all" />
+</head>
+
+<body class="J_wrapper">
+    <script type="text/template" id="addresslist-template">
+        {{each data as address}}
+        <div class="address-item{{if address.is_default == 1}} default{{/if}}" data-address="{{address.json_data}}">
+            <div class="receive-info">
+                <span class="receive-name">{{address.true_name}}</span>
+                <span class="receive-phonenumber">{{address.mob_phone}}</span>
+                <a class="edit" href="javascript:;"></a>
+            </div>
+            <div class="address-info">
+                <span>{{address.area_info}}{{address.address}}</span>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
+    <section id="J_list-address-page" class="list-address-page">
+        <section class="navbar hidden J_navbar">
+            <a class="back-btn" href="javascript:history.back();"></a>
+            <h1 class="title">地址管理</h1>
+            <a class="home-btn" href="/"></a>
+        </section>
+
+        <section class="wrapper J_wrapper" id="wrapper">
+            <div class="address-add">
+                <label>新增地址</label>
+                <i class="icon right-arrow"></i>
+            </div>
+            <section class="addresslist"></section>
+        </section>
+    </section>
+
+    <section class="edit-address-page">
+        <section class="navbar hidden J_navbar">
+            <a class="back-btn J_backBtn"></a>
+            <h1 class="title brand-title">修改地址</h1>
+        </section>
+
+        <section class="wrapper grid-wrap">
+            <div class="grid">
+                <div class="item receiver row-1">
+                    <label class="col-3">收货人</label>
+                    <input class="col-8" type="text" value="" placeholder="请输入收货人" />
+                </div>
+                <div class="item phonenumber row-1">
+                    <label class="col-3">手机号码</label>
+                    <input class="col-8" type="text" value="" placeholder="请输入手机号码" />
+                </div>
+                <div class="item address row-3">
+                    <label class="col-3">省市地址</label>
+                    <select class="provinces"></select>
+                    <label>省</label>
+                    <select class="cities"></select>
+                    <label>市</label>
+                    <select class="counties"></select>
+                    <label>区/县</label>
+                </div>
+                <div class="item address-detail row-1">
+                    <label class="col-3">详细地址</label>
+                    <input class="col-8" type="text" value="" placeholder="请输入详细地址" />
+                </div>
+                <div class="item select-default-address row-1">
+                    <label class="col-3">默认地址</label>
+                    <input class="col-8" type="checkbox" value="" />
+                </div>
+            </div>
+
+            <div class="address-update">
+                <span>确认修改</span>
+            </div>
+
+            <div class="address-del">
+                <span>删除地址</span>
+            </div>
+        </section>
+    </section>
+
+    <section id="J_add-address-page" class="add-address-page">
+        <section class="navbar hidden J_navbar">
+            <a class="back-btn J_backBtn"></a>
+            <h1 class="title brand-title">新增地址</h1>
+        </section>
+
+        <section class="wrapper grid-wrap">
+            <div class="grid">
+                <div class="item receiver row-1">
+                    <label class="col-3">收货人</label>
+                    <input class="col-8" type="text" name="" value="" placeholder="请输入收货人" />
+                </div>
+                <div class="item phonenumber row-1">
+                    <label class="col-3">手机号码</label>
+                    <input class="col-8" type="text" name="" value="" placeholder="请输入手机号码" />
+                </div>
+                <div class="item address row-3">
+                    <label class="col-3">省市地址</label>
+                    <select class="provinces">
+
+                    </select>
+                    <label>省</label>
+                    <select class="cities">
+
+                    </select>
+                    <label>市</label>
+                    <select class="counties">
+
+                        <br />
+
+                    </select>
+                    <label>区/县</label>
+                </div>
+                <div class="item address-detail row-1">
+                    <label class="col-3">详细地址</label>
+                    <input class="col-8" type="text" name="" value="" placeholder="请输入详细地址" />
+                </div>
+                <div class="item select-default-address row-1">
+                    <label class="col-3">默认地址</label>
+                    <input class="col-8" type="checkbox" name="" value="" />
+                </div>
+                <div class="item postcode row-1">
+                    <label class="col-3">邮政编码</label>
+                    <input class="col-8" type="text" name="" value="" placeholder="请输入邮政编码( 可选 )" />
+                </div>
+            </div>
+
+            <div class="address-new">
+                <span>完成</span>
+            </div>
+        </section>
+    </section>
+
+    <script type="text/javascript" src="/js/zepto.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/mine.js"></script>
+    <script type="text/javascript" src="/js/address.js"></script>
+</body>
+
+</html>

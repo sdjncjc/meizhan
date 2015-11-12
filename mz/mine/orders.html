@@ -126,7 +126,7 @@
         $(".navbar .title").html(title);
         function ajax_getOrder(){        
             if(stop)return;
-            var url = getUrl('mz_mine','getOrders',"type="+status+"&page=" + page++);
+            var url = getUrl('mz_member_order','getOrders',"type="+status+"&page=" + page++);
             getAjaxResult(url,'order-list-template',".orders",'order-empty-template');
         }
         // 全部订单
@@ -149,7 +149,7 @@
     });
     function delOrder(id){
          if(window.confirm("确定要删除此订单吗？")){
-            var url = getUrl('mz_mine','recycleOrder','order_id='+id);
+            var url = getUrl('mz_member_order','recycleOrder','order_id='+id);
             ajax_do(url);
          }
     }
@@ -166,7 +166,7 @@
    $(".order-refund-reason .btn-ok").tap(function() {
         if (d){
             if (window.confirm("确定要取消订单吗？")) {
-                var url = getUrl('mz_mine','cancelOrder','order_id='+id + '&reason=' + d);
+                var url = getUrl('mz_member_order','cancelOrder','order_id='+id + '&reason=' + d);
                 ajax_do(url);
             };
         }else{

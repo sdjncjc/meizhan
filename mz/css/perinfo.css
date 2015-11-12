@@ -189,6 +189,7 @@ body {
 .mask .truename-pop,
 .mask .gender-pop,
 .mask .date-pop,
+.mask .promotion_group-pop,
 .mask .password-pop {
   background-color: #fff;
   -webkit-border-radius: .2rem;
@@ -205,6 +206,7 @@ body {
 .mask .truename-pop .headiconedit,
 .mask .gender-pop .headiconedit,
 .mask .date-pop .headiconedit,
+.mask .promotion_group-pop .headiconedit,
 .mask .password-pop .headiconedit {
   width: 80%;
   margin: 0 auto;
@@ -225,6 +227,7 @@ body {
 .mask .truename-pop .truenameedit,
 .mask .gender-pop .truenameedit,
 .mask .date-pop .truenameedit,
+.mask .promotion_group-pop .truenameedit,
 .mask .password-pop .truenameedit {
   width: 80%;
   margin: 0 auto;
@@ -246,6 +249,7 @@ body {
 .mask .truename-pop .gender-row,
 .mask .gender-pop .gender-row,
 .mask .date-pop .gender-row,
+.mask .promotion_group-pop .gender-row,
 .mask .password-pop .gender-row {
   position: relative;
   font-size: .8rem;
@@ -258,6 +262,7 @@ body {
 .mask .truename-pop .gender,
 .mask .gender-pop .gender,
 .mask .date-pop .gender,
+.mask .promotion_group-pop .gender,
 .mask .password-pop .gender {
   position: absolute;
   right: 2rem;
@@ -271,6 +276,7 @@ body {
 .mask .truename-pop .birthday,
 .mask .gender-pop .birthday,
 .mask .date-pop .birthday,
+.mask .promotion_group-pop .birthday,
 .mask .password-pop .birthday {
   width: 2.5rem;
   height: 1.5rem;
@@ -286,11 +292,13 @@ body {
 .mask .truename-pop .birthmonth,
 .mask .gender-pop .birthmonth,
 .mask .date-pop .birthmonth,
+.mask .promotion_group-pop .birthmonth,
 .mask .password-pop .birthmonth,
 .mask .headicon-pop .birthdate,
 .mask .truename-pop .birthdate,
 .mask .gender-pop .birthdate,
 .mask .date-pop .birthdate,
+.mask .promotion_group-pop .birthdate,
 .mask .password-pop .birthdate {
   width: 2rem;
 }
@@ -298,6 +306,7 @@ body {
 .mask .truename-pop .gender-select,
 .mask .gender-pop .gender-select,
 .mask .date-pop .gender-select,
+.mask .promotion_group-pop .gender-select,
 .mask .password-pop .gender-select {
   width: 8rem;
   margin: 0 auto;
@@ -314,16 +323,19 @@ body {
 .mask .truename-pop .headicon-notification,
 .mask .gender-pop .headicon-notification,
 .mask .date-pop .headicon-notification,
+.mask .promotion_group-pop .headicon-notification,
 .mask .password-pop .headicon-notification,
 .mask .headicon-pop .truename-notification,
 .mask .truename-pop .truename-notification,
 .mask .gender-pop .truename-notification,
 .mask .date-pop .truename-notification,
+.mask .promotion_group-pop .truename-notification,
 .mask .password-pop .truename-notification,
 .mask .headicon-pop .date-notification,
 .mask .truename-pop .date-notification,
 .mask .gender-pop .date-notification,
 .mask .date-pop .date-notification,
+.mask .promotion_group-pop .date-notification,
 .mask .password-pop .date-notification {
   text-align: right;
   font-size: .5rem;
@@ -334,54 +346,81 @@ body {
 .mask .truename-pop .headicon-notification .headicon-alert,
 .mask .gender-pop .headicon-notification .headicon-alert,
 .mask .date-pop .headicon-notification .headicon-alert,
+.mask .promotion_group-pop .headicon-notification .headicon-alert,
 .mask .password-pop .headicon-notification .headicon-alert,
 .mask .headicon-pop .truename-notification .headicon-alert,
 .mask .truename-pop .truename-notification .headicon-alert,
 .mask .gender-pop .truename-notification .headicon-alert,
 .mask .date-pop .truename-notification .headicon-alert,
+.mask .promotion_group-pop .truename-notification .headicon-alert,
 .mask .password-pop .truename-notification .headicon-alert,
 .mask .headicon-pop .date-notification .headicon-alert,
 .mask .truename-pop .date-notification .headicon-alert,
 .mask .gender-pop .date-notification .headicon-alert,
 .mask .date-pop .date-notification .headicon-alert,
+.mask .promotion_group-pop .date-notification .headicon-alert,
 .mask .password-pop .date-notification .headicon-alert,
 .mask .headicon-pop .headicon-notification .truename-alert,
 .mask .truename-pop .headicon-notification .truename-alert,
 .mask .gender-pop .headicon-notification .truename-alert,
 .mask .date-pop .headicon-notification .truename-alert,
+.mask .promotion_group-pop .headicon-notification .truename-alert,
 .mask .password-pop .headicon-notification .truename-alert,
 .mask .headicon-pop .truename-notification .truename-alert,
 .mask .truename-pop .truename-notification .truename-alert,
 .mask .gender-pop .truename-notification .truename-alert,
 .mask .date-pop .truename-notification .truename-alert,
+.mask .promotion_group-pop .truename-notification .truename-alert,
 .mask .password-pop .truename-notification .truename-alert,
 .mask .headicon-pop .date-notification .truename-alert,
 .mask .truename-pop .date-notification .truename-alert,
 .mask .gender-pop .date-notification .truename-alert,
 .mask .date-pop .date-notification .truename-alert,
+.mask .promotion_group-pop .date-notification .truename-alert,
 .mask .password-pop .date-notification .truename-alert,
 .mask .headicon-pop .headicon-notification .date-alert-note,
 .mask .truename-pop .headicon-notification .date-alert-note,
 .mask .gender-pop .headicon-notification .date-alert-note,
 .mask .date-pop .headicon-notification .date-alert-note,
+.mask .promotion_group-pop .headicon-notification .date-alert-note,
 .mask .password-pop .headicon-notification .date-alert-note,
 .mask .headicon-pop .truename-notification .date-alert-note,
 .mask .truename-pop .truename-notification .date-alert-note,
 .mask .gender-pop .truename-notification .date-alert-note,
 .mask .date-pop .truename-notification .date-alert-note,
+.mask .promotion_group-pop .truename-notification .date-alert-note,
 .mask .password-pop .truename-notification .date-alert-note,
 .mask .headicon-pop .date-notification .date-alert-note,
 .mask .truename-pop .date-notification .date-alert-note,
 .mask .gender-pop .date-notification .date-alert-note,
 .mask .date-pop .date-notification .date-alert-note,
+.mask .promotion_group-pop .date-notification .date-alert-note,
 .mask .password-pop .date-notification .date-alert-note {
   color: #ff4965;
   margin-right: 0.3rem;
+}
+.mask .headicon-pop .promotion_group-notification,
+.mask .truename-pop .promotion_group-notification,
+.mask .gender-pop .promotion_group-notification,
+.mask .date-pop .promotion_group-notification,
+.mask .promotion_group-pop .promotion_group-notification,
+.mask .password-pop .promotion_group-notification {
+  font-size: 0.8rem;
+  margin: 0.5rem 0.7rem;
+}
+.mask .headicon-pop .promotion_group-notification .promotion_group-notion,
+.mask .truename-pop .promotion_group-notification .promotion_group-notion,
+.mask .gender-pop .promotion_group-notification .promotion_group-notion,
+.mask .date-pop .promotion_group-notification .promotion_group-notion,
+.mask .promotion_group-pop .promotion_group-notification .promotion_group-notion,
+.mask .password-pop .promotion_group-notification .promotion_group-notion {
+  line-height: 1.2rem;
 }
 .mask .headicon-pop .date-alert,
 .mask .truename-pop .date-alert,
 .mask .gender-pop .date-alert,
 .mask .date-pop .date-alert,
+.mask .promotion_group-pop .date-alert,
 .mask .password-pop .date-alert {
   color: #ff4965;
   font-size: .5rem;
@@ -392,11 +431,13 @@ body {
 .mask .truename-pop .passwordedit,
 .mask .gender-pop .passwordedit,
 .mask .date-pop .passwordedit,
+.mask .promotion_group-pop .passwordedit,
 .mask .password-pop .passwordedit,
 .mask .headicon-pop .repasswordedit,
 .mask .truename-pop .repasswordedit,
 .mask .gender-pop .repasswordedit,
 .mask .date-pop .repasswordedit,
+.mask .promotion_group-pop .repasswordedit,
 .mask .password-pop .repasswordedit {
   width: 70%;
   margin: 0 auto;

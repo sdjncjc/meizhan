@@ -8,7 +8,7 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
         type: 'post',
         dataType: 'json',
         success: function(result) {
-        	console.log(result);
+        	// console.log(result);
         	if(result.code == 200 && (result.datas.data != undefined && result.datas.data != '')){
         		if (tpl != "" && tpl != undefined) {
 		        	html = template(tpl, result.datas);
@@ -94,6 +94,9 @@ function open_url(type,sub,id){
 				if (sub == 'detial') {
 					url = "/detail/detail.html?id="+id;
 				};
+			case 'address':
+				url = "/mine/address-manage.html";
+				break;
 		}
 	}else{
 		switch(type){

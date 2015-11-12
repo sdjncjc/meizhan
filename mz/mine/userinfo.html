@@ -130,6 +130,16 @@
                 <div class="pop-confirm" data-type="date">保存</div>
             </div>
         </div>
+        <div class="promotion_group-pop popout">
+            <h2 class="pop-title">确认删除</h2>
+            <p class="promotion_group-notification">
+                <label class="promotion_group-notion">确定要取消该专属客服吗？<br/>下次购买时还可以重新设置</label>
+            </p>
+            <div class="pop-sure">
+                <div class="pop-cancle">取消</div>
+                <div class="pop-confirm" data-type="promotion_group">确定</div>
+            </div>
+        </div>
         <div class="password-pop popout">
             <h2 class="pop-title">修改密码</h2>
             &nbsp;原密码：<input type="password" class="passwordedit"/><br/>
@@ -144,7 +154,7 @@
 <script type="text/javascript" src="/js/zepto.min.js"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript" src="/js/mine.js"></script>
-<script src="/js/CJL.0.1.min.js"></script>
+<script type="text/javascript" src="/js/CJL.0.1.min.js"></script>
 <script type="text/javascript" src="/js/upload.js"></script>
 <script type="text/javascript">
     // 显示用户基本信息
@@ -191,6 +201,12 @@
             d.find(".birthdate").val("");
         }
     });
+    $(".promotion_group").tap(function(){
+        if ($(".promotion_group-inner").find(".answer").text() != "") {
+            showMask();
+            $(".promotion_group-pop").removeClass("hidden");
+        }
+    })
     $(".password").tap(function(){
         showMask();
         $(".password-pop").removeClass("hidden");
@@ -229,6 +245,9 @@
                     return void $(".date-alert-note").removeClass("hidden");
                 }
                 ajax_do(getUrl('mz_mine','editUser'),{member_birthday:d});
+                break;
+            case "promotion_group":
+                ajax_do(getUrl('mz_mine','editUser'),{group_id:0});
                 break;
             case "password":
                 params = {member_passwd:$(".password-pop").find(".passwordedit").val(),member_repasswd:$(".password-pop").find(".repasswordedit").val()};
