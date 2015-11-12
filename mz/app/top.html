@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8" />
-    <meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
-    <meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="telephone=no" name="format-detection" />
-    <meta content="email=no" name="format-detection" />
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <title>TOP排行榜 - 亲亲美站</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
-    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
-	<link rel="stylesheet" href="/css/common.css" />
-	<link rel="stylesheet" href="/css/top.css" />
-</head>
-<body>
+<!--#include file="/tpl/head.html"-->
+<!--#include file="/tpl/navbar.html"-->
     <section class="wrapper">
         <header class="banner">
             <img src="/img/top_banner.jpg">
@@ -30,7 +15,7 @@
     </div>
     <script id="class-template" type="text/template">
 		<div class="grid">
- 	       {{each top_class as value index}}
+ 	       {{each gc_id_1_list as value index}}
 			<a class="col-4" href="/app/top_filter.html?cate={{value.gc_id}}">
 				<i class="cate-{{value.gc_id}}"></i>
 				<span>{{value.gc_name}}榜</span>
@@ -38,38 +23,8 @@
 			{{/each}}
 		</div>
     </script>
-    <script id="item-list-template" type="text/template">
-        {{each goods_list as value index}}
-        <li class="col-6 row-9 item mart-item">
-            <a href="/detail/detail.html?id={{value.goods_id}}">
-                <div class="row-6 item-img">
-					<img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}" alt="{{value.goods_name}}" >
-                    {{if value.goods_storage <= 0}}
-                    <i class="sold-out"></i>
-                    {{/if}}
-                </div>
-                <div class="row-2 item-info">
-                    <div class="title util-ellipsis">{{value.goods_name}}</div>
-                    <div class="item-detail">
-                        <div class="price-no-float">
-                            <span class="price-discount">
-                                <span>¥</span>
-                                <b>{{value.goods_price}}</b>
-                            </span>
-                            <span class="price-original">
-                                <span>¥</span>
-                                <b>{{value.goods_marketprice}}</b>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row-1 eventGo util-ellipsis">{{value.brand_name}}专场</div>
-            </a>
-        </li>
-        {{/each}}
-    </script>
-    <script type="text/javascript" src="/js/zepto.min.js"></script>
-    <script type="text/javascript" src="/js/common.js"></script>
+	<!--#include file="/tpl/goods_list.html"-->
+	<link rel="stylesheet" href="/css/top.css" />
     <script type="text/javascript" src="/js/top.js"></script>
 </body>
 </html>

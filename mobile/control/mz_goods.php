@@ -161,7 +161,7 @@ class mz_goodsControl extends mobileHomeControl{
         }
 
         //特卖
-        $goods_detail['brandsale'] = Model('brandsale')->field('rec_id, brand_name, start_time, end_time, area_id, brand_pic, info, is_oversea')->where(array('is_open'=>1,'brand_id'=>$goods_detail['goods_info']['brand_id'],'gc_id'=>$goods_detail['goods_info']['gc_id_1']))->find();
+        $goods_detail['brandsale'] = Model('brandsale')->field('rec_id, brand_name, start_time, end_time, brand_pic, info, is_oversea')->where(array('is_open'=>1,'brand_id'=>$goods_detail['goods_info']['brand_id'],'gc_id'=>$goods_detail['goods_info']['gc_id_1']))->find();
 		if($goods_detail['brandsale']['start_time']<=TIMESTAMP && $goods_detail['brandsale']['end_time']>TIMESTAMP){
 			$goods_detail['goods_info']['remaining_time'] = $goods_detail['brandsale']['end_time']-TIMESTAMP;
 		}
@@ -172,17 +172,13 @@ class mz_goodsControl extends mobileHomeControl{
 		}
 		
         //国家
-		$area_id = $goods_detail['brandsale']['area_id'];
-		if(!$area_id && $goods_detail['goods_info']['goods_type'])$area_id=32;
-        $brandsale_area = Model('brandsale_area')->field('area_name, area_img')->where(array('area_id'=>$area_id))->find();
-		if($brandsale_area){
-			$goods_detail['goods_info']['area_name'] = $brandsale_area['area_name'];
-			$goods_detail['goods_info']['area_img_url'] = UPLOAD_SITE_URL."/shop/oversea/".$brandsale_area['area_img'];
-			//发货地区
-			if($goods_detail['goods_info']['areaid_2']){
-				$area = Model('area')->field('area_name')->where(array('area_id'=>$goods_detail['goods_info']['areaid_2']))->find();
-				$goods_detail['goods_info']['send_area_name'] = $area['area_name'];
-			}
+        $country_list = rkcache('country');
+        $goods_detail['country'] = $country_list[$goods_detail['goods_info']['country_id']];
+
+		//发货地区
+		if($goods_detail['goods_info']['country_id'] > 0 && $goods_detail['goods_info']['areaid_2']){
+			$area = Model('area')->field('area_name')->where(array('area_id'=>$goods_detail['goods_info']['areaid_2']))->find();
+			$goods_detail['goods_info']['send_area_name'] = $area['area_name'];
 		}
 		
         //折扣

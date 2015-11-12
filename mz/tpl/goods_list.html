@@ -1,0 +1,30 @@
+<script id="item-list-template" type="text/template">
+	{{each goods_list as value index}}
+	<li class="col-6 row-8 item">
+		<a href="/detail/detail.html?id={{value.goods_id}}">
+			<div class="row-6 item-img">
+				<img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}" alt="{{value.goods_name}}" >
+				{{if value.goods_storage <= 0}}
+				<i class="sold-out"></i>
+				{{/if}}
+			</div>
+			<div class="row-2 item-info">
+				<div class="title util-ellipsis">{{value.goods_name}}</div>
+				<div class="item-detail">
+					<div class="price">
+						<span class="price-discount">
+							<span>¥</span>
+							<b>{{value.goods_promotion_price*1}}</b>
+						</span>
+						<span class="price-original">
+							<span>¥</span>
+							<b>{{value.goods_marketprice*1}}</b>
+						</span>
+					</div>
+					<div class="discount">{{value.discount}}折</div>
+				</div>
+			</div>
+		</a>
+	</li>
+	{{/each}}
+</script>

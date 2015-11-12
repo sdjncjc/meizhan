@@ -1,48 +1,18 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8" />
-    <meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
-    <meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="telephone=no" name="format-detection" />
-    <meta content="email=no" name="format-detection" />
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <title>亲亲美站</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
-    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
-	<link rel="stylesheet" href="/css/common.css" />
-	<link rel="stylesheet" href="/css/index.css" />
-</head>
-<body>
-    <section class="header">
-        <section class="navbar">
-            <a class="myaccount" href="/mine/index.html"></a>
-            <h1 class="title">亲亲美站</h1>
-            <a class="search-btn" href="/category/search.html"></a>
-        </section>
+<!--#include file="/tpl/head.html"-->
+    <section class="navbar">
+        <a class="myaccount" href="/mine/index.html"></a>
+        <h1 class="title">亲亲美站</h1>
+        <a class="search-btn" href="/category/search.html"></a>
     </section>
     <section class="wrapper">
         <section class="filterbar"></section>
         <section class="slider"></section>
         <section class="catebox">
 			<div class="grid">
-				<a class="col-3" href="/tuan/group_list.html" title="限量购">
-					<i class="cate" style="background-image:url(/img/index_group.png)"></i>
-					限量购
-				</a>
-				<a class="col-3" href="/app/top.html" title="TOP排行">
-					<i class="cate" style="background-image:url(/img/index_top.png)"></i>
-					TOP排行   
-				</a>                   
-				<a class="col-3" href="/oversea/oversea_index.html" title="海外购">
-					<i class="cate" style="background-image:url(/img/index_oversea.png)"></i>
-					海外购     
-				</a>                 
-				<a class="col-3" href="/category/category_index.html" title="更多分类">
-					<i class="cate" style="background-image:url(/img/index_category.png)"></i>
-					更多分类   
-				</a>     
+				<a class="col-3" href="/tuan/group_list.html"><i></i>限量购</a>
+				<a class="col-3" href="/app/top.html"><i></i>TOP排行</a>                   
+				<a class="col-3" href="/oversea/oversea_index.html"><i></i>海外购</a>                 
+				<a class="col-3" href="/category/category_index.html"><i></i>更多分类</a>     
 			</div>
 		</section>
         <section class="grid-thin ad"></section>
@@ -57,7 +27,6 @@
     <div class="toolbar">
         <a href="/trade/cart.html"></a>
     </div>
-
     <script id="slider-template" type="text/template">
         <img src="{{pic}}" />
     </script>
@@ -70,7 +39,7 @@
             <div class="filterbar-dropdown-item" data-category="lastminute">
                 <div class="filterbar-dropdown-item-inner">最后疯抢</div>
             </div>
-            {{each brandsale_class as value index}}
+            {{each gc_id_1_list as value index}}
             <div class="filterbar-dropdown-item" data-category="{{value.gc_id}}">
                 <div class="filterbar-dropdown-item-inner">{{value.gc_name}}</div>
             </div>
@@ -84,7 +53,7 @@
                 <div class="filterbar-inner">
                     <div class="filterbar-inner-item active" data-category="index">上新</div>
                     <div class="filterbar-inner-item" data-category="lastminute">最后疯抢</div>
-                    {{each brandsale_class as value index}}
+                    {{each gc_id_1_list as value index}}
                     <div class="filterbar-inner-item" data-category="{{value.gc_id}}">{{value.gc_name}}</div>
                     {{/each}}
                 </div>
@@ -150,7 +119,7 @@
         {{/each}}
     </script>
     <script id="goods-list-template" type="text/template">
-		{{each goods_list as value index}}
+		{{each recommend_goods_list as value index}}
 		<header><i></i>
 			<span>{{value.gc_name}}推荐</span>
 		</header>
@@ -170,11 +139,11 @@
 							<div class="price">
 								<span class="price-discount">
 									<span>¥</span>
-									<b>{{val.goods_price}}</b>
+									<b>{{val.goods_promotion_price*1}}</b>
 								</span>
 								<span class="price-original">
 									<span>¥</span>
-									<b>{{val.goods_marketprice}}</b>
+									<b>{{val.goods_marketprice*1}}</b>
 								</span>
 							</div>
 							<div class="discount">{{val.discount}}折</div>
@@ -186,8 +155,7 @@
 		</ul>
 		{{/each}}
     </script>
-    <script type="text/javascript" src="/js/zepto.min.js"></script>
-    <script type="text/javascript" src="/js/common.js"></script>
+	<link rel="stylesheet" href="/css/index.css" />
     <script type="text/javascript" src="/js/index.js"></script>
 </body>
 </html>

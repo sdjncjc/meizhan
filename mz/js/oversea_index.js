@@ -4,9 +4,20 @@ $(function(){
 	var page = 1;
 	var clock = 0;
 	
+	//获取团购
+    $.ajax({
+        url: ApiUrl + "/index.php?act=mz_oversea&op=get_group&type=3",
+        type: 'get',
+        dataType: 'json',
+        success: function(result) {
+			var html = template('oversea-promotion-tpl', result.datas);
+			$('.trendy').html(html);
+        }
+    });
+	
 	//获取商品分类
     $.ajax({
-        url: ApiUrl + "/index.php?act=mz_oversea&op=get_class",
+        url: ApiUrl + "/index.php?act=mz_index&op=get_gc_id_1_list",
         type: 'get',
         dataType: 'json',
         success: function(result) {

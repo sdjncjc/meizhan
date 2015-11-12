@@ -1,26 +1,5 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8" />
-    <meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
-    <meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="telephone=no" name="format-detection" />
-    <meta content="email=no" name="format-detection" />
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <title>商品详情 - 亲亲美站</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
-    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
-	<link rel="stylesheet" href="/css/common.css" />
-	<link rel="stylesheet" href="/css/detail.css" />
-</head>
-<body>
-	<section class="navbar">
-		<a class="back-btn" href="javascript:history.back();"></a>
-		<h1 class="title">商品详情</h1>
-		<a class="home-btn" href="/"></a>
-	</section>
-
+<!--#include file="/tpl/head.html"-->
+<!--#include file="/tpl/navbar.html"-->
 	<!-- 内容盒子 -->
 	<section class="wrapper">
 		<section id="slider" class="swipe">
@@ -43,9 +22,9 @@
 				<section class="base-info">
 					<div class="left-desc">
 						<div class="desc-title">
-							{{if goods_info.area_name}}
-							<img src="{{goods_info.area_img_url}}" class="oversea-country"/>
-							<span class="oversea-country-name">{{goods_info.area_name}}</span>
+							{{if goods_info.country_id > 0}}
+							<img src="{{country.country_img_url}}" class="oversea-country"/>
+							<span class="oversea-country-name">{{country.country_name}}</span>
 							{{else if goods_info.promotion_type == 'groupbuy'}}
 							<span>限量特卖</span>
 							{{else}}
@@ -64,7 +43,7 @@
 						<div class="col">收藏</div>
 					</div>
 				</section>
-				{{if goods_info.area_name}}
+				{{if goods_info.country_id > 0}}
 				<section class="oversea-base-price">
 					<div class="oversea-price-wrap">
 						<span class="oversea-now-price">
@@ -433,9 +412,11 @@
 		<a class="cart-add" href="javascript:void(0);">加入购物车</a>
 		<a class="cart-price"></a>
 	</section>
-    <script type="text/javascript" src="/js/zepto.min.js"></script>
-    <script type="text/javascript" src="/js/common.js"></script>
+	<link rel="stylesheet" href="/css/detail.css" />
     <script type="text/javascript" src="/js/swipe.js"></script>
     <script type="text/javascript" src="/js/detail.js"></script>
+    <script>
+    	title = '商品详情';
+    </script>
 </body>
 </html>

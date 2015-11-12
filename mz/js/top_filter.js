@@ -7,7 +7,7 @@ $(function(){
 	
 	//获取商品分类
     $.ajax({
-        url: ApiUrl + "/index.php?act=mz_top&op=get_class",
+        url: ApiUrl + "/index.php?act=mz_index&op=get_gc_id_1_list",
         type: 'get',
         dataType: 'json',
         success: function(result) {
@@ -18,6 +18,7 @@ $(function(){
 			$('.filter').each(function(){
 				if($(this).attr('data') == cate){
 					$(this).addClass('active');
+					$('.title').html($(this).html());
 				}else{
 					$(this).removeClass('active');
 				}
@@ -31,6 +32,10 @@ $(function(){
 	function ajax_top(){
 		if(clock)return;
 		clock = 1;
+		if(page > 5){
+			$('.loading').hide();
+			return;	
+		}
 		$.ajax({
 			url: ApiUrl + '/index.php?act=mz_top&op=get_list&cate='+cate+'&page='+page,
 			type: 'get',

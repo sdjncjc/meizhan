@@ -1,27 +1,5 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8" />
-    <meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
-    <meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="telephone=no" name="format-detection" />
-    <meta content="email=no" name="format-detection" />
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <title>品牌特卖 - 亲亲美站</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
-    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
-	<link rel="stylesheet" href="/css/common.css" />
-	<link rel="stylesheet" href="/css/brandsale_list.css" />
-</head>
-<body>
-    <section class="header">
-        <section class="navbar">
-			<a class="back-btn" href="javascript:history.back();"></a>
-            <h1 class="title"></h1>
-            <a class="home-btn" href="/"></a>
-        </section>
-    </section>
+<!--#include file="/tpl/head.html"-->
+<!--#include file="/tpl/navbar.html"-->
     <section class="wrapper">
         <section class="filterbar"></section>
         <section class="itemlist-brand"></section>
@@ -42,7 +20,7 @@
             <div class="filterbar-dropdown-item" data-category="lastminute">
                 <div class="filterbar-dropdown-item-inner">最后疯抢</div>
             </div>
-            {{each brandsale_class as value index}}
+            {{each gc_id_1_list as value index}}
             <div class="filterbar-dropdown-item" data-category="{{value.gc_id}}">
                 <div class="filterbar-dropdown-item-inner">{{value.gc_name}}</div>
             </div>
@@ -56,7 +34,7 @@
                 <div class="filterbar-inner">
                     <div class="filterbar-inner-item active" data-category="index">上新</div>
                     <div class="filterbar-inner-item" data-category="lastminute">最后疯抢</div>
-                    {{each brandsale_class as value index}}
+                    {{each gc_id_1_list as value index}}
                     <div class="filterbar-inner-item" data-category="{{value.gc_id}}">{{value.gc_name}}</div>
                     {{/each}}
                 </div>
@@ -112,8 +90,7 @@
             <a class="button" href='/'>逛逛今日特卖</a>
         </div>
     </script>
-    <script type="text/javascript" src="/js/zepto.min.js"></script>
-    <script type="text/javascript" src="/js/common.js"></script>
+	<link rel="stylesheet" href="/css/brandsale.css" />
     <script type="text/javascript" src="/js/brandsale_list.js"></script>
 </body>
 </html>
