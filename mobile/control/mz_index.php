@@ -19,10 +19,6 @@ class mz_indexControl extends mobileHomeControl{
         parent::__construct();
     }
 
-    public function indexOp() {
-        exit();
-    }
-
     /**
      * 获取头图
      */
@@ -50,27 +46,33 @@ class mz_indexControl extends mobileHomeControl{
     /**
      * 获取推荐商品列表
      */
-    public function get_goods_listOp() {
-		$class = Model('goods_class')->field('gc_id,gc_name')->where(array('gc_parent_id'=>0))->order('gc_sort asc')->select();
-		if($class){
+    public function get_recommend_goods_listOp() {
+		$recommend_goods_list = Model('goods_class')->getGoodsClassListByParentId(0);
+		if($recommend_goods_list){
 			$model_goods = Model('goods');
-			foreach($class as $k=>$v){
-				$list = $model_goods->getGeneralGoodsOnlineList(array('gc_id_1'=>$v['gc_id']), 'goods_id,goods_name,goods_price,goods_storage,goods_marketprice,goods_image', 6, 'goods_salenum desc');
-				if($list){
-					foreach($list as $kk=>$vv){
-						$list[$kk]['img_url'] = thumb($vv, 360);
-						$list[$kk]['goods_price'] *= 1;
-						$list[$kk]['goods_marketprice'] *= 1;
-						$list[$kk]['discount'] = sprintf('%0.1f', $vv['goods_price']/$vv['goods_marketprice']*10);
+			foreach($recommend_goods_list as $k=>$v){
+				$goods_list = $model_goods->getGeneralGoodsOnlineList(array('gc_id_1'=>$v['gc_id']), 'goods_id,goods_name,goods_promotion_price,goods_storage,goods_marketprice,goods_image', 6, 'goods_salenum desc');
+				if($goods_list){
+					foreach($goods_list as $kk=>$vv){
+						$goods_list[$kk]['img_url'] = thumb($vv, 360);
+						$goods_list[$kk]['discount'] = sprintf('%0.1f', $vv['goods_promotion_price']/$vv['goods_marketprice']*10);
 					}
-					$class[$k]['list'] = $list;
+					$recommend_goods_list[$k]['list'] = $goods_list;
 				}else{
-					unset($class[$k]);
+					unset($recommend_goods_list[$k]);
 				}
 			}
 		}
 
-        output_data(array('goods_list' => $class));
+        output_data(array('recommend_goods_list' => $recommend_goods_list));
     }
 
+
+    /**
+     * 获取一级商品分类
+     */
+    public function get_gc_id_1_listOp() {
+		$gc_id_1_list = Model('goods_class')->getGoodsClassListByParentId(0);
+        output_data(array('gc_id_1_list' => $gc_id_1_list));
+    }
 }

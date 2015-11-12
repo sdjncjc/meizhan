@@ -58,7 +58,6 @@ body{padding-top:2rem}
 .broadcast .img-cnt{display:block;width:100%;margin-bottom:.384rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}
 .broadcast .img-cnt:last-child{margin-bottom:0}
 .broadcast .img-cnt img{display:block;width:100%;height:100%;height:auto}
-.loading{font-size:.6rem;line-height:1.2rem;text-align:center;color:#999}
 .last-page-hint{text-align:center}
 .last-page-hint .hint{margin:.65rem 0 .975rem;text-align:center;color:#999}
 .last-page-hint .hint span{text-decoration:line-through}

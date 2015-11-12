@@ -7,7 +7,7 @@ $(function(){
 	
 	//获取品牌特卖分类
     $.ajax({
-        url: ApiUrl + "/index.php?act=mz_brandsale&op=get_class",
+        url: ApiUrl + "/index.php?act=mz_index&op=get_gc_id_1_list",
         type: 'get',
         dataType: 'json',
         success: function(result) {
@@ -40,7 +40,6 @@ $(function(){
 			dataType: 'json',
 			success: function(result) {
 				var html = '';
-				console.log(result);
 				if(result.datas.brandsale_list.length>0){
 					html = template('item-list-template', result.datas);
 					page++;

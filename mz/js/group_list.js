@@ -13,8 +13,6 @@ $(function(){
         success: function(result) {
 			var html = template('filterbar-template', result.datas);
 			$('.filterbar').html(html);
-		},
-		complete: function(){
 			show_filterbar();
 			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
 				if(!$(this).hasClass('active')){

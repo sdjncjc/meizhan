@@ -19,7 +19,7 @@ $(function(){
 			$('.brand-story').html(html);
 			var html = template('refinements-template', data);
 			$('.item-nav').append(html);
-			$('.title, title').html(data.brandsale.name);
+			$('.title').html(data.brandsale.name);
 			//倒计时
 			if(data.brandsale.remaining_time>0){
 				var t = data.brandsale.remaining_time;

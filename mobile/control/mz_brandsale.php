@@ -19,18 +19,6 @@ class mz_brandsaleControl extends mobileHomeControl{
         parent::__construct();
     }
 
-    public function indexOp() {
-        exit;
-    }
-
-    /**
-     * 获取分类
-     */
-    public function get_classOp() {
-		$brandsale_class = Model('goods_class')->field('gc_id,gc_name')->where(array('gc_parent_id'=>0))->order('gc_sort asc')->select();
-        output_data(array('brandsale_class' => $brandsale_class));
-    }
-
     /**
      * 获取列表
      */
@@ -85,8 +73,18 @@ class mz_brandsaleControl extends mobileHomeControl{
 			$brandsale['remaining_time'] = $brandsale['end_time']-TIMESTAMP;
 		}
 
-        $info = unserialize($brandsale['info']);
-		$brandsale['brandsale_cate'] = $info['data_cate'];
+		$goods_list = Model('goods_common')->field('gc_id,gc_name,count(*) as num')->where(array('goods_state'=>1,'goods_verify'=>1,'brand_id'=>$brandsale['brand_id'],'gc_id_1'=>$brandsale['gc_id']))->group('gc_id')->limit(false)->select();
+		$brandsale_cate = array();
+		$brandsale_cate[0] = array('gc_name'=>'全部','num'=>0);
+		if($goods_list){
+			foreach($goods_list as $v){
+				$v['gc_name'] = end(explode(' &gt;',$v['gc_name']));
+				$brandsale_cate[$v['gc_id']] = $v;
+				$brandsale_cate[0]['num'] += $v['num'];
+			}
+		}
+
+		$brandsale['brandsale_cate'] = $brandsale_cate;
 
         output_data(array('brandsale' => $brandsale));
     }
@@ -101,7 +99,7 @@ class mz_brandsaleControl extends mobileHomeControl{
 		$goods_list = array();
 		if($brandsale){
 			$size = 10;
-			$condition = array();
+			$condition = array('goods_state'=>1,'goods_verify'=>1,'brand_id'=>$brandsale['brand_id'],'gc_id_1'=>$brandsale['gc_id']);
 			$stock = intval($_GET['stock']);
 			if($stock)$condition['goods_storage'] = array('gt', 0);
 			$sort = intval($_GET['sort']);
@@ -115,10 +113,8 @@ class mz_brandsaleControl extends mobileHomeControl{
 				default:
 					$order = "goods_id desc";
 			}
-			$info = unserialize($brandsale['info']);
-	
 			$cate = intval($_GET['cate']);
-			$condition['goods_id'] = array('in', $info['data'][$cate]);
+			if($cate)$where['gc_id'] = $cate;
 			
 			$page = intval($_GET['page']);
 			$page = $page <= 0 ? 1 : $page;

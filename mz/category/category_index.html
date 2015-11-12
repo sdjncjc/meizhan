@@ -1,0 +1,31 @@
+<!--#include file="/tpl/head.html"-->
+<!--#include file="/tpl/navbar.html"-->
+    <section class="wrapper">
+        <section class="categories"></section>
+    </section>
+    <section class="footer"></section>
+    <script type="text/template" id="cate-template">
+        {{each class_list as value index}}
+        <div class="category">
+            <label class="cate-name">{{value.gc_name}}</label>
+            <div class="cate-items">
+                {{each value.class2 as value2 index2}}
+                <a href="/category/category_list.html?cate={{value2.gc_id}}" class="cate-item">{{value2.gc_name}}</a>
+				{{/each}}
+				{{if value.yu == 1}}
+				<a href="javascript:void(0);" class="cate-item">&nbsp;</a>
+				<a href="javascript:void(0);" class="cate-item">&nbsp;</a>
+				{{else if value.yu == 2}}
+				<a href="javascript:void(0);" class="cate-item">&nbsp;</a>
+				{{/if}}
+            </div>
+        </div>
+        {{/each}}
+    </script>
+	<link rel="stylesheet" href="/css/category_index.css" />
+    <script type="text/javascript" src="/js/category_index.js"></script>
+    <script>
+    	title = '商品列表';
+    </script>
+</body>
+</html>

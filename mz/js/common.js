@@ -38,8 +38,7 @@ var SiteUrl = "http://www.qinqin.net";
 var ApiUrl = "http://mobile.qinqin.net";
 var pagesize = 10;
 var MzSiteUrl = "http://mz.qinqin.net";
-var IOSSiteUrl = "https://itunes.apple.com/us/app/qin-qin-wang/id933954574?l=zh&ls=1&mt=8";
-var AndroidSiteUrl = "http://src.qinqin.net/download/app/qinqin_3.1.3.apk";
+var title = '亲亲美妆';
 
 function show_filterbar(){
 	var inner_w = 5;
@@ -147,6 +146,9 @@ function checklogin(state){
 }
 
 $(function(){
+	//设置标题
+	$('.navbar .title').html(title);
+	
 	if($('.footer').length)get_footer();
 
 	$('body').append('<a href="javascript:;" class="backtop"></a>');

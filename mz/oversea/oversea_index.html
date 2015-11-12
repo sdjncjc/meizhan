@@ -1,30 +1,8 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8" />
-    <meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
-    <meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="telephone=no" name="format-detection" />
-    <meta content="email=no" name="format-detection" />
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <title>海外购 - 亲亲美站</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
-    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
-	<link rel="stylesheet" href="/css/common.css" />
-	<link rel="stylesheet" href="/css/oversea_index.css" />
-</head>
-<body>
-    <section class="header">
-        <section class="navbar">
-			<a class="back-btn" href="javascript:history.back();"></a>
-            <h1 class="title">海外购</h1>
-            <a class="home-btn" href="/"></a>
-        </section>
-    </section>
+<!--#include file="/tpl/head.html"-->
+<!--#include file="/tpl/navbar.html"-->
     <section class="wrapper">
         <div class="slider"><img src="/img/oversea_banner.jpg" /></div>
-        <div id="J_trendy" class="hwg-cnt trendy hidden">
+        <div class="hwg-cnt trendy">
         </div>
         <div class="hwg-cnt theme">
             <p class="tit"><span class="main">海外购主题馆</span></p>
@@ -36,26 +14,25 @@
     </section>
     <div class="loading">正在加载...</div>
     <script id="oversea-promotion-tpl" type="text/template">
-        <p class="tit"><span class="main">${title}</span><span class="sub">${subtit}</span><span class="countdown"></span><a class="more" href="/oversea/oversea-hot.html">更多<i class="ico-arrow-more"></i></a></p>
+        <p class="tit"><span class="main">全球爆款</span><span class="sub">每天9点开抢</span><span class="countdown"></span><a class="more" href="/oversea/oversea_hot.html">更多<i class="ico-arrow-more"></i></a></p>
         <div class="list">
-            {@each list as item }
-            <a class="item" href="/oversea/oversea-hot.html?oversea_id=${item.oversea_id}">
-                <img class="img-cnt" src="${item.img}!270x270.jpg" alt="${item.title}">
-                <p class="title">${item.title}</p>
-                <p class="price"><span class="now">&yen;${item.price/100}</span><span class="original">&yen;${item.price_ori/100}</span>
-                </p>
-                <img class="ico-flag" src="${item.country_icon}" alt="${item.country_name}">
-                <div class="tag"><i class="${item.gmt_begin_class_icon}"></i><span class="${item.gmt_begin_class_txt}">${item.gmt_begin_txt}</span></div>
+            {{each group_list as value index}}
+            <a class="item" href="/detail/detail.html?id={{value.goods_id}}">
+                <img class="img-cnt" src="{{value.img_url}}" alt="{{value.goods_name}}">
+                <p class="title">{{value.goods_name}}</p>
+                <p class="price"><span class="now">&yen;{{value.goods_promotion_price*1}}</span><span class="original">&yen;{{value.goods_marketprice*1}}</span></p>
+                <img class="ico-flag" src="{{value.country_icon}}" />
+                <div class="tag"><i class="ico-day"></i><span class="txt-day">早9点</span></div>
                 <span class="btn-buy">立即抢</span>
             </a>
-            {@/each}
+            {{/each}}
         </div>
     </script>
     <script id="oversea-cat-tpl" type="text/template">
         <div class="list">
-            {{each oversea_class as value index}}
+            {{each gc_id_1_list as value index}}
             <a class="item" href="/oversea/oversea_list.html?cate={{value.gc_id}}">
-                <img class="img-cnt" src="/img/oversea_{{value.gc_id}}.jpg" alt="{{value.gc_name}}" />
+                <img class="img-cnt" src="/img/oversea_{{value.gc_id}}.png" alt="{{value.gc_name}}" />
             </a>
             {{/each}}
         </div>
@@ -85,8 +62,10 @@
     <div class="toolbar">
         <a href="/trade/cart.html"></a>
     </div>
-    <script type="text/javascript" src="/js/zepto.min.js"></script>
-    <script type="text/javascript" src="/js/common.js"></script>
+	<link rel="stylesheet" href="/css/oversea_index.css" />
     <script type="text/javascript" src="/js/oversea_index.js"></script>
+    <script>
+    	title = '海外购';
+    </script>
 </body>
 </html>
