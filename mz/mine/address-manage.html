@@ -13,20 +13,6 @@
 </head>
 
 <body class="J_wrapper">
-    <script type="text/template" id="addresslist-template">
-        {{each data as address}}
-        <div class="address-item{{if address.is_default == 1}} default{{/if}}" data-address="{{address.json_data}}">
-            <div class="receive-info">
-                <span class="receive-name">{{address.true_name}}</span>
-                <span class="receive-phonenumber">{{address.mob_phone}}</span>
-                <a class="edit" href="javascript:;"></a>
-            </div>
-            <div class="address-info">
-                <span>{{address.area_info}}{{address.address}}</span>
-            </div>
-        </div>
-        {{/each}}
-    </script>
 
     <section id="J_list-address-page" class="list-address-page">
         <section class="navbar hidden J_navbar">
@@ -142,6 +128,20 @@
         </section>
     </section>
 
+    <script type="text/template" id="addresslist-template">
+        {{each data as address}}
+        <div class="address-item{{if address.is_default == 1}} default{{/if}}" data-address="{{address.json_data}}">
+            <div class="receive-info">
+                <span class="receive-name">{{address.true_name}}</span>
+                <span class="receive-phonenumber">{{address.mob_phone}}</span>
+                <a class="edit" href="javascript:;"></a>
+            </div>
+            <div class="address-info">
+                <span>{{address.area_info}}{{address.address}}</span>
+            </div>
+        </div>
+        {{/each}}
+    </script>
     <script type="text/javascript" src="/js/zepto.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/js/mine.js"></script>

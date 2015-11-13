@@ -12,7 +12,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" media="screen" />
     <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
     <link rel="stylesheet" href="/css/common.css" />
+    <script type="text/javascript" src="/js/zepto.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/mine.js"></script>
+
     <link href="/css/mine.css" rel="stylesheet" media="all" />
+    
 </head>
 
 <body>
@@ -186,9 +191,6 @@
         </div>
         <a class="personal" onclick="open_url('userinfo')" href="javascript:void(0)">个人中心</a>
     </script>
-    <script type="text/javascript" src="/js/zepto.min.js"></script>
-    <script type="text/javascript" src="/js/common.js"></script>
-    <script type="text/javascript" src="/js/mine.js"></script>
     <script type="text/javascript">
         // 显示用户基本信息
         getAjaxResult(getUrl('mz_mine','getUserInfo'),'tpl-personal',".my-info",'tpl-login');

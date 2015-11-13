@@ -32,7 +32,7 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
 							window.location.href = decodeURIComponent(getcookie('lastvisit'));
 						},1000); 
 					}else{
-						window.setTimeout(function(){history.go(-1);},1000); 
+						window.setTimeout(function(){history.back();},1000); 
 					}
 	        	}
 	        	$(".loading").hide();
@@ -71,6 +71,7 @@ function open_url(type,sub,id){
 	if (key) {
 		switch(type){
 			case 'userinfo':
+				title = "个人中心";
 				url = "/mine/userinfo.html";
 				break;
 			case 'orders':
