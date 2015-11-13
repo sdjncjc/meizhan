@@ -20,6 +20,43 @@ class mz_goodsControl extends mobileHomeControl{
     }
 
     /**
+     * 获取一级商品分类
+     */
+    public function get_gc_id_1_listOp() {
+		$gc_id_1_list = Model('goods_class')->getGoodsClassListByParentId(0);
+        output_data(array('gc_id_1_list' => $gc_id_1_list));
+    }
+
+    /**
+     * 获取top列表
+     */
+    public function get_top_listOp() {
+		$size = 10;
+        $condition = array();
+		$condition['goods_state'] = 1;
+		$condition['goods_verify'] = 1;
+
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
+		$gc_id_1 = intval($_GET['cate']);
+		if($gc_id_1){
+			$condition['gc_id_1'] = $gc_id_1;
+			if($page > 5)output_data(array('goods_list' => array()));
+		}else{
+			if($page > 10)output_data(array('goods_list' => array()));
+		}
+        $goods_list = Model('goods')->field('goods_id,goods_name,goods_promotion_price,goods_storage,goods_marketprice,goods_image')->where($condition)->order('goods_salenum desc')->limit((($page-1)*$size).','.$size)->select();
+		if($goods_list){
+			foreach($goods_list as $k=>$v){
+				$goods_list[$k]['img_url'] = thumb($v, 360);
+				$goods_list[$k]['discount'] = sprintf('%0.1f', $v['goods_promotion_price']/$v['goods_marketprice']*10);
+			}
+		}
+
+        output_data(array('goods_list' => $goods_list));
+    }
+
+    /**
      * 商品列表
      */
     public function goods_listOp() {

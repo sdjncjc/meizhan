@@ -1,10 +1,11 @@
 <!--#include file="/tpl/head.html"-->
 <!--#include file="/tpl/navbar.html"-->
     <section class="wrapper">
-        <header class="banner">
+        <header class="banner hidden">
             <img src="/img/top_banner.jpg">
         </header>
-        <section class="catebox"></section>
+        <section class="catebox hidden"></section>
+        <section class="filters hidden"></section>
         <section class="grid-wrap">
             <ul class="grid item-list"></ul>
         </section>
@@ -13,15 +14,20 @@
     <div class="toolbar">
         <a href="/trade/cart.html"></a>
     </div>
-    <script id="class-template" type="text/template">
+    <script id="catebox-template" type="text/template">
 		<div class="grid">
  	       {{each gc_id_1_list as value index}}
-			<a class="col-4" href="/app/top_filter.html?cate={{value.gc_id}}">
+			<a class="col-4" href="/app/top.html?cate={{value.gc_id}}">
 				<i class="cate-{{value.gc_id}}"></i>
 				<span>{{value.gc_name}}榜</span>
 			</a>
 			{{/each}}
 		</div>
+    </script>
+    <script id="filters-template" type="text/template">
+		{{each gc_id_1_list as value index}}
+		<a class="filter" data="{{value.gc_id}}" href="/app/top_filter.html?cate={{value.gc_id}}">{{value.gc_name}}榜</span>
+		{{/each}}
     </script>
 	<!--#include file="/tpl/goods_list.html"-->
 	<link rel="stylesheet" href="/css/top.css" />

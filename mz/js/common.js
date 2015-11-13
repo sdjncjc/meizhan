@@ -2,7 +2,7 @@
 	function b() {
 		a.rem = f.getBoundingClientRect().width / 16, f.style.fontSize = a.rem + "px"
 	}
-	var c, d = a.devicePixelRatio ? a.devicePixelRatio : 1,
+        var c, d = a.navigator.appVersion.match(/iphone/gi) ? a.devicePixelRatio : 1,
 		e = 1 / d,
 		f = document.documentElement,
 		g = document.createElement("meta");
@@ -143,6 +143,12 @@ function checklogin(state){
 	}else {
 		return true;
 	}
+}
+
+//设置标题
+function set_title(title){
+	$('.navbar .title').html(title);
+	$('title').prepend(title+' - ');
 }
 
 $(function(){

@@ -3,7 +3,7 @@
 $(function(){
 	//获取品牌特卖分类
     $.ajax({
-        url: ApiUrl + "/index.php?act=mz_index&op=get_gc_id_1_list",
+        url: ApiUrl + "/index.php?act=mz_goods&op=get_gc_id_1_list",
         type: 'get',
         dataType: 'json',
         success: function(result) {

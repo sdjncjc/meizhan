@@ -66,13 +66,4 @@ class mz_indexControl extends mobileHomeControl{
 
         output_data(array('recommend_goods_list' => $recommend_goods_list));
     }
-
-
-    /**
-     * 获取一级商品分类
-     */
-    public function get_gc_id_1_listOp() {
-		$gc_id_1_list = Model('goods_class')->getGoodsClassListByParentId(0);
-        output_data(array('gc_id_1_list' => $gc_id_1_list));
-    }
 }
