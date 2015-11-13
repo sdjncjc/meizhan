@@ -1,31 +1,38 @@
 // JavaScript Document
 
 $(function(){
-	title = 'TOP排行榜';
-	
+    var cate = GetQueryString("cate");
 	var page = 1;
 	var clock = 0;
 	
 	//获取商品分类
     $.ajax({
-        url: ApiUrl + "/index.php?act=mz_index&op=get_gc_id_1_list",
+        url: ApiUrl + "/index.php?act=mz_goods&op=get_gc_id_1_list",
         type: 'get',
         dataType: 'json',
         success: function(result) {
-			var html = template('class-template', result.datas);
-			$('.catebox').html(html);
+			if(cate){
+				var html = template('filters-template', result.datas);
+				$('.filters').html(html).removeClass('hidden');
+				$('.filter[data="'+cate+'"]').addClass('active');
+				set_title($('.filter[data="'+cate+'"]').html());
+				$('.filter').tap(function(){
+					location.href=MzSiteUrl+'/app/top.html?cate='+$(this).attr('data');
+				})
+			}else{
+				var html = template('catebox-template', result.datas);
+				$('.catebox').html(html).removeClass('hidden');
+				$('.banner').removeClass('hidden');
+				set_title('TOP排行榜');
+			}
         }
     });
 	//获取排行榜
 	function ajax_top(){
 		if(clock)return;
 		clock = 1;
-		if(page > 10){
-			$('.loading').hide();
-			return;	
-		}
 		$.ajax({
-			url: ApiUrl + '/index.php?act=mz_top&op=get_list&page='+page,
+			url: ApiUrl + '/index.php?act=mz_goods&op=get_top_list&cate='+cate+'&page='+page,
 			type: 'get',
 			dataType: 'json',
 			success: function(result) {
