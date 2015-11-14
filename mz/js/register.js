@@ -47,7 +47,7 @@ $(function(){
 		var captcha = $(".pin-input").val();
 		var password = $('.password-input').val();
 		var reg = /^[a-zA-Z0-9`~@!#$%^&*()-=_+]{6,20}$/
-		if(user_name == ''){
+		if(phone == ''){
 			$.dialog({
 				content: '请输入手机号',
 				title: "alert",

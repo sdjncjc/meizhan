@@ -35,7 +35,6 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
         			function_data =  result.datas.data;
         		}
 	        }else{
-	        	console.log(empty_tpl);
 	        	if (empty_tpl != "" && empty_tpl != undefined) {
 	        		html = template(empty_tpl, {});
 	        	}else{
@@ -87,7 +86,7 @@ function ajax_do(url,params){
 
 function open_url(type,sub,id){
 	var key = getcookie('key');
-	var url = "/login/login.html";
+	var url = "/home/login.html";
 	if (key) {
 		switch(type){
 			case 'userinfo':
@@ -114,17 +113,24 @@ function open_url(type,sub,id){
 				if (sub == 'detial') {
 					url = "/detail/detail.html?id="+id;
 				};
+				break;
 			case 'address':
+				url = "/mine/address-manage.html";
+				break;
+			case 'coupon':
+				url = "/mine/coupon.html";
+				break;
+			case 'point':
 				url = "/mine/address-manage.html";
 				break;
 		}
 	}else{
 		switch(type){
 			case 'login':
-				url = "/login/login.html";
+				url = "/home/login.html";
 				break;
 			case 'register':
-				url = "/login/register.html";
+				url = "/home/register.html";
 				break;
 		}
 	}
