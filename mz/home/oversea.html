@@ -1,0 +1,30 @@
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="wrapper">
+        <section class="brand-story"></section>
+        <section class="grid-wrap">
+            <ul class="grid item-list"></ul>
+        </section>
+    </section>
+    <div class="loading">正在加载...</div>
+    <section class="footer"></section>
+    <div class="toolbar">
+        <a href="/trade/cart.html"></a>
+    </div>
+    <script id="brand-story-template" type="text/template">
+        <img src="{{brandsale.image_url}}">
+        <div class="brand-status">
+            <div class="brand-desc">
+                <p>{{brandsale.area_name}}直采 | {{brandsale.preferential}}</p>
+            </div>
+        </div>
+        <p class="brand-intro">{{brandsale.intro}}</p>
+        <div class="show-control show-more"></div>
+        <div class="show-control show-less"></div>
+        <div style="clear: both"></div>
+    </script>
+	<!--#include virtual="/tpl/goods_list.html"-->
+	<link rel="stylesheet" href="/css/oversea.css" />
+    <script type="text/javascript" src="/js/oversea.js"></script>
+</body>
+</html>

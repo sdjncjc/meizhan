@@ -1,9 +1,8 @@
-<!--#include file="/tpl/head.html"-->
-<!--#include file="/tpl/navbar.html"-->
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
     <section class="wrapper">
         <div class="slider"><img src="/img/oversea_banner.jpg" /></div>
-        <div class="hwg-cnt trendy">
-        </div>
+        <div class="hwg-cnt trendy"></div>
         <div class="hwg-cnt theme">
             <p class="tit"><span class="main">海外购主题馆</span></p>
         </div>
@@ -14,10 +13,10 @@
     </section>
     <div class="loading">正在加载...</div>
     <script id="oversea-promotion-tpl" type="text/template">
-        <p class="tit"><span class="main">全球爆款</span><span class="sub">每天9点开抢</span><span class="countdown"></span><a class="more" href="/oversea/oversea_hot.html">更多<i class="ico-arrow-more"></i></a></p>
+        <p class="tit"><span class="main">全球爆款</span><span class="sub">每天9点开抢</span><span class="countdown"></span><a class="more" href="/home/oversea_hot.html">更多<i class="ico-arrow-more"></i></a></p>
         <div class="list">
             {{each group_list as value index}}
-            <a class="item" href="/detail/detail.html?id={{value.goods_id}}">
+            <a class="item" href="/home/detail.html?id={{value.goods_id}}">
                 <img class="img-cnt" src="{{value.img_url}}" alt="{{value.goods_name}}">
                 <p class="title">{{value.goods_name}}</p>
                 <p class="price"><span class="now">&yen;{{value.goods_promotion_price*1}}</span><span class="original">&yen;{{value.goods_marketprice*1}}</span></p>
@@ -31,15 +30,15 @@
     <script id="oversea-cat-tpl" type="text/template">
         <div class="list">
             {{each gc_id_1_list as value index}}
-            <a class="item" href="/oversea/oversea_list.html?cate={{value.gc_id}}">
+            <a class="item" href="/home/oversea_list.html?cate={{value.gc_id}}">
                 <img class="img-cnt" src="/img/oversea_{{value.gc_id}}.png" alt="{{value.gc_name}}" />
             </a>
             {{/each}}
         </div>
     </script>
     <script id="oversea-brands-tpl" type="text/template">
-        {{each oversea_list as value index}}
-        <a class="item" href="/oversea/oversea.html?rec_id={{value.rec_id}}">
+        {{each brandsale_list as value index}}
+        <a class="item" href="/home/oversea.html?rec_id={{value.rec_id}}">
 			<img class="img-cnt lazy" src="/img/blank.png" data-original="{{value.img_url}}">
             <div class="item-brand-status">
                 <img class="national-flag" src="{{value.country_icon}}" />

@@ -95,7 +95,7 @@ $(function(){
 						var spec_string = curSpec.sort(function(a, b) { return a - b; }).join("|");
 						//获取商品ID
 						var spec_goods_id = data.spec_list[spec_string];
-						location.href = MzSiteUrl+'/detail/detail.html?id='+spec_goods_id;
+						location.href = MzSiteUrl+'/home/detail.html?id='+spec_goods_id;
 					});
 				}else {
 					$('.item-sku').remove();
@@ -146,7 +146,7 @@ $(function(){
 			$(".right-collection").tap(function (){
 				if(!$(this).hasClass('collect_checked')){
 					if(key==''){
-						location.href = MzSiteUrl+'/login/login.html';
+						location.href = MzSiteUrl+'/home/login.html';
 					}else{
 						$.ajax({
 							url:ApiUrl+"/index.php?act=mz_member_favorites&op=favorites_add",
@@ -227,7 +227,7 @@ $(function(){
             $(".cart-add").tap(function (){
 				if(!$(this).hasClass('soldout')){
 					if(key==''){
-						location.href = MzSiteUrl+'/login/login.html';
+						location.href = MzSiteUrl+'/home/login.html';
 					}else{
 						$.ajax({
 							url:ApiUrl+"/index.php?act=mz_member_cart&op=cart_add",

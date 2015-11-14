@@ -1,6 +1,7 @@
 // JavaScript Document
 
 $(function(){
+	set_title('限量购');
 	var category = 'all';
 	var page = 1;
 	var clock = 0;
@@ -13,11 +14,20 @@ $(function(){
         success: function(result) {
 			var html = template('filterbar-template', result.datas);
 			$('.filterbar').html(html);
-			show_filterbar();
+			//设置导航
+			var inner_w = 5;
+			$('.filterbar-inner-item').each(function(){
+				inner_w += $(this).width();
+			});
+			$('.filterbar-inner').width(inner_w);
+			$('.filterbar-dropdown').css('top', $('.navbar').height()+$('.filterbar-inner-container').height());
+			$('.filterbar-more i').tap(function(){
+				$(this).toggleClass('show-more').toggleClass('show-less');
+				$('.filterbar-inner-mask,.filterbar-dropdown,.filterbar-dropdown-mask').toggleClass('hidden');
+			})
 			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
 				if(!$(this).hasClass('active')){
-					$('.group-list').html('');
-					category = $(this).attr('data-category');
+					category = $(this).attr('data');
 					page = 1;
 					clock = 0;
 					$(this).addClass('active').siblings().removeClass('active');
@@ -30,6 +40,7 @@ $(function(){
 	function ajax_group(){
 		if(clock)return;
 		clock = 1;
+		if(page == 1)$('.group-list').html('');
 		$.ajax({
 			url: ApiUrl + '/index.php?act=mz_group&op=get_list&category='+category+'&page='+page,
 			type: 'get',
@@ -55,7 +66,7 @@ $(function(){
 				$('.nextup .buy-btn').tap(function(){
 					var key = getcookie('key');//登录标记
 					if(key==''){
-						location.href = MzSiteUrl+'/login/login.html';
+						location.href = MzSiteUrl+'/home/login.html';
 					}else {
 						var goods_id = $(this).attr('data-iid');
 						$.ajax({

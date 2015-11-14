@@ -28,6 +28,17 @@ class mz_goodsControl extends mobileHomeControl{
     }
 
     /**
+     * 获取指定分类下的二级分类
+     */
+    public function get_gc_id_2_listOp() {
+		$gc_id = intval($_GET['gc_id']);
+        $goods_class_model = Model('goods_class');
+		$class = $goods_class_model->getGoodsClassInfoById($gc_id);
+		$goods_class = $goods_class_model->getGoodsClassListByParentId($gc_id);
+        output_data(array('class_name' => $class['gc_name'],'goods_class' => $goods_class));
+    }
+
+    /**
      * 获取top列表
      */
     public function get_top_listOp() {
@@ -57,126 +68,121 @@ class mz_goodsControl extends mobileHomeControl{
     }
 
     /**
-     * 商品列表
+     * 获取商品分类列表
      */
-    public function goods_listOp() {
-        $model_goods = Model('goods');
-        $model_search = Model('search');
-        $_GET['is_book'] = 0;
+	public function get_goods_classOp() {
+		$class_list = Model('goods_class')->get_all_category();
+		if($class_list){
+			foreach($class_list as $k=>$v){
+				foreach($v['class2'] as $kk=>$vv){
+					$class_list[$k]['class2'][$kk]['img'] = UPLOAD_SITE_URL.'/'.ATTACH_COMMON.'/category-pic-'.$kk.'.jpg';
+				}
+				$class_list[$k]['yu'] = count($v['class2'])%3;
+			}
+		}
+        output_data(array('class_list' => $class_list));
+	}
 
-        //查询条件
-        $condition = array();
-        // ==== 暂时不显示定金预售商品，手机端未做。  ====
-        $condition['is_book'] = 0;
-        // ==== 暂时不显示定金预售商品，手机端未做。  ====
-        if(!empty($_GET['gc_id']) && intval($_GET['gc_id']) > 0) {
-            $condition['gc_id'] = $_GET['gc_id'];
-        } elseif (!empty($_GET['keyword'])) {
-            $condition['goods_name|goods_jingle'] = array('like', '%' . $_GET['keyword'] . '%');
-        } elseif (!empty($_GET['barcode'])) {
-            $condition['goods_barcode'] = $_GET['barcode'];
-        } elseif (!empty($_GET['b_id']) && intval($_GET['b_id'] > 0)) {
-            $condition['brand_id'] = intval($_GET['b_id']);
-        }
+    /**
+     * 获取商品分类列表页
+     */
+    public function get_category_listOp() {
+		$cate = intval($_GET['cate']);
+		$title = $key = trim($_GET['key']);
+		$condition = array();
+		$condition['goods_state']   = 1;
+		$condition['goods_verify']  = 1;
+		if($cate){
+			$class = Model('goods_class')->getGoodsClassInfoById($cate);
+		}
+		$list = array();
+		if($class){
+			$title = $class['gc_name'];
+			$condition['gc_id_2'] = $cate;
+			$list = Model('goods')->table('goods_common')->field('gc_id,gc_name,brand_id,brand_name')->where($condition)->group('gc_id,brand_id')->limit(false)->select();
+		}elseif($key != ''){
+			$condition['goods_name'] = array('like','%'.$key.'%');
+			$list = Model('goods')->table('goods_common')->field('gc_id,gc_name,brand_id,brand_name')->where($condition)->group('gc_id,brand_id')->limit(false)->select();
+		}
 
-        //所需字段
-        $fieldstr = "goods_id,goods_commonid,store_id,goods_name,goods_price,goods_promotion_price,goods_promotion_type,goods_marketprice,goods_image,goods_salenum,evaluation_good_star,evaluation_count";
+		$class_list = $brand_list = array();
+		if($list){
+			foreach($list as $k=>$v){
+				if(!$class_list[$v['gc_id']])$class_list[$v['gc_id']] = end(explode(" &gt;",$v['gc_name']));
+				if(!$brand_list[$v['brand_id']])$brand_list[$v['brand_id']] = $v['brand_name'];
+			}
+			unset($class_list[0],$brand_list[0]);
+		}
 
-        // 添加3个状态字段
-        $fieldstr .= ',is_virtual,is_presell,is_fcode,have_gift';
-
-        //排序方式
-        $order = $this->_goods_list_order($_GET['key'], $_GET['order']);
-
-        //优先从全文索引库里查找
-        list($goods_list,$indexer_count) = $model_search->indexerSearch($_GET,$this->page);
-        if (!is_null($goods_list)) {
-            $goods_list = array_values($goods_list);
-            pagecmd('setEachNum',$this->page);
-            pagecmd('setTotalNum',$indexer_count);
-        } else {
-            $goods_list = $model_goods->getGoodsListByColorDistinct($condition, $fieldstr, $order, $this->page);
-        }
-        $page_count = $model_goods->gettotalpage();
-        //处理商品列表(团购、限时折扣、商品图片)
-        $goods_list = $this->_goods_list_extend($goods_list);
-        output_data(array('goods_list' => $goods_list), mobile_page($page_count));
+        output_data(array('class_list' => $class_list,'brand_list' => $brand_list,'title' => $title));
     }
 
     /**
-     * 商品列表排序方式
+     * 获取分类商品列表
      */
-    private function _goods_list_order($key, $order) {
-        $result = 'is_own_shop desc,goods_id desc';
-        if (!empty($key)) {
+    public function get_category_goodsOp() {
+		$cate = intval($_GET['cate']);
+		$key = trim($_GET['key']);
+		$cates = trim($_GET['cates']);
+		$brands = trim($_GET['brands']);
+		$sort = intval($_GET['sort']);
+		$size = 10;
+		$condition = array();
+		$condition['goods_state']   = 1;
+		$condition['goods_verify']  = 1;
+		if($cates)$condition['gc_id'] = array('in', $cates);
+		if($brands)$condition['brand_id'] = array('in', $brands);
+		if($sort){
+			$order = "goods_promotion_price asc";
+		}else{
+			$order = "goods_salenum desc";
+		}
+		$page = intval($_GET['page']);
+		$page = $page <= 0 ? 1 : $page;
+		$goods_list = array();
+		if($cate){
+			$condition['gc_id_2'] = $cate;
+			$goods_list = Model('goods')->field('goods_id,goods_storage,goods_name,goods_image,goods_type,goods_marketprice,goods_promotion_price')->where($condition)->group('goods_commonid')->order($order)->limit((($page-1)*$size).','.$size)->select();
+		}elseif($key != ''){
+			$condition['goods_name'] = array('like','%'.$key.'%');
+			$goods_list = Model('goods')->field('goods_id,goods_storage,goods_name,goods_image,goods_type,goods_marketprice,goods_promotion_price')->where($condition)->group('goods_commonid')->order($order)->limit((($page-1)*$size).','.$size)->select();
+		}
 
-            $sequence = 'desc';
-            if($order == 1) {
-                $sequence = 'asc';
-            }
+		if($goods_list){
+			foreach($goods_list as $k=>$v){
+				$goods_list[$k]['img_url'] = thumb($v, 360);
+				$goods_list[$k]['discount'] = sprintf('%0.1f', $v['goods_promotion_price']/$v['goods_marketprice']*10);
+			}
+		}
 
-            switch ($key) {
-                //销量
-                case '1' :
-                    $result = 'goods_salenum' . ' ' . $sequence;
-                    break;
-                //浏览量
-                case '2' :
-                    $result = 'goods_click' . ' ' . $sequence;
-                    break;
-                //价格
-                case '3' :
-                    $result = 'goods_price' . ' ' . $sequence;
-                    break;
-            }
-        }
-        return $result;
+        output_data(array('goods_list' => $goods_list));
     }
-
     /**
-     * 处理商品列表(团购、限时折扣、商品图片)
+     * 获取海外购商品列表
      */
-    private function _goods_list_extend($goods_list) {
-        //获取商品列表编号数组
-        $goodsid_array = array();
-        foreach($goods_list as $key => $value) {
-            $goodsid_array[] = $value['goods_id'];
-        }
-        
-        $sole_array = Model('p_sole')->getSoleGoodsList(array('goods_id' => array('in', $goodsid_array)));
-        $sole_array = array_under_reset($sole_array, 'goods_id');
+    public function get_oversea_goods_listOp() {
+		$size = 10;
+		$condition = array();
+		$condition['gc_id_1'] = intval($_GET['gc_id_1']);
+		$condition['goods_type'] = array('gt', 0);
+		$gc_id_2 = intval($_GET['gc_id_2']);
+		if($gc_id_2)$condition['gc_id_2'] = $gc_id_2;
 
-        foreach ($goods_list as $key => $value) {
-            $goods_list[$key]['sole_flag']      = false;
-            $goods_list[$key]['group_flag']     = false;
-            $goods_list[$key]['xianshi_flag']   = false;
-            if (!empty($sole_array[$value['goods_id']])) {
-                $goods_list[$key]['goods_price'] = $sole_array[$value['goods_id']]['sole_price'];
-                $goods_list[$key]['sole_flag'] = true;
-            } else {
-                $goods_list[$key]['goods_price'] = $value['goods_promotion_price'];
-                switch ($value['goods_promotion_type']) {
-                    case 1:
-                        $goods_list[$key]['group_flag'] = true;
-                        break;
-                    case 2:
-                        $goods_list[$key]['xianshi_flag'] = true;
-                        break;
-                }
-                
-            }
+		$page = intval($_GET['page']);
+		$page = $page <= 0 ? 1 : $page;
 
-            //商品图片url
-            $goods_list[$key]['goods_image_url'] = cthumb($value['goods_image'], 360, $value['store_id']);
+		$goods_list = Model()->table('goods')->field('country_id,goods_id,goods_storage,goods_name,goods_image,goods_marketprice,goods_promotion_price')->where($condition)->group('goods_commonid')->order('goods_id desc')->limit((($page-1)*$size).','.$size)->select();
+		if($goods_list){
+			//特卖国家
+        	$country_list = rkcache('country');
+			foreach($goods_list as $k=>$v){
+				$goods_list[$k]['img_url'] = thumb($v, 360);
+				$goods_list[$k]['discount'] = sprintf('%0.1f', $v['goods_promotion_price']/$v['goods_marketprice']*10);
+				$goods_list[$k]['country_icon'] = $country_list[$v['country_id']]['country_img_url'];
+			}
+		}
 
-            unset($goods_list[$key]['goods_promotion_type']);
-            unset($goods_list[$key]['goods_promotion_price']);
-            unset($goods_list[$key]['store_id']);
-            unset($goods_list[$key]['goods_commonid']);
-            unset($goods_list[$key]['nc_distinct']);
-        }
-
-        return $goods_list;
+        output_data(array('goods_list' => $goods_list));
     }
 
     /**
@@ -330,22 +336,6 @@ class mz_goodsControl extends mobileHomeControl{
         unset($goods_detail['xianshi_info']);
 
         return $goods_detail;
-    }
-
-    /**
-     * 商品详细页
-     */
-    public function goods_bodyOp() {
-        header("Access-Control-Allow-Origin:*");
-        $goods_id = intval($_GET ['goods_id']);
-
-        $model_goods = Model('goods');
-
-        $goods_info = $model_goods->getGoodsInfoByID($goods_id, 'goods_commonid');
-        $goods_common_info = $model_goods->getGoodsCommonInfoByID($goods_info['goods_commonid']);
-
-        Tpl::output('goods_common_info', $goods_common_info);
-        Tpl::showpage('goods_body');
     }
 
     /**

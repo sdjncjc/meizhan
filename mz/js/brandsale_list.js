@@ -1,7 +1,7 @@
 // JavaScript Document
 
 $(function(){
-    var category = GetQueryString("category");
+    var cate = GetQueryString("cate");
 	var page = 1;
 	var clock = 0;
 	
@@ -13,21 +13,22 @@ $(function(){
         success: function(result) {
 			var html = template('filterbar-template', result.datas);
 			$('.filterbar').html(html);
-		},
-		complete: function(){
-			show_filterbar();
-			$('.filterbar-dropdown-item,.filterbar-inner-item').each(function(){
-				if($(this).attr('data-category') == category){
-					$(this).addClass('active');
-				}else{
-					$(this).removeClass('active');
-				}
+			//设置导航
+			var inner_w = 5;
+			$('.filterbar-inner-item').each(function(){
+				inner_w += $(this).width();
 			});
-			$('.title').html($('.filterbar-inner .active').html());
-			
-			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
-				location.href=MzSiteUrl+'/brandsale/brandsale_list.html?category='+$(this).attr('data-category');
+			$('.filterbar-inner').width(inner_w);
+			$('.filterbar-dropdown').css('top', $('.navbar').height()+$('.filterbar-inner-container').height());
+			$('.filterbar-more i').tap(function(){
+				$(this).toggleClass('show-more').toggleClass('show-less');
+				$('.filterbar-inner-mask,.filterbar-dropdown,.filterbar-dropdown-mask').toggleClass('hidden');
 			})
+			$('[data="'+cate+'"]').addClass('active');
+			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
+				location.href=MzSiteUrl+'/home/brandsale_list.html?cate='+$(this).attr('data');
+			})
+			set_title($('.filterbar-inner .active').html());
         }
     });
 	//获取品牌特卖列表
@@ -35,7 +36,7 @@ $(function(){
 		if(clock)return;
 		clock = 1;
 		$.ajax({
-			url: ApiUrl + '/index.php?act=mz_brandsale&op=get_list&category='+category+'&page='+page,
+			url: ApiUrl + '/index.php?act=mz_brandsale&op=get_brandsale_list&cate='+cate+'&page='+page,
 			type: 'get',
 			dataType: 'json',
 			success: function(result) {

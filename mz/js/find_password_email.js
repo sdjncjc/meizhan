@@ -1,4 +1,6 @@
 $(function(){
+	set_title('重置密码');
+	$('.home-btn').remove();
     var uid = GetQueryString("uid");
     var hash = GetQueryString("hash");
 
@@ -30,7 +32,7 @@ $(function(){
 							title: "ok",
 							time: 1000
 						});			
-						window.setTimeout(function(){location.href = MzSiteUrl+'/login/login.html';},1000); 
+						window.setTimeout(function(){location.href = MzSiteUrl+'/home/login.html';},1000); 
 					}else{
 						$.dialog({
 							content: result.datas.error,

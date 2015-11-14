@@ -1,0 +1,27 @@
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="search">
+        <div class="search-input">
+            <span class="magnifier"></span>
+            <input type="text" placeholder="发现你喜欢的商品"/>
+        </div>
+        <a href="#" class="search-button">搜索</a>
+    </section>
+    <section class="category"></section>
+    <script type="text/template" id="tpl">
+        {{each class_list as value index}}
+        <div class="category-header">{{value.gc_name}}</div>
+        <section class="category-content">
+            {{each value.class2 as value2 index2}}
+			<a href="/home/category_list.html?cate={{value2.gc_id}}" class="category-item">
+                <img class="lazy" src="/img/blank.png" data-original="{{value2.img}}">
+                <p class="category-desc">{{value2.gc_name}}</p>
+			</a>
+            {{/each}}
+        </section>
+        {{/each}}
+    </script>
+	<link rel="stylesheet" href="/css/search.css" />
+    <script type="text/javascript" src="/js/search.js"></script>
+</body>
+</html>

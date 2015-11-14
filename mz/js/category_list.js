@@ -11,7 +11,7 @@ $(function(){
 
 	//获取商品分类
     $.ajax({
-        url: ApiUrl + "/index.php?act=mz_category&op=get_category_list&cate="+cate+"&key="+encodeURI(key),
+        url: ApiUrl + "/index.php?act=mz_goods&op=get_category_list&cate="+cate+"&key="+encodeURI(key),
         type: 'get',
         dataType: 'json',
         success: function(result) {
@@ -19,7 +19,7 @@ $(function(){
 			$('.filter_cates .cates_content').html(html);
 			var html = template('filter_brand_template', result.datas);
 			$('.filter_brands .cates_content').html(html);
-			$('.navbar .title,title').html(result.datas.title);
+			set_title(result.datas.title);
 			$('.filter_body').css('height',$(window).height()-$('.complete_button').height()*2);
 			$('.cates_button,.brands_button').tap(function(){
 				if($(this).attr('data-id')==0){
@@ -41,11 +41,11 @@ $(function(){
 				$('.filter_cates .current').each(function(){
 					_cates += ','+$(this).attr('data-id');
 				})
-				_cates.substr(2);
+				_cates = _cates.substr(2);
 				$('.filter_brands .current').each(function(){
 					_brands += ','+$(this).attr('data-id');
 				})
-				_brands.substr(2);
+				_brands = _brands.substr(2);
 				$('.filter').removeClass('trans');
 				ajax_goods();
 			})
@@ -80,19 +80,19 @@ $(function(){
 		clock = 1;
 		if(page == 1)$('.item-list').html('');
 		$.ajax({
-			url: ApiUrl + '/index.php?act=mz_category&op=get_goods&cate='+cate+'&key='+encodeURI(key)+'&cates='+_cates+'&brands='+_brands+'&sort='+_sort+'&page='+page,
+			url: ApiUrl + '/index.php?act=mz_goods&op=get_category_goods&cate='+cate+'&key='+encodeURI(key)+'&cates='+_cates+'&brands='+_brands+'&sort='+_sort+'&page='+page,
 			type: 'get',
 			dataType: 'json',
 			success: function(result) {
 				if(result.datas.goods_list.length>0){
-					var html = template('product-list-template', result.datas);
-					$('.result-content').append(html);
+					var html = template('item-list-template', result.datas);
+					$('.item-list').append(html);
 					$('img.lazy').picLazyLoad();
 					page++;
 					clock = 0;
 				}else{
-					if(page == 1 && key != '')$('.item-list').html('没有相应的搜索结果');
-					$('.wait').hide();
+					if(page == 1)$('.item-list').html('<div class="wait">没有相应的搜索结果</div>');
+					$('.loading').hide();
 				}
 			}
 		});
@@ -101,7 +101,7 @@ $(function(){
 
 	$(window).scroll(function() {
 		if(!clock){
-			if($('.wait').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+			if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
 				ajax_goods();
 			}
 		}					  

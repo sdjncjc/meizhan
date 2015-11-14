@@ -19,10 +19,6 @@ class mz_groupControl extends mobileHomeControl{
         parent::__construct();
     }
 
-    public function indexOp() {
-        exit;
-    }
-
     /**
      * 获取分类
      */
@@ -69,4 +65,45 @@ class mz_groupControl extends mobileHomeControl{
         output_data(array('group_list' => $group_list));
     }
 
+
+    /**
+     * 获取团购列表
+     */
+    public function get_oversea_listOp() {
+		$size = 10;
+        $condition = array();
+		$condition['is_vr'] = 0;
+		$condition['state'] = 20;
+		$condition['goods_type'] = array('gt', 0);
+        $type = intval($_GET['type']);
+		if($type == '1'){
+			$condition['start_time'] = array('gt', TIMESTAMP);
+		}else{
+			$condition['start_time'] = array('lt', TIMESTAMP);
+			$condition['end_time'] = array('gt', TIMESTAMP);
+		}
+		if($type == '2'){
+			$condition['end_time'] = array('lt', strtotime("today")+86400);
+		}elseif($type == '3'){
+			$size = 2;
+		}
+
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
+        $group_list = Model('groupbuy')->field('goods_id')->where($condition)->order('start_time desc')->limit((($page-1)*$size).','.$size)->select();
+		if($group_list){
+			//国家
+        	$country_list = rkcache('country');
+			$model_goods = Model('goods');
+			foreach($group_list as $k=>$v){
+				$goods = $model_goods->getGoodsInfoByID($v['goods_id'], 'country_id,goods_promotion_price,goods_jingle,goods_image,goods_name,goods_marketprice,goods_storage');
+				$v['img_url'] = thumb($goods, 360);
+				$v['soon'] = $type==1 ? 1 : 0;
+				$v['country_icon'] = $country_list[$goods['country_id']]['country_img_url'];
+				$group_list[$k] = array_merge($v,$goods);
+			}
+		}
+
+        output_data(array('group_list' => $group_list));
+    }
 }
