@@ -121,7 +121,7 @@ function open_url(type,sub,id){
 				url = "/mine/coupon.html";
 				break;
 			case 'point':
-				url = "/mine/address-manage.html";
+				url = "/mine/point.html";
 				break;
 		}
 	}else{
