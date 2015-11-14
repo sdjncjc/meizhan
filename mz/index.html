@@ -2,17 +2,17 @@
     <section class="navbar">
         <a class="myaccount" href="/mine/index.html"></a>
         <h1 class="title">亲亲美站</h1>
-        <a class="search-btn" href="/category/search.html"></a>
+        <a class="search-btn" href="/home/search.html"></a>
     </section>
     <section class="wrapper">
         <section class="filterbar"></section>
         <section class="slider"></section>
         <section class="catebox">
 			<div class="grid">
-				<a class="col-3" href="/tuan/group_list.html"><i></i>限量购</a>
-				<a class="col-3" href="/app/top.html"><i></i>TOP排行</a>                   
-				<a class="col-3" href="/oversea/oversea_index.html"><i></i>海外购</a>                 
-				<a class="col-3" href="/category/category_index.html"><i></i>更多分类</a>     
+				<a class="col-3" href="/home/group_list.html"><i></i>限量购</a>
+				<a class="col-3" href="/home/top.html"><i></i>TOP排行</a>                   
+				<a class="col-3" href="/home/oversea_index.html"><i></i>海外购</a>                 
+				<a class="col-3" href="/home/category.html"><i></i>更多分类</a>     
 			</div>
 		</section>
         <section class="grid-thin ad"></section>
@@ -32,15 +32,15 @@
     </script>
     <script id="filterbar-template" type="text/template">
         <div class="filterbar-dropdown-mask hidden"></div>
-        <div class="filterbar-dropdown hidden" style="top: 0px;">
-            <div class="filterbar-dropdown-item active" data-categoy="index">
+        <div class="filterbar-dropdown hidden">
+            <div class="filterbar-dropdown-item active" data="index">
                 <div class="filterbar-dropdown-item-inner">上新</div>
             </div>
-            <div class="filterbar-dropdown-item" data-category="lastminute">
+            <div class="filterbar-dropdown-item" data="lastminute">
                 <div class="filterbar-dropdown-item-inner">最后疯抢</div>
             </div>
             {{each gc_id_1_list as value index}}
-            <div class="filterbar-dropdown-item" data-category="{{value.gc_id}}">
+            <div class="filterbar-dropdown-item" data="{{value.gc_id}}">
                 <div class="filterbar-dropdown-item-inner">{{value.gc_name}}</div>
             </div>
             {{/each}}
@@ -51,10 +51,10 @@
             </div>
             <div class="filterbar-inner-wrapper">
                 <div class="filterbar-inner">
-                    <div class="filterbar-inner-item active" data-category="index">上新</div>
-                    <div class="filterbar-inner-item" data-category="lastminute">最后疯抢</div>
+                    <div class="filterbar-inner-item active" data="index">上新</div>
+                    <div class="filterbar-inner-item" data="lastminute">最后疯抢</div>
                     {{each gc_id_1_list as value index}}
-                    <div class="filterbar-inner-item" data-category="{{value.gc_id}}">{{value.gc_name}}</div>
+                    <div class="filterbar-inner-item" data="{{value.gc_id}}">{{value.gc_name}}</div>
                     {{/each}}
                 </div>
             </div>
@@ -79,45 +79,7 @@
             </a>
         </div>
     </script>
-    <script id="item-list-template" type="text/template">
-        {{each brandsale_list as value index}}
-        <a href="/brandsale/brandsale.html?rec_id={{value.rec_id}}" class="item-box">
-            <div class="item-box-content">
-                <img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}">
-				{{if value.preferential!=''}}
-                <div class="item-box-promotion">
-                    <p>{{value.preferential}}</p>
-                    <div class="background"></div>
-                </div>
-                {{/if}}
-            </div>
-            <div class="item-box-header">
-                <div class="item-box-discount">
-                    {{if value.isnew}}
-                    <i></i>
-					{{/if}}
-					{{value.discount}}折起
-                </div>
-                <div class="item-title">
-                    {{value.name}}
-                </div>
-                {{if value.timer.day > 1}}
-                <div class="item-timer">
-                    剩{{value.timer.day}}天
-                </div>
-                {{else if value.timer.hour > 1}}
-                <div class="item-timer red">
-                    剩{{value.timer.hour}}小时
-                </div>
-                {{else}}
-                <div class="item-timer red">
-                    剩{{value.timer.minute}}分钟
-                </div>
-                {{/if}}
-            </div>
-        </a>
-        {{/each}}
-    </script>
+	<!--#include virtual="/tpl/brandsale_list.html"-->
     <script id="goods-list-template" type="text/template">
 		{{each recommend_goods_list as value index}}
 		<header><i></i>
@@ -126,7 +88,7 @@
 		<ul class="grid item-list">
 			{{each value.list as val key}}
 			<li class="col-6 row-8 item">
-				<a href="/detail/detail.html?id={{val.goods_id}}">
+				<a href="/home/detail.html?id={{val.goods_id}}">
 					<div class="row-6 item-img">
 						<img class="lazy" src="/img/blank.png" data-original="{{val.img_url}}" alt="{{val.goods_name}}" >
 						{{if val.goods_storage <= 0}}

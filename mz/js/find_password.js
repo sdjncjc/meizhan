@@ -1,4 +1,6 @@
 $(function(){
+	set_title('忘记密码');
+	$('.home-btn').remove();
 	$('.find-password-btn').tap(function(){
 		var user = $('.user-name-input').val();
 		var reg = /^1[3-578]\d{9}$/;
@@ -10,7 +12,7 @@ $(function(){
 				time: 2000
 			});			
 		}else if(reg.test(user)){ 
-			location.href=MzSiteUrl+"/login/find_password_phone.html?phone="+user;
+			location.href=MzSiteUrl+"/home/find_password_phone.html?phone="+user;
 		}else if(reg2.test(user)){ 
 			$.ajax({
 				type:'post',

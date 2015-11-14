@@ -14,11 +14,8 @@ $(function(){
 			if(cate){
 				var html = template('filters-template', result.datas);
 				$('.filters').html(html).removeClass('hidden');
-				$('.filter[data="'+cate+'"]').addClass('active');
-				set_title($('.filter[data="'+cate+'"]').html());
-				$('.filter').tap(function(){
-					location.href=MzSiteUrl+'/app/top.html?cate='+$(this).attr('data');
-				})
+				$('[data="'+cate+'"]').addClass('active');
+				set_title($('.filter .active').html());
 			}else{
 				var html = template('catebox-template', result.datas);
 				$('.catebox').html(html).removeClass('hidden');

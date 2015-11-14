@@ -1,0 +1,39 @@
+<script id="item-list-template" type="text/template">
+	{{each brandsale_list as value index}}
+	<a href="/home/brandsale.html?rec_id={{value.rec_id}}" class="item-box">
+		<div class="item-box-content">
+			<img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}">
+			{{if value.preferential!=''}}
+			<div class="item-box-promotion">
+				<p>{{value.preferential}}</p>
+				<div class="background"></div>
+			</div>
+			{{/if}}
+		</div>
+		<div class="item-box-header">
+			<div class="item-box-discount">
+				{{if value.isnew}}
+				<i></i>
+				{{/if}}
+				{{value.discount}}折起
+			</div>
+			<div class="item-title">
+				{{value.name}}
+			</div>
+			{{if value.timer.day > 1}}
+			<div class="item-timer">
+				剩{{value.timer.day}}天
+			</div>
+			{{else if value.timer.hour > 1}}
+			<div class="item-timer red">
+				剩{{value.timer.hour}}小时
+			</div>
+			{{else}}
+			<div class="item-timer red">
+				剩{{value.timer.minute}}分钟
+			</div>
+			{{/if}}
+		</div>
+	</a>
+	{{/each}}
+</script>

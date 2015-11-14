@@ -1,5 +1,5 @@
-<!--#include file="/tpl/head.html"-->
-<!--#include file="/tpl/navbar.html"-->
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
 	<!-- 内容盒子 -->
 	<section class="wrapper">
 		<section id="slider" class="swipe">
@@ -174,9 +174,9 @@
 							<div class="special-content">{{brandsale.special_content}}</div>
 						</div>
 						{{if brandsale.is_oversea}}
-						<a href="/brandsale/brandsale.html?rec_id={{brandsale.rec_id}}" class="special-button">进入专场</a>
+						<a href="/home/brandsale.html?rec_id={{brandsale.rec_id}}" class="special-button">进入专场</a>
 						{{else if event_type == 'oversea'}}
-						<a href="/oversea/oversea.html?rec_id={{brandsale.rec_id}}" class="special-button">进入专场</a>
+						<a href="/home/oversea.html?rec_id={{brandsale.rec_id}}" class="special-button">进入专场</a>
 						{{/if}}
 						{{/if}}
 					</div>

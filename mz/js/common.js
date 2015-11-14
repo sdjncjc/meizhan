@@ -40,35 +40,13 @@ var pagesize = 10;
 var MzSiteUrl = "http://mz.qinqin.net";
 var title = '亲亲美妆';
 
-function show_filterbar(){
-	var inner_w = 5;
-	$('.filterbar-inner-item').each(function(){
-		inner_w += $(this).width();
-	});
-	$('.filterbar-inner').width(inner_w);
-	
-	$('.filterbar-more i').tap(function(){
-		if($(this).hasClass('show-more')){
-			$(this).addClass('show-less').removeClass('show-more');
-			$('.filterbar-inner-mask').removeClass('hidden');
-			$('.filterbar-dropdown').removeClass('hidden').css('top',$('.navbar').height()+$('.filterbar-inner-container').height());
-			$('.filterbar-dropdown-mask').removeClass('hidden');
-		}else{
-			$(this).addClass('show-more').removeClass('show-less');
-			$('.filterbar-inner-mask').addClass('hidden');
-			$('.filterbar-dropdown').addClass('hidden').css('top',0);
-			$('.filterbar-dropdown-mask').addClass('hidden');
-		}
-	})
-}
-
 function get_footer(){
 	var key = getcookie('key');
 	var html = '<div class="info-line">';
 	if (key){
 		html += '<a href="/member.html">我的亲亲</a><a href="javascript:void(0);" class="logout">退出</a>';
 	}else{
-		html += '<a href="/login/login.html">登录</a><a href="/login/register.html">注册</a>';
+		html += '<a href="/home/login.html">登录</a><a href="/home/register.html">注册</a>';
 	}
 	html += '<a href="">客户端</a><a href="http://www.qinqin.net">电脑版</a></div><p class="info"></p><p class="tel">客服热线：<span>4000-500-775</span></p><p class="icp">2015 京ICP备08031978号</p>';
 	$('.footer').html(html);
@@ -138,7 +116,7 @@ function delCookie(name){//删除cookie
 
 function checklogin(state){
 	if(state == 0){
-		location.href = MzSiteUrl+'/login/login.html';
+		location.href = MzSiteUrl+'/home/login.html';
 		return false;
 	}else {
 		return true;

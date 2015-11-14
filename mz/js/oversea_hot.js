@@ -1,6 +1,7 @@
 // JavaScript Document
 
 $(function(){
+	set_title('全球爆款');
 	var page = 1;
 	var type = 0;
 	var clock = 0;
@@ -57,7 +58,7 @@ $(function(){
 		clock = 1;
 		if(page == 1)$('.hot-list').html('');
 		$.ajax({
-			url: ApiUrl + '/index.php?act=mz_oversea&op=get_group&type='+type+'&page='+page,
+			url: ApiUrl + '/index.php?act=mz_group&op=get_oversea_list&type='+type+'&page='+page,
 			type: 'get',
 			dataType: 'json',
 			success: function(result) {

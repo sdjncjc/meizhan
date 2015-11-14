@@ -1,0 +1,52 @@
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="search-item">
+        <ul class="nav">
+            <li id="tab1" class="item-sorted-popularity current">人气</li>
+            <li id="tab2" class="item-sorted-price">价格</li>
+            <li id="tab3" class="item-filter">筛选</li>
+        </ul>
+    </section>
+    <section class="wrapper">
+        <section class="brand-story"></section>
+        <section class="grid-wrap">
+            <ul class="grid item-list"></ul>
+        </section>
+    </section>
+    <div class="loading">正在加载...</div>
+    
+    <section class="filter">
+        <section class="filter_navbar">
+            <a class="back-btn"></a>
+            <h1 class="title">筛选</h1>
+        </section>
+        <section class="filter_body">
+            <section class="filter_cates">
+                <div class="brand">类别</div>
+                <div class="cates_content"></div>
+            </section>
+            <section class="filter_brands">
+                <div class="brand">品牌</div>
+                <div class="cates_content"></div>
+            </section>
+            <section class="complete_button">完成</section>
+        </section>
+    </section>
+    
+    <script type="text/template" id="filter_cates_template">
+        <div class="cates_button current" data-id="0">全部</div>
+        {{each class_list as value index}}
+        <div class="cates_button" data-id="{{index}}">{{value}}</div>
+        {{/each}}
+    </script>
+    <script type="text/template" id="filter_brand_template">
+        <div class="brands_button current" data-id="0">全部</div>
+        {{each brand_list as value index}}
+        <div class="brands_button" data-id="{{index}}">{{value}}</div>
+        {{/each}}
+    </script>
+	<!--#include virtual="/tpl/goods_list.html"-->
+	<link rel="stylesheet" href="/css/category.css" />
+    <script type="text/javascript" src="/js/category_list.js"></script>
+</body>
+</html>

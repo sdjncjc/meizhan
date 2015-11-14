@@ -9,9 +9,19 @@ $(function(){
         success: function(result) {
 			var html = template('filterbar-template', result.datas);
 			$('.filterbar').html(html);
-			show_filterbar();
+			//设置导航
+			var inner_w = 5;
+			$('.filterbar-inner-item').each(function(){
+				inner_w += $(this).width();
+			});
+			$('.filterbar-inner').width(inner_w);
+			$('.filterbar-dropdown').css('top', $('.navbar').height()+$('.filterbar-inner-container').height());
+			$('.filterbar-more i').tap(function(){
+				$(this).toggleClass('show-more').toggleClass('show-less');
+				$('.filterbar-inner-mask,.filterbar-dropdown,.filterbar-dropdown-mask').toggleClass('hidden');
+			})
 			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
-				location.href=MzSiteUrl+'/brandsale/brandsale_list.html?category='+$(this).attr('data-category');
+				location.href=MzSiteUrl+'/home/brandsale_list.html?cate='+$(this).attr('data');
 			})
         }
     });
@@ -37,7 +47,7 @@ $(function(){
     });
 	//获取品牌特卖列表
     $.ajax({
-        url: ApiUrl + "/index.php?act=mz_brandsale&op=get_list",
+        url: ApiUrl + "/index.php?act=mz_brandsale&op=get_brandsale_list",
         type: 'get',
         dataType: 'json',
         success: function(result) {

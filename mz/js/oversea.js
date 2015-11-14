@@ -7,25 +7,29 @@ $(function(){
 	
 	//获取品牌特卖详情
     $.ajax({
-        url: ApiUrl + "/index.php?act=mz_oversea&op=get_info&rec_id="+rec_id,
+        url: ApiUrl + "/index.php?act=mz_brandsale&op=get_brandsale_info&type=1&rec_id="+rec_id,
         type: 'get',
         dataType: 'json',
         success: function(result) {
 			var data = result.datas;
+			if(data.error){
+				$.dialog({
+					content: data.error,
+					title: "alert",
+					time: 2000
+				});			
+				window.setTimeout(function(){history.back();},1000);
+				return false;
+			}
 			var html = template('brand-story-template', data);
 			$('.brand-story').html(html);
-			$('.title, title').html(data.brandsale.name);
+			set_title(data.brandsale.name);
 			//展开
-			$('.show-more').tap(function(){
-				$(this).hide();
-				$('.show-less').show();
-				$('.brand-intro').css('max-height','100%');
-			})
-			$('.show-less').tap(function(){
-				$(this).hide();
-				$('.show-more').show();
-				$('.brand-intro').css('max-height','1.6rem');
-			})
+			$('.show-control').tap(function(){
+				var m_h = $(this).index()==3 ? '100%' : '1.6rem';
+				$('.brand-intro').css('max-height',m_h);
+				$('.show-more,.show-less').toggleClass('hidden');
+			});
         }
     });
 	//获取商品
@@ -33,7 +37,7 @@ $(function(){
 		if(clock)return;
 		clock = 1;
 		$.ajax({
-			url: ApiUrl + '/index.php?act=mz_oversea&op=get_goods&rec_id='+rec_id+'&page='+page,
+			url: ApiUrl + '/index.php?act=mz_brandsale&op=get_brandsale_goods&rec_id='+rec_id+'&page='+page,
 			type: 'get',
 			dataType: 'json',
 			success: function(result) {

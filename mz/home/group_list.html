@@ -1,5 +1,5 @@
-<!--#include file="/tpl/head.html"-->
-<!--#include file="/tpl/navbar.html"-->
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
     <section class="wrapper">
         <section class="filterbar"></section>
         <div class="group-list"></div>
@@ -11,16 +11,16 @@
 
     <script id="filterbar-template" type="text/template">
         <div class="filterbar-dropdown-mask hidden"></div>
-        <div class="filterbar-dropdown hidden" style="top: 0px;">
-            <div class="filterbar-dropdown-item active" data-categoy="all">
+        <div class="filterbar-dropdown hidden">
+            <div class="filterbar-dropdown-item active" data="all">
                 <div class="filterbar-dropdown-item-inner">全部</div>
             </div>
             {{each groupbuy_class as value index}}
-            <div class="filterbar-dropdown-item" data-category="{{value.class_id}}">
+            <div class="filterbar-dropdown-item" data="{{value.class_id}}">
                 <div class="filterbar-dropdown-item-inner">{{value.class_name}}</div>
             </div>
             {{/each}}
-            <div class="filterbar-dropdown-item" data-category="nextup">
+            <div class="filterbar-dropdown-item" data="nextup">
                 <div class="filterbar-dropdown-item-inner">下期预告</div>
             </div>
         </div>
@@ -30,11 +30,11 @@
             </div>
             <div class="filterbar-inner-wrapper">
                 <div class="filterbar-inner">
-                    <div class="filterbar-inner-item active" data-category="all">全部</div>
+                    <div class="filterbar-inner-item active" data="all">全部</div>
                     {{each groupbuy_class as value index}}
-                    <div class="filterbar-inner-item" data-category="{{value.class_id}}">{{value.class_name}}</div>
+                    <div class="filterbar-inner-item" data="{{value.class_id}}">{{value.class_name}}</div>
                     {{/each}}
-                    <div class="filterbar-inner-item" data-category="nextup">下期预告</div>
+                    <div class="filterbar-inner-item" data="nextup">下期预告</div>
                 </div>
             </div>
             <div class="filterbar-more">
@@ -45,7 +45,7 @@
 
 	<script type="text/template" id="list-item-template">
         {{each group_list as value index}}
-        <a href="/detail/detail.html?id={{value.goods_id}}">
+        <a href="/home/detail.html?id={{value.goods_id}}">
         {{if value.goods_storage > 0}}
         <div class="item">
         {{else}}
@@ -77,12 +77,12 @@
 	<script type="text/template" id="list-next-up-template">
         {{each group_list as value index}}
             <div class="item nextup">
-                <a href="/detail/detail.html?id={{value.goods_id}}">
+                <a href="/home/detail.html?id={{value.goods_id}}">
                 <div class="label">省<div class="price">{{value.goods_marketprice-value.groupbuy_price}}</div></div>
                 <img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}">
                 </a>
                 <div class="item-detail">
-                    <a href="/detail/detail.html?id={{value.goods_id}}">
+                    <a href="/home/detail.html?id={{value.goods_id}}">
                     <p class="title">
                         {{value.goods_name}}
                     </p>
@@ -112,8 +112,5 @@
 
 	<link rel="stylesheet" href="/css/group_list.css" />
     <script type="text/javascript" src="/js/group_list.js"></script>
-    <script>
-    	title = '限量购';
-    </script>
 </body>
 </html>

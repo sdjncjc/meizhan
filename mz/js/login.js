@@ -1,4 +1,6 @@
 $(function(){
+	set_title('登录亲亲');
+	$('body').css('background','#eee');
 	$('.login-btn').tap(function(){
 		var user_name = $('.user-name-input').val();
 		var password = $('.password-input').val();

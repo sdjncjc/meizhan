@@ -1,4 +1,5 @@
 $(function(){
+	set_title('注册亲亲');
 	var wait=60;
 	function r_time() {  
         if (wait == 0) {  
@@ -84,7 +85,7 @@ $(function(){
 							title: "ok",
 							time: 1000
 						});			
-						window.setTimeout(function(){location.href = MzSiteUrl+'/login/login.html';},1000); 
+						window.setTimeout(function(){location.href = MzSiteUrl+'/home/login.html';},1000); 
 					}else{
 						$.dialog({
 							content: result.datas.error,

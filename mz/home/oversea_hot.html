@@ -1,5 +1,5 @@
-<!--#include file="/tpl/head.html"-->
-<!--#include file="/tpl/navbar.html"-->
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
     <section class="wrapper">
         <div class="time-tablist">
 			<div class="time-tab active">
@@ -30,7 +30,7 @@
     <!-- 商品列表模板 -->
     <script type="text/template" id="oversea-hot-list-tpl">
         {{each group_list as value index}}
-        <a class="item{{if value.goods_storage <= 0}} soldout{{/if}}" href="/detail/detail.html?id={{value.goods_id}}">
+        <a class="item{{if value.goods_storage <= 0}} soldout{{/if}}" href="/home/detail.html?id={{value.goods_id}}">
             <div class="soldout-icon">已抢光</div>
 			<img class="img-cnt lazy" src="/img/blank.png" data-original="{{value.img_url}}">
             <div class="item-detail">
@@ -50,8 +50,5 @@
     </script>
 	<link rel="stylesheet" href="/css/oversea_hot.css" />
     <script type="text/javascript" src="/js/oversea_hot.js"></script>
-    <script>
-    	title = '全球爆款';
-    </script>
 </body>
 </html>
