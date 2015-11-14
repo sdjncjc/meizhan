@@ -1,0 +1,52 @@
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
+<link rel="stylesheet" href="/css/point.css" media="all" />
+    <section class="wrapper J_wrapper" id="wrapper">
+        <section class="point-info-box">
+            <div class="point-info">
+                <div class="point-amount">
+                    <span></span>
+                    个积分
+                </div>
+                <div class="point-declare">
+                    成功注册会员：增加20积分；会员每天登录：增加5积分；评价完成订单：增加10积分
+                </div>
+            </div>
+            <!-- <div class="point-pick hidden">
+                <i class="icon point"></i>
+                <span class="point-pick-text">捡贝壳</span>
+            </div> -->
+        </section>
+
+        <div class="point-detail-box">
+            <div class="point-detail-box-hd">
+                <h3>积分明细</h3>
+                <a href="/point/about.html">积分说明 <i class="icon right-arrow"></i></a>
+            </div>
+            <div class="point-detail-box-bd"></div>
+        </div>
+    </section>    
+    <script type="text/template" id="point-item-template">
+        {@each records as record}
+        <div class="point-item">
+            <span class="point-from">
+                ${record.type_desc}
+            </span>
+            <span class="point-gain">
+                ${record.num}
+            </span>
+            <span class="point-time">
+                ${record.format_time}
+            </span>
+        </div>
+        {@/each}
+    </script>
+    <script type="text/javascript" src="/js/mine.js"></script>
+    <script type="text/javascript">
+        title = "我的积分";
+        // 显示积分列表
+        getAjaxResult(getUrl('mz_wallet','list'),'point-item-template',".point-detail-box-bd");
+    </script>
+</body>
+
+</html>

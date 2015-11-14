@@ -1,0 +1,44 @@
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
+    <link rel="stylesheet" href="/css/coupon.css" media="all" />
+    <section class="wrapper J_wrapper" id="wrapper">
+        <section class="coupon-list"></section>
+    </section>
+
+    <script type="text/template" id="coupon-template">
+        {{each data as voucher}}
+        <div class="coupon-item">
+            <div class="coupon-detail">
+                <div class="coupon-category">
+                    适用类目：{{voucher.voucher_title}}
+                </div>
+                <div class="coupon-valid-period">
+                    有效期：{{voucher.voucher_start_date}} 至 {{voucher.voucher_end_date}}
+                </div>
+                <div class="coupon-serial-number">
+                    券号：{{voucher.voucher_code}}
+                </div>
+            </div>
+            <div class="coupon-stub used">
+                <div class="stamp" />
+                <p class="coupon-value">&yen;{{voucher.voucher_price}}</p>
+                <p class="coupon-condition">{{voucher.voucher_desc}}</p>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
+    <script id="coupon-empty-template" type="text/template">
+        <i class="coupon-img"></i>
+        <p class="coupon-hint">您暂时还没有可用代金券哦~</p>
+        <a class="coupon-btn" href="/">逛逛今日特卖</a>
+    </script>
+    <script type="text/javascript" src="/js/mine.js"></script>
+    <script type="text/javascript">
+        title = "我的代金券";
+        // 显示代金券列表
+        getAjaxResult(getUrl('mz_wallet','pointList'),'coupon-template',".coupon-list",'coupon-empty-template');
+    </script>
+</body>
+
+</html>
