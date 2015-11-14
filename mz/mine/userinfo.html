@@ -1,29 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-<meta charset="utf-8" />
-<meta name="description" content="亲亲网是国内首家承诺“百分百正品”的化妆品团购特卖网站,销售国内外知名化妆品、护肤品、彩妆等上万种商品,海外直邮,30天无条件退换,我们只卖正品!" />
-<meta name="keywords" content="亲亲网,正品化妆品商城,韩国化妆品,化妆品特卖网站,化妆品全球购" />
-<!-- 全屏显示 WebApp，隐藏 Safari 导航栏以及工具栏 -->
-<meta content="yes" name="apple-mobile-web-app-capable"/>
-<!-- 屏蔽iPhone下的拨号链接-->
-<meta content="telephone=no" name="format-detection"/>
-<!-- 不让android识别邮箱 -->
-<meta content="email=no" name="format-detection" />
-<!-- 设置系统状态栏风格 -->
-<meta content="black" name="apple-mobile-web-app-status-bar-style">
-<title>个人资料</title>
-<link rel="stylesheet" href="/css/common.css" />
+<!--#include virtual="/tpl/head.html"-->
 <link href="/css/perinfo.css" rel="stylesheet" media="all" />
-</head>
-<body>
-    <section class="header">
-        <section class="navbar">
-            <a class="back-btn" href="javascript:history.back();"></a>
-            <h1 class="title">个人资料</h1>
-            <a class="home-btn" href="/"></a>
-        </section>
-    </section>
+<!--#include virtual="/tpl/navbar.html"-->
     <section class="uprows">
         <div class="headicon">
             <div class="headicon-inner">
@@ -150,15 +127,13 @@
             </div>
         </div>
     </div>
-
-<script type="text/javascript" src="/js/zepto.min.js"></script>
-<script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript" src="/js/mine.js"></script>
 <script type="text/javascript" src="/js/CJL.0.1.min.js"></script>
 <script type="text/javascript" src="/js/upload.js"></script>
 <script type="text/javascript">
     // 显示用户基本信息
     var username;
+    title = "个人资料";
     getAjaxResult(getUrl('mz_mine','getUserInfo'),'','','',"setuserinfo");
     function setuserinfo(data){
         username = data.member_name;

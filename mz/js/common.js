@@ -154,6 +154,7 @@ function set_title(title){
 $(function(){
 	//设置标题
 	$('.navbar .title').html(title);
+	document.title = title + " - " + document.title;
 	
 	if($('.footer').length)get_footer();
 

@@ -1,5 +1,18 @@
 var page = 1;
 var stop = false;
+// var proxyZepto = {
+// 	ready:false,
+// 	init:function(){
+// 		if (!this.ready) {
+// 			document.domain = "qinqin.net";
+// 			document.write('<iframe id="proxyform" src="'+ ApiUrl +'/proxy.html#agentReady" style="display:none"></iframe>');
+// 		};
+// 	},
+// 	setAgentReady:function(){
+// 		this.ready = true;
+// 	}
+// };
+// proxyZepto.init();
 function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
 	var html = "";
 	var function_data;
@@ -55,15 +68,22 @@ function getUrl(act,op,params){
 	return ApiUrl + "/index.php?act=" + act + "&op=" + op + "&" + params;
 }
 function ajax_do(url,params){
-	$.post(url,params,function(result){
-    	if(result.code == 200){
-			$.dialog({content:result.datas,title: "提示",time: 1000});
-			window.setTimeout(function(){location.reload();},1000); 
-        }else{
-			$.dialog({content:result.datas.error,title: "ok",time: 1000});
-        }
-	},'json');
+	// if (proxyZepto.ready) {
+		$.post(url,params,function(result){
+	    	if(result.code == 200){
+				$.dialog({content:result.datas,title: "提示",time: 1000});
+				window.setTimeout(function(){location.reload();},1000); 
+	        }else{
+				$.dialog({content:result.datas.error,title: "ok",time: 1000});
+	        }
+		},'json');
+	// }else{
+	// 	proxyZepto.init();
+	// }
 }
+// function agentReady(){
+// 	proxyZepto.setAgentReady();
+// }
 
 function open_url(type,sub,id){
 	var key = getcookie('key');
@@ -71,7 +91,6 @@ function open_url(type,sub,id){
 	if (key) {
 		switch(type){
 			case 'userinfo':
-				title = "个人中心";
 				url = "/mine/userinfo.html";
 				break;
 			case 'orders':
