@@ -38,7 +38,13 @@ $(function(){
 								title: "ok",
 								time: 1000
 							});		
-							window.setTimeout(function(){window.location.href="/mine/index.html";},1000); 
+							if (getcookie('lastvisit')) {
+								window.setTimeout(function(){
+									window.location.href = decodeURIComponent(getcookie('lastvisit'));
+								},1000); 
+							}else{
+								window.setTimeout(function(){history.back();},1000); 
+							}
 						}
 					}else{
 						$.dialog({
