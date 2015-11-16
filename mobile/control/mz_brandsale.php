@@ -156,7 +156,7 @@ class mz_brandsaleControl extends mobileHomeControl{
 					$order = "goods_id desc";
 			}
 			$cate = intval($_GET['cate']);
-			if($cate)$where['gc_id'] = $cate;
+			if($cate)$condition['gc_id'] = $cate;
 			
 			$page = intval($_GET['page']);
 			$page = $page <= 0 ? 1 : $page;
