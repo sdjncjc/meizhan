@@ -50,12 +50,29 @@ class mz_walletControl extends mobileMemberControl {
         }
         output_data(array('data'=>$voucher_list));
     }
+    public function getMyPointOp(){
+        output_data(array('data'=>$this->member_info['member_points']));
+    }
     public function pointListOp(){
+        $size = 8;     
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
         //查询积分日志列表
         $points_model = Model('points');
         $condition['pl_memberid'] = $this->member_info['member_id'];
-        $point_log = $points_model->getPointsLogList($condition);
-        output_data(array('data'=>$point_log));
+        $condition['limit'] = (($page-1)*$size).','.$size;
+        $point_log = $points_model->getPointsLogList($condition,true);
+        if (!empty($point_log)) {
+            foreach ($point_log as $key => $value) {
+                $point_log[$key]['pl_addtime'] = date("Y-m-d",$value['pl_addtime']);
+            }
+        }
+        $point_count = model()->table('points_log')->where(array('pl_memberid'=>$this->member_info['member_id']))->count();
+        $data_info['thispage'] = $page;
+        $data_info['count'] = $point_count;
+        $data_info['totalpage'] = ceil($point_count / $size);
+
+        output_data(array('data'=>$point_log,'data_info'=>$data_info));
     }
     /**
      * 调试

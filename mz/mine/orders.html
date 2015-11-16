@@ -70,7 +70,6 @@
         </div>
         <section id="payment" class="payment-list hidden"></section>
     </section>
-    <a href="javascript:;" class="backtop"></a>
     <section class="order-refund-reason hidden">
         <div class="title"><a href="javascript:;" class="btn btn-cancel">取消</a>请选择取消订单的原因？<a href="javascript:;" class="btn btn-ok">确定</a>
         </div>
@@ -106,10 +105,17 @@
                 break;
         }
         $(".navbar .title").html(title);
-        function ajax_getOrder(){        
+        function ajax_getOrder(){  
+            if (getcookie("totalpage")) {
+                if (page > getcookie("totalpage")) {
+                    stop = true;
+                    $(".loading").hide();
+                }
+            };          
             if(stop)return;
-            var url = getUrl('mz_member_order','getOrders',"type="+status+"&page=" + page++);
+            var url = getUrl('mz_member_order','getOrders',"type="+status+"&page=" + page);
             getAjaxResult(url,'order-list-template',".orders",'order-empty-template');
+            page++;
         }
         // 全部订单
         ajax_getOrder();
@@ -120,14 +126,7 @@
                     ajax_getOrder();
                 }
             }
-            if($('body').scrollTop() > 2000){
-                $('.backtop').show();
-            }else{
-                $('.backtop').hide();
-            }
         });
-
-        $('.backtop').tap(function(){$('body').scrollTop(0);});
     });
     function delOrder(id){
          if(window.confirm("确定要删除此订单吗？")){

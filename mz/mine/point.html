@@ -25,27 +25,63 @@
             </div>
             <div class="point-detail-box-bd"></div>
         </div>
-    </section>    
+    </section> 
+        <div class="loading">
+            正在加载...
+        </div>
+    <a href="javascript:;" class="backtop"></a>
     <script type="text/template" id="point-item-template">
-        {@each records as record}
+        {{each data as point}}
         <div class="point-item">
             <span class="point-from">
-                ${record.type_desc}
+                {{point.pl_desc}}
             </span>
             <span class="point-gain">
-                ${record.num}
+                {{point.pl_points}}
             </span>
             <span class="point-time">
-                ${record.format_time}
+                {{point.pl_addtime}}
             </span>
         </div>
-        {@/each}
+        {{/each}}
     </script>
     <script type="text/javascript" src="/js/mine.js"></script>
     <script type="text/javascript">
         title = "我的积分";
-        // 显示积分列表
-        getAjaxResult(getUrl('mz_wallet','list'),'point-item-template',".point-detail-box-bd");
+        // 获取个人资料
+        getAjaxResult(getUrl('mz_wallet','getMyPoint'),'','','',"getMyPoint");
+        function getMyPoint(data){
+            $(".point-amount span").text(data);
+        }
+        function ajax_getPoint(){ 
+            if (getcookie("totalpage")) {
+                if (page > getcookie("totalpage")) {
+                    stop = true;
+                    $(".loading").hide();
+                }
+            };    
+            if(stop) return;
+            // 显示积分列表
+            getAjaxResult(getUrl('mz_wallet','pointList',"&page=" + page),'point-item-template',".point-detail-box-bd");
+            page++;   
+        }
+        // 获取积分列表
+        ajax_getPoint();
+        $(window).scroll(function() {
+            if(!stop){
+                if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+                    $(".loading").show();
+                    ajax_getPoint();
+                }
+            }
+            if($('body').scrollTop() > 2000){
+                $('.backtop').show();
+            }else{
+                $('.backtop').hide();
+            }
+        });
+
+        $('.backtop').tap(function(){$('body').scrollTop(0);}); 
     </script>
 </body>
 

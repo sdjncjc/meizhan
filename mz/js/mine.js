@@ -1,18 +1,5 @@
 var page = 1;
 var stop = false;
-// var proxyZepto = {
-// 	ready:false,
-// 	init:function(){
-// 		if (!this.ready) {
-// 			document.domain = "qinqin.net";
-// 			document.write('<iframe id="proxyform" src="'+ ApiUrl +'/proxy.html#agentReady" style="display:none"></iframe>');
-// 		};
-// 	},
-// 	setAgentReady:function(){
-// 		this.ready = true;
-// 	}
-// };
-// proxyZepto.init();
 function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
 	var html = "";
 	var function_data;
@@ -25,11 +12,13 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
         	if(result.code == 200 && (result.datas.data != undefined && result.datas.data != '')){
         		if (tpl != "" && tpl != undefined) {
 		        	html = template(tpl, result.datas);
-		        	if (typeof(result.datas.data_info) == 'object') {
-		        		if (result.datas.data_info.thispage >= result.datas.data_info.totalpage) {
-		        			stop = true;
-	                    	$(".loading").hide();
-		        		};
+		        	if (result.datas.data_info !== undefined) {
+						addcookie('thispage',result.datas.data_info.thispage);
+						addcookie('totalpage',result.datas.data_info.totalpage);
+		        		// if (result.datas.data_info.thispage >= result.datas.data_info.totalpage) {
+		        		// 	stop = true;
+	           //          	$(".loading").hide();
+		        		// };
 		        	};
         		}else{
         			function_data =  result.datas.data;
@@ -67,7 +56,6 @@ function getUrl(act,op,params){
 	return ApiUrl + "/index.php?act=" + act + "&op=" + op + "&" + params;
 }
 function ajax_do(url,params){
-	// if (proxyZepto.ready) {
 		$.post(url,params,function(result){
 	    	if(result.code == 200){
 				$.dialog({content:result.datas,title: "提示",time: 1000});
@@ -76,13 +64,7 @@ function ajax_do(url,params){
 				$.dialog({content:result.datas.error,title: "ok",time: 1000});
 	        }
 		},'json');
-	// }else{
-	// 	proxyZepto.init();
-	// }
 }
-// function agentReady(){
-// 	proxyZepto.setAgentReady();
-// }
 
 function open_url(type,sub,id){
 	var key = getcookie('key');
