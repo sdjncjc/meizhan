@@ -1,0 +1,145 @@
+<!--#include virtual="head.html"-->
+    <link rel="stylesheet" href="/css/favorite.css" media="all" />
+    <section class="navbar J_navbar">
+        <a class="back-btn J_backBtn" href="javascript:history.back();"></a>
+        <h1 class="title brand-title">我的收藏</h1>
+        <span class="word-btn btn-edit">编辑</span>
+    </section>
+    <section class="container_main select_item">
+        <div class="view_name">
+            <span view="item">收藏的商品</span>
+            <span view="event">收藏的店铺</span>
+            <i class="slide_bar"></i>
+        </div>
+        <div class="container_view">
+            <div class="view_item">
+                <div class="container_list grid-wrap">
+                </div>
+                <div class="btn_del">删除</div>
+            </div>
+            <div class="view_event">
+                <div class="container_list"></div>
+                <div class="btn_del">删除</div>
+            </div>
+        </div>
+    </section>
+    <!--商品列表模板-->
+    <script id="tmpl_list_item" type="text/template">
+        {@each _ as listObject} {@if listObject.hasItem}
+        <ul class="grid item-list ${listObject.className}">
+            <div class="title_list"><i class="title_left"></i>${listObject.title}</div>
+            {@each listObject.list as item}
+            <li class="col-6 row-8 item">
+                <a class="target_item" href="${item.detailUrl}" pid="${item.pid}">
+                    <div class="icon_del"></div>
+                    <div class="row-6 item-img">
+                        <img use-lazyload data-src="${item.img}" alt="${item.title}" src="http://b0.hucdn.com/img/h5/spaceball.gif">{@if item.isOversea}
+                        <div class="trait_oversea"></div>
+                        {@/if} {@if item.isWaiting}
+                        <div class="trait_waiting">${item.waitingTitle}</div>
+                        {@else if item.isFinished}
+                        <div class="trait_finished">
+                            <div class="brand_finished">
+                                <span>已结束</span>
+                            </div>
+                        </div>
+                        {@/if}
+                    </div>
+                    <div class="row-2 item-info">
+                        <div class="title util-ellipsis">${item.title}</div>
+                        <div class="item-detail">
+                            <div class="price">
+                                <span class="price-discount">
+                                    <span>¥</span>
+                                <b>${item.price}</b>
+                                </span>
+                                <span class="price-original">
+                                    <span>¥</span>
+                                <b>${item.oldPrice}</b>
+                                </span>
+                            </div>
+                            <div class="discount">${item.discount}折</div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            {@/each}
+        </ul>
+        {@/if} {@/each}
+    </script>
+    <!--店铺列表模板-->
+    <script id="tmpl_list_event" type="text/template">
+        {@each _ as listObject} {@if listObject.hasItem}
+        <section class="itemlist-brand ${listObject.className}">
+            <div class="title_list"><i class="title_left"></i>${listObject.title}</div>
+            {@each listObject.list as item}
+            <a href="${item.targetUrl}" class="item-box target_item" eid="${item.eid}" bid="${item.bid}">
+                <div class="icon_del"></div>
+                {@if item.isOversea}
+                <div class="trait_oversea"></div>
+                {@/if}
+                <div class="item-box-content">
+                    <img use-lazyload data-src="${item.img}" src="http://b0.hucdn.com/img/h5/spaceball.gif">{@if item.mjPromotion}
+                    <div class="item-box-promotion">
+                        <p>${item.mjPromotion}</p>
+                        <div class="background"></div>
+                    </div>
+                    {@/if}
+                </div>
+                <div class="item-box-header">
+                    <div class="item-box-discount">
+                        ${item.promotion}
+                    </div>
+                    <div class="item-title">
+                        ${item.title}
+                    </div>
+                    <div class="item-timer ${item.timeClass}">
+                        ${item.timeTitle}
+                    </div>
+                </div>
+            </a>
+            {@/each}
+        </section>
+        {@/if} {@/each}
+    </script>
+    <script id="tmpl_empty" type="text/template">
+        <div class="container_empty">
+            <i></i>
+            <p>你还没有喜欢的东东呢,赶紧去逛逛吧</p>
+            <div>
+                <a href='/'>逛逛今日特卖</a>
+            </div>
+        </div>
+    </script>
+    <script type="text/javascript">
+        title = "我的收藏";
+        function getMyPoint(data){
+            $(".point-amount span").text(data);
+        }
+        function ajax_getPoint(fav_type){ 
+            if(stop) return;
+            // 显示积分列表
+            getAjaxResult(getUrl('mz_member_favorites','getList',"fav_type="+fav_type+"&page=" + page),'point-item-template',".point-detail-box-bd");
+        }
+        // 获取列表
+        ajax_getPoint("goods");
+        $(window).scroll(function() {
+            if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+                if(!stop){
+                    $(".loading").show();
+                    ajax_getPoint("goods");
+                    stop = true;
+                }
+            }
+            if($('body').scrollTop() > 2000){
+                $('.backtop').show();
+            }else{
+                $('.backtop').hide();
+            }
+        });
+
+        $('.backtop').tap(function(){$('body').scrollTop(0);}); 
+    </script>
+</body>
+
+</html>

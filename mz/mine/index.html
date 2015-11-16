@@ -101,7 +101,7 @@ if(window.name != "qinqin"){
                     </a>
                 </li>
                 <li class="wallet-item">
-                    <a id="J_balance_tip" href="javascript:;">
+                    <a id="J_balance_tip" href="javascript:open_url('balance');">
                         <i class="icon left"></i>
                         <span class="txt">余额</span><span id="my-balance" class="num"></span>
                     </a>
@@ -115,7 +115,7 @@ if(window.name != "qinqin"){
                     </a>
                 </li>
                 <li class="favourite">
-                    <a href="/mine/favourite.html" class="div-line">
+                    <a href="javascript:open_url('favorite')" class="div-line">
                         我的收藏
                         <span class="next-page"></span>
                     </a>
@@ -151,7 +151,6 @@ if(window.name != "qinqin"){
         </div>
         <a class="personal" onclick="open_url('userinfo')" href="javascript:void(0)">个人中心</a>
     </script>
-    <script type="text/javascript" src="/js/mine.js"></script>
     <script type="text/javascript">
         title = "我的美站";
         // 显示用户基本信息

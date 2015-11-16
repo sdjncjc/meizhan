@@ -1,4 +1,4 @@
-<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="head.html"-->
 <!--#include virtual="/tpl/navbar.html"-->
 <link rel="stylesheet" href="/css/point.css" media="all" />
     <section class="wrapper J_wrapper" id="wrapper">
@@ -12,16 +12,11 @@
                     成功注册会员：增加20积分；会员每天登录：增加5积分；评价完成订单：增加10积分
                 </div>
             </div>
-            <!-- <div class="point-pick hidden">
-                <i class="icon point"></i>
-                <span class="point-pick-text">捡贝壳</span>
-            </div> -->
         </section>
 
         <div class="point-detail-box">
             <div class="point-detail-box-hd">
                 <h3>积分明细</h3>
-                <a href="/point/about.html">积分说明 <i class="icon right-arrow"></i></a>
             </div>
             <div class="point-detail-box-bd"></div>
         </div>
@@ -45,33 +40,26 @@
         </div>
         {{/each}}
     </script>
-    <script type="text/javascript" src="/js/mine.js"></script>
     <script type="text/javascript">
         title = "我的积分";
         // 获取个人资料
-        getAjaxResult(getUrl('mz_wallet','getMyPoint'),'','','',"getMyPoint");
+        getAjaxResult(getUrl('mz_member_wallet','getMyPoint'),'','','',"getMyPoint");
         function getMyPoint(data){
             $(".point-amount span").text(data);
         }
         function ajax_getPoint(){ 
-            if (getcookie("totalpage")) {
-                if (page > getcookie("totalpage")) {
-                    stop = true;
-                    $(".loading").hide();
-                }
-            };    
             if(stop) return;
             // 显示积分列表
-            getAjaxResult(getUrl('mz_wallet','pointList',"&page=" + page),'point-item-template',".point-detail-box-bd");
-            page++;   
+            getAjaxResult(getUrl('mz_member_wallet','pointList',"&page=" + page),'point-item-template',".point-detail-box-bd");
         }
         // 获取积分列表
         ajax_getPoint();
         $(window).scroll(function() {
-            if(!stop){
-                if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+            if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+                if(!stop){
                     $(".loading").show();
                     ajax_getPoint();
+                    stop = true;
                 }
             }
             if($('body').scrollTop() > 2000){

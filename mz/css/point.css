@@ -225,3 +225,51 @@ body {
   opacity: .4;
   margin-right: 0.2rem;
 }
+.balance-info {
+  float: left;
+  margin-left: 0.5rem;
+}
+.balance-info li {
+  list-style: none;
+}
+.balance-info li span {
+  font-size: 1.2rem;
+  color: #ff4a7a;
+  margin-left: 0.5rem;
+}
+.balance-item {
+  background: #FFF;
+  font-size: 0.6rem;
+  border-bottom: 1px solid #c4c4c4;
+  /*记录为空*/
+}
+.balance-item .balance-desc {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: .3rem .4rem;
+  color: #7a7a7a;
+}
+.balance-item .balance-amount .balance-income,
+.balance-item .balance-amount .balance-spending,
+.balance-item .balance-amount .balance-freeze {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: .3rem .4rem;
+  color: #7a7a7a;
+}
+.balance-item .balance-amount .balance-income,
+.balance-item .balance-amount .balance-spending,
+.balance-item .balance-amount .balance-freeze {
+  width: 30%;
+  text-align: left;
+}
+.balance-item .balance-time {
+  text-align: right;
+  padding-right: 0.4rem;
+  padding-bottom: 0.3rem;
+}
+.balance-item .empty-record {
+  padding: .3rem .4rem;
+  font-size: 0.8rem;
+  text-align: center;
+}

@@ -1,4 +1,4 @@
-<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="head.html"-->
 <!--#include virtual="/tpl/navbar.html"-->
     <link rel="stylesheet" href="/css/coupon.css" media="all" />
     <section class="wrapper J_wrapper" id="wrapper">
@@ -33,11 +33,10 @@
         <p class="coupon-hint">您暂时还没有可用代金券哦~</p>
         <a class="coupon-btn" href="/">逛逛今日特卖</a>
     </script>
-    <script type="text/javascript" src="/js/mine.js"></script>
     <script type="text/javascript">
         title = "我的代金券";
         // 显示代金券列表
-        getAjaxResult(getUrl('mz_wallet','couponList'),'coupon-template',".coupon-list",'coupon-empty-template');
+        getAjaxResult(getUrl('mz_member_wallet','couponList'),'coupon-template',".coupon-list",'coupon-empty-template');
     </script>
 </body>
 

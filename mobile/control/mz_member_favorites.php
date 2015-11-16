@@ -65,5 +65,29 @@ class mz_member_favoritesControl extends mobileMemberControl{
             output_error('收藏失败');
         }
     }
+    /**
+     * 获取收藏列表
+     * @return [type] [description]
+     */
+    public function getListOp(){
+        $fav_type = $_POST("fav_type");
+        $size = 10;     
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
+        if (!in_array($fav_type, array('goods','store'))) {
+            output_error("未知收藏类型");
+        }
+        $favorites_model = Model('favorites');
+        $condition = array();
+        $condition['member_id'] = $this->member_info['member_id'];
+        $condition['fav_type'] = 'store';
+        $favorites_list = $favorites_model->getFavoritesList($condition,"*",true , 'log_id desc', (($page-1)*$size).','.$size);
+        
+        $fav_count = $this->table('favorites')->where($condition)->count()
+        $data_info = array();
+        $data_info['thispage'] = $page;
+        $data_info['totalpage'] = ceil($fav_count / $size);
+        output_data(array('data'=>$favorites_list,'data_info'=>$data_info));
+    }
 
 }

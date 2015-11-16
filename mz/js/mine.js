@@ -8,17 +8,21 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
         type: 'post',
         dataType: 'json',
         success: function(result) {
-        	// console.log(result);
         	if(result.code == 200 && (result.datas.data != undefined && result.datas.data != '')){
         		if (tpl != "" && tpl != undefined) {
 		        	html = template(tpl, result.datas);
 		        	if (result.datas.data_info !== undefined) {
-						addcookie('thispage',result.datas.data_info.thispage);
-						addcookie('totalpage',result.datas.data_info.totalpage);
-		        		// if (result.datas.data_info.thispage >= result.datas.data_info.totalpage) {
-		        		// 	stop = true;
-	           //          	$(".loading").hide();
-		        		// };
+		        		if (page >= result.datas.data_info.thispage) {
+		        			if (page >= result.datas.data_info.totalpage) {
+		        				stop = true;
+		        			}else{
+		        				stop = false;
+            					page++;   
+		        			}
+		        		}else{
+		        			stop = false;
+            				page++;   
+		        		}
 		        	};
         		}else{
         			function_data =  result.datas.data;
@@ -28,16 +32,16 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
 	        		html = template(empty_tpl, {});
 	        	}else{
 					$.dialog({content:result.datas.error,title: "ok",time: 1000});
-					if (getcookie('lastvisit')) {
-						window.setTimeout(function(){
-							window.location.href = decodeURIComponent(getcookie('lastvisit'));
-						},1000); 
-					}else{
-						window.setTimeout(function(){history.back();},1000); 
-					}
+					// if (getcookie('lastvisit')) {
+					// 	window.setTimeout(function(){
+					// 		window.location.href = decodeURIComponent(getcookie('lastvisit'));
+					// 	},1000); 
+					// }else{
+					// 	window.setTimeout(function(){history.back();},1000); 
+					// }
 	        	}
-	        	$(".loading").hide();
 	        }
+	        $(".loading").hide();
 	        $(obj).append(html);
 			$('img.lazy').picLazyLoad();
 		},
@@ -104,6 +108,12 @@ function open_url(type,sub,id){
 				break;
 			case 'point':
 				url = "/mine/point.html";
+				break;
+			case 'balance':
+				url = "/mine/balance.html";
+				break;
+			case 'favorite':
+				url = "/mine/favorite.html";
 				break;
 		}
 	}else{

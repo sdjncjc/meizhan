@@ -130,6 +130,7 @@ function set_title(title){
 }
 
 $(function(){
+	template.config('base', '');
 	//设置标题
 	$('.navbar .title').html(title);
 	document.title = title + " - " + document.title;

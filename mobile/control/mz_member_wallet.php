@@ -22,7 +22,10 @@ class mz_walletControl extends mobileMemberControl {
     public function indexOp() {
         exit;
     }
-
+    /**
+     * 获取优惠券列表
+     * @return [type] [description]
+     */
     public function couponListOp(){
         $model_voucher = Model('voucher');
         $voucher_list = $model_voucher->getMemberVoucherList($this->member_info['member_id']);
@@ -50,11 +53,19 @@ class mz_walletControl extends mobileMemberControl {
         }
         output_data(array('data'=>$voucher_list));
     }
+    /**
+     * 我的积分
+     * @return [type] [description]
+     */
     public function getMyPointOp(){
         output_data(array('data'=>$this->member_info['member_points']));
     }
+    /**
+     * 积分列表
+     * @return [type] [description]
+     */
     public function pointListOp(){
-        $size = 8;     
+        $size = 10;     
         $page = intval($_GET['page']);
         $page = $page <= 0 ? 1 : $page;
         //查询积分日志列表
@@ -69,23 +80,40 @@ class mz_walletControl extends mobileMemberControl {
         }
         $point_count = model()->table('points_log')->where(array('pl_memberid'=>$this->member_info['member_id']))->count();
         $data_info['thispage'] = $page;
-        $data_info['count'] = $point_count;
         $data_info['totalpage'] = ceil($point_count / $size);
 
         output_data(array('data'=>$point_log,'data_info'=>$data_info));
     }
     /**
-     * 调试
-     * @param  [type]  $arr  [description]
-     * @param  boolean $stop [description]
-     * @return [type]        [description]
+     * 获取余额
+     * @return [type] [description]
      */
-    private function debuger($arr,$stop = true){
-        header("Access-Control-Allow-Origin:*");
-        echo "<pre>";
-        print_r($arr);
-        if ($stop) {
-            die();
+    public function getMyBalanceOp(){
+        $data = array();
+        $data['available_predeposit'] = $this->member_info['available_predeposit'];//预存款可用金额
+        $data['freeze_predeposit'] = $this->member_info['freeze_predeposit'];//预存款冻结金额
+        $data['available_rc_balance'] = $this->member_info['available_rc_balance'];//可用充值卡余额
+        $data['freeze_rc_balance'] = $this->member_info['freeze_rc_balance'];//冻结充值卡余额
+        output_data(array('data'=>$data));
+    }
+    public function getBalanceListOp(){
+        $size = 10;     
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
+
+        $pd_model = Model('predeposit');
+        $condition = array();
+        $condition['lg_member_id'] = $this->member_info['member_id'];
+        $pdlog = $pd_model->getPdLogList($condition,$size,"*",'lg_add_time desc',(($page-1)*$size).','.$size);
+        if (!empty($pdlog)) {
+            foreach ($pdlog as $key => $value) {
+                $pdlog[$key]['lg_add_time'] = date("Y-m-d H:i:s",$value['lg_add_time']);
+            }
         }
+
+        $pdcount = $pd_model->getPdLogCount($condition);
+        $data_info['thispage'] = $page;
+        $data_info['totalpage'] = ceil($pdcount / $size);
+        output_data(array('data'=>$pdlog,'data_info'=>$data_info));
     }
 }
