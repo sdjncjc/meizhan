@@ -26,20 +26,65 @@ class mz_member_cartControl extends mobileMemberControl {
      */
     public function cart_listOp() {
         $model_cart = Model('cart');
-
-        $condition = array('buyer_id' => $this->member_info['member_id']);
-        $cart_list  = $model_cart->listCart('db', $condition);
+        $logic_buy_1 = logic('buy_1');
+			
+		$del_ids = $_POST['del_ids'];
+        //购物车列表
+        $cart_list  = $model_cart->listCart('db',array('buyer_id'=>$this->member_info['member_id']));
 
         // 购物车列表 [得到最新商品属性及促销信息]
-        $cart_list = logic('buy_1')->getGoodsCartList($cart_list, $jjgObj);
-        $sum = 0;
-        foreach ($cart_list as $key => $value) {
-            $cart_list[$key]['goods_image_url'] = cthumb($value['goods_image'], $value['store_id']);
-            $cart_list[$key]['goods_sum'] = ncPriceFormat($value['goods_price'] * $value['goods_num']);
-            $sum += $cart_list[$key]['goods_sum'];
+        $cart_list = $logic_buy_1->getGoodsCartList($cart_list, $jjgObj);
+
+        //购物车商品以店铺ID分组显示,并计算商品小计,店铺小计与总价由JS计算得出
+        $store_cart_list = array();
+        $total_price = 0;
+        $total_save = 0;
+        foreach ($cart_list as $cart) {
+            $cart['goods_image_url'] = cthumb($cart['goods_image'], $cart['store_id']);
+            $cart['goods_total'] = $cart['goods_price'] * $cart['goods_num'];
+			if(in_array($cart['cart_id'], $del_ids)){
+				$cart['is_selected'] = 0;
+			}else{
+				$cart['is_selected'] = 1;
+				$total_price += $cart['goods_total'];
+				$total_save += ($cart['goods_marketprice']-$cart['goods_price']) * $cart['goods_num'];
+				$store_cart_list[$cart['store_id']]['cart_count'] += $cart['goods_num'];
+				$store_cart_list[$cart['store_id']]['cart_price'] += $cart['goods_total'];
+			}
+            $store_cart_list[$cart['store_id']]['store_id'] = $cart['store_id'];
+            $store_cart_list[$cart['store_id']]['store_name'] = $cart['store_name'];
+            $store_cart_list[$cart['store_id']]['cart_list'][] = $cart;
         }
 
-        output_data(array('cart_list' => $cart_list, 'sum' => ncPriceFormat($sum)));
+        // 店铺优惠券
+//        $condition = array();
+//        $condition['voucher_t_gettype'] = 3;
+//        $condition['voucher_t_state'] = 1;
+//        $condition['voucher_t_end_date'] = array('gt', time());
+//        $condition['voucher_t_mgradelimit'] = array('elt', $this->member_info['level']);
+//        $condition['voucher_t_store_id'] = array('in', array_keys($store_cart_list));
+//        $voucher_template = Model('voucher')->getVoucherTemplateList($condition);
+//        $voucher_template = array_under_reset($voucher_template, 'voucher_t_store_id', 2);
+//        Tpl::output('voucher_template', $voucher_template);
+
+        //取得店铺级活动 - 可用的满即送活动
+        $mansong_rule_list = $logic_buy_1->getMansongRuleList(array_keys($store_cart_list));
+        //取得哪些店铺有满免运费活动
+        $free_freight_list = $logic_buy_1->getFreeFreightActiveList(array_keys($store_cart_list));
+		$is_selected = 1;
+        foreach ($store_cart_list as $k=>$v) {
+            $store_cart_list[$k]['mansong'] = $mansong_rule_list[$k]['desc'];
+            $store_cart_list[$k]['free_freight'] = $free_freight_list[$k];
+            $store_cart_list[$k]['is_selected'] = 1;
+			foreach($v['cart_list'] as $kk=>$vv){
+				if($vv['is_selected'] == 0){
+					$store_cart_list[$k]['is_selected'] = 0;
+					$is_selected = 0;
+				}
+			}
+        }
+
+        output_data(array('store_cart_list' => $store_cart_list, 'total_price' => $total_price, 'total_save' => $total_save, 'is_selected' => $is_selected));
     }
 
     /**
@@ -140,11 +185,7 @@ class mz_member_cartControl extends mobileMemberControl {
         $data['goods_num'] = $quantity;
         $update = $model_cart->editCart($data, array('cart_id'=>$cart_id));
         if ($update) {
-            $return = array();
-            $return['quantity'] = $quantity;
-            $return['goods_price'] = ncPriceFormat($cart_info['goods_price']);
-            $return['total_price'] = ncPriceFormat($cart_info['goods_price'] * $quantity);
-            output_data($return);
+            output_data('修改成功');
         } else {
             output_error('修改失败');
         }

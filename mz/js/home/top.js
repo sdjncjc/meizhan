@@ -1,19 +1,9 @@
 // JavaScript Document
 
 $(function(){
+    var cate = GetQueryString("cate");
 	var page = 1;
 	var clock = 0;
-	
-	//获取团购
-    $.ajax({
-        url: ApiUrl + "/index.php?act=mz_group&op=get_oversea_list&type=3",
-        type: 'get',
-        dataType: 'json',
-        success: function(result) {
-			var html = template('oversea-promotion-tpl', result.datas);
-			$('.trendy').html(html);
-        }
-    });
 	
 	//获取商品分类
     $.ajax({
@@ -21,21 +11,30 @@ $(function(){
         type: 'get',
         dataType: 'json',
         success: function(result) {
-			var html = template('oversea-cat-tpl', result.datas);
-			$('.theme').append(html);
+			if(cate){
+				var html = template('filters-template', result.datas);
+				$('.filters').html(html).removeClass('hidden');
+				$('[data="'+cate+'"]').addClass('active');
+				set_title($('.filter .active').html());
+			}else{
+				var html = template('catebox-template', result.datas);
+				$('.catebox').html(html).removeClass('hidden');
+				$('.banner').removeClass('hidden');
+				set_title('TOP排行榜');
+			}
         }
     });
-	//获取海外购品牌列表
-	function ajax_oversea(){
+	//获取排行榜
+	function ajax_top(){
 		if(clock)return;
 		clock = 1;
 		$.ajax({
-			url: ApiUrl + '/index.php?act=mz_brandsale&op=get_brandsale_list&type=1&page='+page,
+			url: ApiUrl + '/index.php?act=mz_goods&op=get_top_list&cate='+cate+'&page='+page,
 			type: 'get',
 			dataType: 'json',
 			success: function(result) {
-				if(result.datas.brandsale_list.length>0){
-					var html = template('oversea-brands-tpl', result.datas);
+				if(result.datas.goods_list.length>0){
+					var html = template('item-list-template', result.datas);
 					$('.item-list').append(html);
 					$('img.lazy').picLazyLoad();
 					page++;
@@ -46,12 +45,12 @@ $(function(){
 			}
 		});
 	}
-	ajax_oversea();
+	ajax_top();
 
 	$(window).scroll(function() {
 		if(!clock){
 			if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
-				ajax_oversea();
+				ajax_top();
 			}
 		}					  
 	});

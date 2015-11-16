@@ -38,7 +38,6 @@ var SiteUrl = "http://www.qinqin.net";
 var ApiUrl = "http://mobile.qinqin.net";
 var pagesize = 10;
 var MzSiteUrl = "http://mz.qinqin.net";
-var title = '亲亲美妆';
 
 function get_footer(){
 	var key = getcookie('key');
@@ -130,11 +129,6 @@ function set_title(title){
 }
 
 $(function(){
-	template.config('base', '');
-	//设置标题
-	$('.navbar .title').html(title);
-	document.title = title + " - " + document.title;
-	
 	if($('.footer').length)get_footer();
 
 	$('body').append('<a href="javascript:;" class="backtop"></a>');

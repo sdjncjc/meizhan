@@ -6,7 +6,7 @@ $(function(){
 	var page = 1;
 	var clock = 0;
 	var tab = 0;
-	
+	set_title('商品详情');
 	//获取商品
     $.ajax({
 		url:ApiUrl+"/index.php?act=mz_goods&op=goods_detail",
