@@ -594,7 +594,7 @@
 .itemlist-ad .item-box-content .col-8,
 .itemlist-brand .item-box-content .row-4,
 .itemlist-ad .item-box-content .row-4 {
-  background: url(http://b0.hucdn.com/img/h5/s.gif) no-repeat center;
+  background: url(../../img/s.gif) no-repeat center;
 }
 .itemlist-brand .item-box-content img,
 .itemlist-ad .item-box-content img {
@@ -1042,7 +1042,7 @@ body {
 }
 .view_item .item-list .item .item-img {
   position: relative;
-  background: url(http://b0.hucdn.com/img/h5/s.gif) no-repeat center;
+  background: url(../../img/s.gif) no-repeat center;
 }
 .view_item .item-list .item .item-img img {
   width: 100%;
@@ -1268,7 +1268,7 @@ body {
   width: 3.7rem;
   height: 3.45rem;
   margin: 0 auto;
-  background-image: url("../img/heart.png");
+  background-image: url("../../img/heart.png");
   background-size: cover;
 }
 .container_empty p {

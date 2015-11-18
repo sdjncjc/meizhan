@@ -103,7 +103,6 @@ body {
   user-select: none;
 }
 .nodata {
-  background: url(http://b0.hucdn.com/party/default/d4430d66e29b77999f0a5fb57994d7dd.png) no-repeat center 60%;
   background-size: 8rem;
 }
 .edit-address-page,
@@ -604,7 +603,7 @@ body {
   float: left;
   width: 2rem;
   height: 2rem;
-  background: url(http://b0.hucdn.com/m/activity-logo.png) no-repeat;
+  background: url(../../img/apple-touch-icon.png) no-repeat;
   background-size: 100% 100%;
 }
 .download-bar .download .logo-title {
@@ -672,7 +671,7 @@ body {
 }
 .rDialog-header-load {
   text-align: center;
-  background: url(../img/alert-loading.gif);
+  background: url(../../img/alert-loading.gif);
   background-repeat: no-repeat;
   background-position: 0 0;
   background-size: 100%;
@@ -683,7 +682,7 @@ body {
 .rDialog-header-alert,
 .rDialog-header-ok {
   text-align: center;
-  background: url(../img/alert-icons.png);
+  background: url(../../img/alert-icons.png);
   background-repeat: no-repeat;
   background-size: 100%;
   width: 50px;

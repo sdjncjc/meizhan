@@ -176,7 +176,7 @@ body {
   float: left;
   width: 2rem;
   height: 2rem;
-  background: url(http://b0.hucdn.com/m/activity-logo.png) no-repeat;
+  background: url(../../img/apple-touch-icon.png) no-repeat;
   background-size: 100% 100%;
 }
 .download-bar .download .logo-title {

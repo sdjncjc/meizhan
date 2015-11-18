@@ -13,7 +13,7 @@
 use Shopnc\Tpl;
 
 defined('InShopNC') or exit('Access Invalid!');
-class mz_walletControl extends mobileMemberControl {
+class mz_member_walletControl extends mobileMemberControl {
 
     public function __construct() {
         parent::__construct();

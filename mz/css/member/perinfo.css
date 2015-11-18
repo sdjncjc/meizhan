@@ -64,10 +64,16 @@ body {
 .downrows .gender,
 .uprows .birthday,
 .downrows .birthday,
+.uprows .verified,
+.downrows .verified,
 .uprows .promotion_group,
 .downrows .promotion_group,
 .uprows .password,
-.downrows .password {
+.downrows .password,
+.uprows .mobile,
+.downrows .mobile,
+.uprows .idcard,
+.downrows .idcard {
   padding-left: .5rem;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -83,10 +89,16 @@ body {
 .downrows .gender label,
 .uprows .birthday label,
 .downrows .birthday label,
+.uprows .verified label,
+.downrows .verified label,
 .uprows .promotion_group label,
 .downrows .promotion_group label,
 .uprows .password label,
-.downrows .password label {
+.downrows .password label,
+.uprows .mobile label,
+.downrows .mobile label,
+.uprows .idcard label,
+.downrows .idcard label {
   font-size: 0.7rem;
 }
 .uprows .nickname-inner,
@@ -97,10 +109,16 @@ body {
 .downrows .gender-inner,
 .uprows .birthday-inner,
 .downrows .birthday-inner,
+.uprows .verified-inner,
+.downrows .verified-inner,
 .uprows .promotion_group-inner,
 .downrows .promotion_group-inner,
 .uprows .password-inner,
-.downrows .password-inner {
+.downrows .password-inner,
+.uprows .mobile-inner,
+.downrows .mobile-inner,
+.uprows .idcard-inner,
+.downrows .idcard-inner {
   position: relative;
   border-bottom: 0.05rem solid #eeeeee;
 }
@@ -112,10 +130,16 @@ body {
 .downrows .gender-inner .answer,
 .uprows .birthday-inner .answer,
 .downrows .birthday-inner .answer,
+.uprows .verified-inner .answer,
+.downrows .verified-inner .answer,
 .uprows .promotion_group-inner .answer,
 .downrows .promotion_group-inner .answer,
 .uprows .password-inner .answer,
-.downrows .password-inner .answer {
+.downrows .password-inner .answer,
+.uprows .mobile-inner .answer,
+.downrows .mobile-inner .answer,
+.uprows .idcard-inner .answer,
+.downrows .idcard-inner .answer {
   position: absolute;
   -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);
@@ -137,10 +161,16 @@ body {
 .downrows .gender-inner label,
 .uprows .birthday-inner label,
 .downrows .birthday-inner label,
+.uprows .verified-inner label,
+.downrows .verified-inner label,
 .uprows .promotion_group-inner label,
 .downrows .promotion_group-inner label,
 .uprows .password-inner label,
-.downrows .password-inner label {
+.downrows .password-inner label,
+.uprows .mobile-inner label,
+.downrows .mobile-inner label,
+.uprows .idcard-inner label,
+.downrows .idcard-inner label {
   color: #333333;
 }
 .uprows {
@@ -491,4 +521,7 @@ body {
 .mask .pop-confirm {
   right: 0;
   color: #ff4965;
+}
+.edit-mobile-page {
+  display: none;
 }

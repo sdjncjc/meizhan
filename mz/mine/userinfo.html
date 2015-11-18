@@ -1,5 +1,5 @@
 <!--#include virtual="head.html"-->
-<link href="/css/perinfo.css" rel="stylesheet" media="all" />
+<link href="/css/member/perinfo.css" rel="stylesheet" media="all" />
 <!--#include virtual="/tpl/navbar.html"-->
     <section class="uprows">
         <div class="headicon">
@@ -34,6 +34,12 @@
         </div>
     </section>
     <section class="downrows">
+        <div class="verified">
+            <div class="verified-inner">
+                <label>实名认证</label>
+                <label class="answer"></label>
+            </div>
+        </div>
         <div class="promotion_group">
             <div class="promotion_group-inner">
                 <label>专属客服</label>
@@ -127,13 +133,13 @@
             </div>
         </div>
     </div>
-<script type="text/javascript" src="/js/CJL.0.1.min.js"></script>
-<script type="text/javascript" src="/js/upload.js"></script>
+<script type="text/javascript" src="/js/member/CJL.0.1.min.js"></script>
+<script type="text/javascript" src="/js/member/upload.js"></script>
 <script type="text/javascript">
+    set_title("个人资料");
     // 显示用户基本信息
     var username;
-    title = "个人资料";
-    getAjaxResult(getUrl('mz_mine','getUserInfo'),'','','',"setuserinfo");
+    getAjaxResult(getUrl('mz_member','getUserInfo'),'','','',"setuserinfo");
     function setuserinfo(data){
         username = data.member_name;
         $(".headpic").attr("src",data.member_avatar);
@@ -175,16 +181,20 @@
             d.find(".birthdate").val("");
         }
     });
+
+    $(".verified").tap(function(){
+        open_url("verified");
+    });
     $(".promotion_group").tap(function(){
         if ($(".promotion_group-inner").find(".answer").text() != "") {
             showMask();
             $(".promotion_group-pop").removeClass("hidden");
         }
-    })
+    });
     $(".password").tap(function(){
         showMask();
         $(".password-pop").removeClass("hidden");
-    })
+    });
     $(".pop-confirm").tap(function(){
         var params = "";
         var d;
@@ -201,11 +211,11 @@
                 }else{
                     $(".truename-alert-note").addClass("hidden");
                 }
-                ajax_do(getUrl('mz_mine','editUser'),{member_truename:d});
+                ajax_do(getUrl('mz_member','editUser'),{member_truename:d});
                 break;
             case "gender":
                 d = $(".gender-select").val();
-                ajax_do(getUrl('mz_mine','editUser'),{member_sex:d});
+                ajax_do(getUrl('mz_member','editUser'),{member_sex:d});
                 break;
             case "date":
                 var b = $(".date-pop");
@@ -218,14 +228,14 @@
                 }else{
                     return void $(".date-alert-note").removeClass("hidden");
                 }
-                ajax_do(getUrl('mz_mine','editUser'),{member_birthday:d});
+                ajax_do(getUrl('mz_member','editUser'),{member_birthday:d});
                 break;
             case "promotion_group":
-                ajax_do(getUrl('mz_mine','editUser'),{group_id:0});
+                ajax_do(getUrl('mz_member','editUser'),{group_id:0});
                 break;
             case "password":
                 params = {member_passwd:$(".password-pop").find(".passwordedit").val(),member_repasswd:$(".password-pop").find(".repasswordedit").val()};
-                ajax_do(getUrl('mz_mine','editUser'),params);
+                ajax_do(getUrl('mz_member','editUser'),params);
                 break;
         }
         hideEditPage();
@@ -245,7 +255,7 @@
     }
     function uploadfile(input_file){
         var file = $$("headiconedit"), fu = new QuickUpload(file, {
-            action: getUrl('mz_mine','uploadHeadIcon'),
+            action: getUrl('mz_member','uploadHeadIcon'),
             timeout: 6,
             onFinish: function(iframe)
             {

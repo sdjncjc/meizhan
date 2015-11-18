@@ -70,7 +70,7 @@ class mz_member_favoritesControl extends mobileMemberControl{
      * @return [type] [description]
      */
     public function getListOp(){
-        $fav_type = $_POST("fav_type");
+        $fav_type = $_GET["fav_type"];
         $size = 10;     
         $page = intval($_GET['page']);
         $page = $page <= 0 ? 1 : $page;
@@ -80,14 +80,39 @@ class mz_member_favoritesControl extends mobileMemberControl{
         $favorites_model = Model('favorites');
         $condition = array();
         $condition['member_id'] = $this->member_info['member_id'];
-        $condition['fav_type'] = 'store';
+        $condition['fav_type'] = $fav_type;
         $favorites_list = $favorites_model->getFavoritesList($condition,"*",true , 'log_id desc', (($page-1)*$size).','.$size);
+        if (!empty($favorites_list)) {
+            foreach ($favorites_list as $key => $value) {
+                if ($fav_type == 'goods') {
+                    $extends_goods =  Model('goods')->getGoodsInfo(array('goods_id'=>$value['fav_id']),'*');
+                    $favorites_list[$key]['goods_img'] = thumb($extends_goods, 360);
+                    $favorites_list[$key]['goods_state'] = $extends_goods['goods_state'];
+                    $favorites_list[$key]['is_presell'] = $extends_goods['is_presell'];
+                    $favorites_list[$key]['goods_type'] = $extends_goods['goods_type'];
+                    $favorites_list[$key]['goods_price'] = $extends_goods['goods_price'];
+                    $favorites_list[$key]['goods_marketprice'] = $extends_goods['goods_marketprice'];
+                    $favorites_list[$key]['goods_discount'] = round($extends_goods['goods_price'] / $extends_goods['goods_marketprice'] * 10,1);
+                }
+            }
+        }
         
-        $fav_count = $this->table('favorites')->where($condition)->count()
+        $fav_count = Model()->table('favorites')->where($condition)->count();
         $data_info = array();
         $data_info['thispage'] = $page;
         $data_info['totalpage'] = ceil($fav_count / $size);
         output_data(array('data'=>$favorites_list,'data_info'=>$data_info));
     }
-
+    public function deleteFavoritesOp(){
+        $ids = $_POST['ids'];
+        $favorites_model = Model('favorites');
+        $condition = array();
+        $condition['log_id'] = array("in",explode(",", $ids));
+        $condition['member_id'] = $this->member_info['member_id'];
+        if($favorites_model->delFavorites($condition)){
+            output_data("删除收藏成功");
+        }else{
+            output_error("系统错误");
+        }
+    }
 }

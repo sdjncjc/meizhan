@@ -109,7 +109,7 @@ body{-webkit-user-select:none;-ms-user-select:none;user-select:none}
 .cart .cart-brand-list .cart-item-list{padding-top:.4rem;font-size:.6rem;border-bottom:.05rem solid #e4e4e4;clear:both}
 .cart .cart-brand-list .cart-item-list .cart-select-dot{height:4.4rem}
 .cart .cart-brand-list .cart-item-list .cart-item-wrapper{height:4.4rem;margin-left:1.6rem}
-.cart .cart-brand-list .cart-item-list .cart-item-img{margin-right:.3rem;float:left;background:url(http://b0.hucdn.com/img/h5/s.gif) no-repeat center;border:1px solid #e4e4e4}
+.cart .cart-brand-list .cart-item-list .cart-item-img{margin-right:.3rem;float:left;background:url(../img/s.gif) no-repeat center;border:1px solid #e4e4e4}
 .cart .cart-brand-list .cart-item-list .cart-item-img img{width:3.8rem;height:auto}
 .cart .cart-brand-list .cart-item-list .cart-item-info{float:left;width:50%;margin-left:.2rem}
 .cart .cart-brand-list .cart-item-list .cart-item-info .title{color:#505050;overflow:hidden;height:1.6rem;line-height:.8rem}

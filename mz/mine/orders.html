@@ -1,5 +1,5 @@
 <!--#include virtual="head.html"-->
-    <link rel="stylesheet" href="/css/orders.css" />
+    <link rel="stylesheet" href="/css/member/orders.css" />
 <!--#include virtual="/tpl/navbar.html"-->
     <section class="wrapper J_wrapper" id="wrapper">
         <section class="grid-wrap orders">
@@ -97,7 +97,7 @@
                 title = "售后订单";
                 break;
         }
-        $(".navbar .title").html(title);
+        set_title(title);
         function ajax_getOrder(){      
             if(stop)return;
             var url = getUrl('mz_member_order','getOrders',"type="+status+"&page=" + page);

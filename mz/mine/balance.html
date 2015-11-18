@@ -1,6 +1,6 @@
 <!--#include virtual="head.html"-->
 <!--#include virtual="/tpl/navbar.html"-->
-<link rel="stylesheet" href="/css/point.css" media="all" />
+<link rel="stylesheet" href="/css/member/point.css" media="all" />
     <section class="wrapper J_wrapper" id="wrapper">
         <section class="point-info-box">
             <div class="balance-info"></div>
@@ -50,7 +50,7 @@
         </div>
     </script>
     <script type="text/javascript">
-        title = "金额明细";
+        set_title("金额明细");
         // 获取个人资料
         getAjaxResult(getUrl('mz_member_wallet','getMyBalance'),'balance-info-template','.balance-info');
         function ajax_getPoint(){ 

@@ -1,6 +1,6 @@
 <!--#include virtual="head.html"-->
 <!--#include virtual="/tpl/navbar.html"-->
-<link rel="stylesheet" href="/css/point.css" media="all" />
+<link rel="stylesheet" href="/css/member/point.css" media="all" />
     <section class="wrapper J_wrapper" id="wrapper">
         <section class="point-info-box">
             <div class="point-info">
@@ -41,7 +41,7 @@
         {{/each}}
     </script>
     <script type="text/javascript">
-        title = "我的积分";
+        set_title("我的积分");
         // 获取个人资料
         getAjaxResult(getUrl('mz_member_wallet','getMyPoint'),'','','',"getMyPoint");
         function getMyPoint(data){

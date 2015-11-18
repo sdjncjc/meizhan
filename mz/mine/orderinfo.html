@@ -1,5 +1,5 @@
 <!--#include virtual="head.html"-->
-    <link rel="stylesheet" href="/css/order-detail.css" />
+    <link rel="stylesheet" href="/css/member/order-detail.css" />
 <!--#include virtual="/tpl/navbar.html"-->
     <section class="wrapper J_wrapper" id="wrapper">
         <section class="grid-wrap orders">
@@ -120,7 +120,7 @@
         </section>
     </section>
     <script type="text/javascript">
-        title = "订单详情";
+        set_title("订单详情");
         var order_id = GetQueryString("id");
         // 获取订单详情
         getAjaxResult(getUrl('mz_member_order','getOrderInfo','order_id='+order_id),'order-template',".orders");

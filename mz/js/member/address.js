@@ -2,9 +2,9 @@ var address;
 var tdist_all;
 $(function(){
 	address = {
-		// cityApi: "http://b0.hucdn.com/script/address/region.js",
 		cityApi: "http://www.qinqin.net/index.php?act=index&op=json_area&src=cache&callback=address.setRegion",
 		init: function(){
+        	set_title("地址管理");
 			document.domain = "qinqin.net";
 			var addr = this;
 			addr.loadAddressScript(addr.cityApi,function(){
@@ -23,12 +23,11 @@ $(function(){
 		},
 		setRegion:function(data){
 			tdist_all = data;
-			// console.log(tdist_all);
 		},
 		renderAddressList: function() {
-			getAjaxResult(getUrl('mz_member_address','list'),'addresslist-template',".addresslist",'',"address.bindAsynEvent");
+			getAjaxResult(getUrl('mz_member_address','list'),'addresslist-template',".addresslist",'empty-addresslist-template',"address.bindAsynEvent");
 		},
-		bindAsynEvent: function() {
+		bindAsynEvent: function(data) {
 			var a = this;
 			$(".address-item").tap(function() {
 				var c, d = $(".edit-address-page"),
@@ -39,7 +38,7 @@ $(function(){
 				var area_arr = e.area_info.split("");
 				var provinces_word = "";
 				for(w in area_arr){
-					if (area_arr[w] === '	') {
+					if (area_arr[w].trim() === '') {
 						break;
 					};
 					provinces_word += area_arr[w];
@@ -72,6 +71,9 @@ $(function(){
 					f = $(this).siblings(".counties");
 				e = a.area2html(d), f.html(e)
 			});
+			if (data === undefined) {
+				a.resetSelect($(".add-address-page")), $(".list-address-page").hide(), $(".add-address-page").show();
+			};
 		},
 		resetSelect: function(a) {
 			var c, d, e, f = this.filterArea("0"),

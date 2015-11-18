@@ -108,7 +108,7 @@ body {
   font-size: 0.9rem;
 }
 .coupon-list .close .close-btn {
-  background: url(http://b0.hucdn.com/party/default/1eb74142afa1b1e785931d3829caf69c.png) no-repeat center center;
+  background: url(../../img/close.png) no-repeat center center;
   height: 2rem;
   width: 2rem;
   display: block;
@@ -211,7 +211,7 @@ body {
   float: left;
   width: 2rem;
   height: 2rem;
-  background: url(http://b0.hucdn.com/m/activity-logo.png) no-repeat;
+  background: url(../../img/apple-touch-icon.png) no-repeat;
   background-size: 100% 100%;
 }
 .download-bar .download .logo-title {

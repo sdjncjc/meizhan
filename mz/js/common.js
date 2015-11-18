@@ -56,7 +56,6 @@ function get_footer(){
 			type:'post',
 			url:ApiUrl+'/index.php?act=mz_logout',
 			data:{username:username,key:key,client:'mz'},
-			dataType:'json',
 			success:function(result){
 				if(!result.datas.error){
 					delCookie('username');

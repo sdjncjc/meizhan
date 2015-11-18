@@ -1,0 +1,44 @@
+<!--#include virtual="head.html"-->
+<link href="/css/member/perinfo.css" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="uprows">
+        <div class="mobile">
+            <div class="mobile-inner">
+                <label>手机号码</label>
+                <label class="answer"></label>
+            </div>
+        </div>
+        <div class="truename">
+            <div class="truename-inner">
+                <label>真实姓名</label>
+                <label class="answer"></label>
+            </div>
+        </div>
+        <div class="idcard">
+            <div class="idcard-inner">
+                <label>身份证号</label>
+                <label class="answer"></label>
+            </div>
+        </div>
+    </section>
+
+    <section class="edit-mobile-page">
+        <section class="wrapper grid-wrap">
+            <div class="grid">
+                <div class="item mobile row-1">
+                    <label class="col-3">手机号码：</label>
+                    <input class="col-8" type="text" value="" placeholder="请输入手机号码" />
+                </div>
+                <div class="item pin row-1">
+                    <label class="col-3">短信验证码</label>
+                    <input class="col-8" type="text" value="" placeholder="短信验证码" />
+                    <button class="pin-btn">获取验证码</button>
+                </div>
+            <div class="address-update">
+                <span>确认修改</span>
+            </div>
+        </section>
+    </section>
+<script type="text/javascript" src="/js/member/verified.js"></script>
+</body>
+</html>
