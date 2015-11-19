@@ -13,10 +13,10 @@
                             <p class="address-info">{{data.extend_order_common.reciver_info.address}}</p>
                         </div>
                     </div>
-                    {{if data.order_state == 20}}
+                    {{if data.order_state == 30 || data.order_state == 40 }}
                     <div class="interflow-box">
                         <div class="interflow-info">
-                            <a href="/trade/shipment.html?shipment_id=${shipment.shipment_id}">
+                            <a href="javascript:open_url('logistics','',{{data.order_id}});">
                                 <div class="node-box">
                                     <p class="node-text green-node">{{data.withdrawal}}</p>
                                     <p class="time-node">${shipment.last_detail.create}</p>
@@ -77,12 +77,12 @@
                                 </div>
                             </div>
                         </a>
-                        {{if data.aftersale}}
+                        {{/each}}
+                        {{if data.aftersale == 1}}
                         <div class="refund-info">
                             <a href="javascript:void(0)" onclick="open_url('aftersale','',{{data.order_id}})">售后</a>
                         </div>
                         {{/if}}
-                        {{/each}}
                     </div>
                     {{if data.extend_order_common.has_invoice}}
                     <div class="info-part part5">

@@ -112,6 +112,9 @@ function open_url(type,sub,id){
 			case 'aftersale':
 				url = "/mine/aftersale.html?id="+id;
 				break;
+			case 'logistics':
+				url = "/mine/logistics.html?id="+id;
+				break;
 			case 'goods':
 				if (sub == 'detial') {
 					url = "/home/detail.html?id="+id;
