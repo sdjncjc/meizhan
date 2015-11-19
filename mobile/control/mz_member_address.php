@@ -75,7 +75,7 @@ class mz_member_addressControl extends mobileMemberControl {
         if (intval($_POST['id']) > 0){
             $rs = $address_model->editAddress($data, array('address_id' => intval($_POST['id']),'member_id'=>$this->member_info['member_id']));
             if (!$rs){
-                output_error($lang['member_address_add_fail']);
+                output_error("地址信息修改失败");
             }
         }else {
             $count = $address_model->getAddressCount(array('member_id'=>$this->member_info['member_id']));
@@ -84,7 +84,7 @@ class mz_member_addressControl extends mobileMemberControl {
             }
             $rs = $address_model->addAddress($data);
             if (!$rs){
-                output_error($lang['member_address_add_fail']);
+                output_error("地址添加失败");
             }
         }
         output_data("设置成功");

@@ -14,9 +14,9 @@
                 <label class="answer"></label>
             </div>
         </div>
-        <div class="truename">
-            <div class="truename-inner">
-                <label>真实姓名</label>
+        <div class="email">
+            <div class="email-inner">
+                <label>邮箱</label>
                 <label class="answer"></label>
             </div>
         </div>
@@ -75,16 +75,16 @@
             </div>
             <iframe id='frameFile' name='frameFile' style='display: none;'></iframe>
         </div>
-        <div class="truename-pop popout">
-            <h2 class="pop-title">设定真实姓名</h2>
-            <input type="text"  class="truenameedit"/>
-            <p class="truename-notification">
-                <label class="truename-alert hidden truename-alert-note">请输入正确格式的姓名</label>
-                <label class="truename-notion">姓名为2-16个字符</label>
+        <div class="email-pop popout">
+            <h2 class="pop-title">设定邮箱</h2>
+            <input type="text"  class="emailedit"/>
+            <p class="email-notification">
+                <label class="email-alert hidden email-alert-note">请输入正确格式的E-mail</label>
+                <label class="email-notion">请输入E-mail</label>
             </p>
             <div class="pop-sure">
                 <div class="pop-cancle">取消</div>
-                <div class="pop-confirm" data-type="truename">保存</div>
+                <div class="pop-confirm" data-type="email">保存</div>
             </div>
         </div>
         <div class="gender-pop popout hidden">
@@ -144,7 +144,7 @@
         username = data.member_name;
         $(".headpic").attr("src",data.member_avatar);
         $(".nickname-inner").find(".answer").text(data.member_name);
-        $(".truename-inner").find(".answer").text(data.member_truename);
+        $(".email-inner").find(".answer").text(data.member_email);
         $(".gender-inner").find(".answer").text((data.member_sex==3)?'保密':(data.member_sex==2)?'女':'男');
         $(".birthday-inner").find(".answer").text(data.member_birthday);
         $(".promotion_group-inner").find(".answer").text(data.group_name);
@@ -153,11 +153,11 @@
         showMask();
         $(".headicon-pop").removeClass("hidden");
     });
-    $(".truename").tap(function(){
+    $(".email").tap(function(){
         showMask();
-        var b=$(".truename-inner").find(".answer").text();
-        $(".truename-pop").removeClass("hidden").find(".truename-alert-note").addClass("hidden");
-        $(".truename-pop").find(".truenameedit").val(b);
+        var b=$(".email-inner").find(".answer").text();
+        $(".email-pop").removeClass("hidden").find(".email-alert-note").addClass("hidden");
+        $(".email-pop").find(".emailedit").val(b);
     });
     $(".gender").tap(function(){
         showMask();
@@ -204,14 +204,15 @@
                 $(".headicon-pop").removeClass("hidden").find(".headicon-alert-note").addClass("hidden");
                 uploadfile("headiconedit");
                 break;
-            case "truename":
-                d=$(".truenameedit").val().trim();
-                if(d.length<2||d.length>16){
-                    return void $(".truename-alert-note").removeClass("hidden");
+            case "email":
+                d=$(".emailedit").val().trim();
+                var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+                if(!pattern.test(d)){
+                    return void $(".email-alert-note").removeClass("hidden");
                 }else{
-                    $(".truename-alert-note").addClass("hidden");
+                    $(".email-alert-note").addClass("hidden");
                 }
-                ajax_do(getUrl('mz_member','editUser'),{member_truename:d});
+                ajax_do(getUrl('mz_member','editUser'),{member_email:d});
                 break;
             case "gender":
                 d = $(".gender-select").val();

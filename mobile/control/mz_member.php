@@ -27,14 +27,25 @@ class mz_memberControl extends mobileMemberControl {
      * 获取用户信息
      */
     public function getUserInfoOp() {
-        $member_info = $this->member_info;
+        $member_info = array();
+        // $member_info = $this->member_info;
         $member_info['member_avatar'] = getMemberAvatar($this->member_info['member_avatar']);
         $promotionGroupInfo = Model("seller_promotion_group")->getSellerPromotionGroupInfo(array('group_id'=>$this->member_info['group_id']));
         $member_info['group_name'] = $promotionGroupInfo['group_name'];
-        // $member_info['member_name'] = $this->member_info['member_name'];
-        // $member_info['member_points'] = $this->member_info['member_points'];
-        // $member_info['available_rc_balance'] = $this->member_info['available_rc_balance'];
-        // $member_info['available_predeposit'] = $this->member_info['available_predeposit'];
+        $member_info['member_name'] = $this->member_info['member_name'];
+        $member_info['member_points'] = $this->member_info['member_points'];
+        $member_info['available_rc_balance'] = $this->member_info['available_rc_balance'];
+        $member_info['available_predeposit'] = $this->member_info['available_predeposit'];
+        $member_info['member_email'] = $this->member_info['member_email'];
+        $member_info['member_sex'] = $this->member_info['member_sex'];
+        $member_info['member_birthday'] = $this->member_info['member_birthday'];
+        
+        $member_info['member_mobile_bind'] = $this->member_info['member_mobile_bind'];
+        $member_info['member_mobile'] = encryptShow($this->member_info['member_mobile'],4,4);
+
+        $member_info['member_idcard_bind'] = (empty($this->member_info['member_truename']) || empty($this->member_info['member_idnum']))?false:true;
+        $member_info['member_truename'] = encryptShow($this->member_info['member_truename'],2,2);
+        $member_info['member_idnum'] = encryptShow($this->member_info['member_idnum'],7,8);
         output_data(array('data'=>$member_info));
     }
     /**
@@ -42,7 +53,7 @@ class mz_memberControl extends mobileMemberControl {
      * @return [type] [description]
      */
     public function editUserOp(){
-        $editFields = array('member_truename','member_avatar','member_sex','member_birthday','member_passwd','group_id');
+        $editFields = array('member_email','member_avatar','member_sex','member_birthday','member_passwd','group_id');
         $data = array();
         if (!empty($_POST)) {
             $condition = array();

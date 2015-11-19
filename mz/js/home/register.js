@@ -20,7 +20,7 @@ $(function(){
         if(phone.length == 11 && reg.test(phone)){
 			$.ajax({
 				type:'get',
-				url:ApiUrl+"/index.php?act=mz_login&op=get_captcha&type=1&phone="+phone,
+				url:ApiUrl+"/index.php?act=mz_member_verified&op=get_captcha&type=1&phone="+phone,
 				dataType:'json',
 				success:function(result){
 					if(!result.datas.error){
