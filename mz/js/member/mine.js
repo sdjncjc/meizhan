@@ -109,6 +109,9 @@ function open_url(type,sub,id){
 					url = "/mine/orderinfo.html?id="+id;
 				};
 				break;
+			case 'aftersale':
+				url = "/mine/aftersale.html?id="+id;
+				break;
 			case 'goods':
 				if (sub == 'detial') {
 					url = "/home/detail.html?id="+id;
@@ -131,6 +134,12 @@ function open_url(type,sub,id){
 				break;
 			case 'verified':
 				url = "/mine/verified.html";
+				break;
+			case 'service':
+				url = "http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODAyMTA0N182OTMxM180MDAwNTAwNzc1XzJf";
+				break;
+			case 'about':
+				url = "/mine/about.html";
 				break;
 		}
 	}else{

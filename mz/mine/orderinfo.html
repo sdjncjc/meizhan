@@ -41,14 +41,6 @@
                                 <div class="intro">满减优惠：</div>
                                 <div class="content-info">{{data.extend_order_common.promotion_total}}</div>
                             </div>
-                            // <!--<div class="my-grid quan">-->
-                            //     <!--<div class="intro">现金券优惠：</div>-->
-                            //     <!--<div class="content-info">¥${quan}</div>-->
-                            // <!--</div>-->
-                            // <!--<div class="my-grid point">-->
-                            //     <!--<div class="intro">贝壳优惠：</div>-->
-                            //     <!--<div class="content-info">¥${(point_fee/100).toFixed(2)}</div>-->
-                            // <!--</div>-->
                         </div>
                     </div>
 
@@ -87,7 +79,7 @@
                         </a>
                         {{if data.aftersale}}
                         <div class="refund-info">
-                            <a href="javascript:void(0)" onclick="open_url('order','aftersale',{{data.order_id}})">售后</a>
+                            <a href="javascript:void(0)" onclick="open_url('aftersale','',{{data.order_id}})">售后</a>
                         </div>
                         {{/if}}
                         {{/each}}

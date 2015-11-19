@@ -1,6 +1,14 @@
 $(function(){
 	set_title('登录亲亲');
 	$('body').css('background','#eee');
+	if (getcookie("key")) {
+		$.dialog({
+			content: '当前已登录',
+			title: "ok",
+			time: 1000
+		});		
+		window.setTimeout(function(){history.back();},1000);
+	};
 	$('.login-btn').tap(function(){
 		var user_name = $('.user-name-input').val();
 		var password = $('.password-input').val();
@@ -32,13 +40,13 @@ $(function(){
 							});			
 						}else{
 							addcookie('username',result.datas.username);
-							addcookie('key',result.datas.key);
+							addcookie('key',result.datas.key,30*24);
 							$.dialog({
 								content: '登录成功',
 								title: "ok",
 								time: 1000
 							});		
-							window.setTimeout(function(){window.location.href="/mine/index.html";},1000); 
+							window.setTimeout(function(){history.back();},1000);
 						}
 					}else{
 						$.dialog({

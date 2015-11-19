@@ -47,6 +47,17 @@
                         <a class="J_payOrder" href="javascript:void(0)" data-tid="{{order.order_id}}" data-fee="{{order.order_amount}}">立即支付</a>
                     </aside>
                     {{/if}}
+                    {{if order.order_state == 30}}
+                    <aside class="receipt">
+                        <a class="J_MakePoint" href="javascript:void(0)" data-shipment-id="{{order.shipping_code}}" data-order-id="{{order.order_id}}">确认收货</a>
+                        <a href="/trade/shipment.html?order_id=${item.id}&amp;shipment_id=${item.shipment_id}">查看物流</a>
+                    </aside>
+                    {{/if}}
+                    {{if order.order_state == 40}}
+                    <aside class="receipt">
+                        <a href="javascript:;" class="J_receipt">去评价</a>
+                    </aside>
+                    {{/if}}
                     <aside class="wave"></aside>
                 </section>
                 <!-- end orders-list -->
