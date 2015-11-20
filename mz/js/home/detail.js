@@ -241,13 +241,13 @@ $(function(){
 										$('.cart-num').html(++num)
 										$('.cart-hint').css('height','1.7rem');
 										setTimeout(function(){$('.cart-hint').css('height','0')},2000);
-									};
-								}else{
-									$.dialog({
-										content: result.datas.error,
-										title: "alert",
-										time: 2000
-									});			
+									}else{
+										$.dialog({
+											content: result.datas.error,
+											title: "alert",
+											time: 2000
+										});	
+									}
 								}
 							}
 						})

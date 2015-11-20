@@ -1,0 +1,16 @@
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
+正在加载…
+<script>
+$(function(){
+	set_title('支付结果');
+	$.dialog({
+		content: '支付操作完成！如果您的订单状态没有改变，请耐心等待支付网关的返回结果。',
+		title: "ok",
+		time: 2000
+	});		
+	window.setTimeout(function(){location.href = MzSiteUrl+'/mine/orders.html';},2000); 
+});		
+</script>
+</body>
+</html>

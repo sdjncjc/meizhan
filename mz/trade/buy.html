@@ -1,0 +1,189 @@
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="wrapper">
+        <div class="personalinfo-box">
+            <div class="address-box">
+                <p style="text-align:center;"><a href="javascript:;">您当前还没有地址，赶快添加吧！</a></p>
+            </div>
+            <div class="card-box hidden">
+                <a class="card-tip" href="javascript:void(0);">
+                    <span class="card-notice">
+                        <strong>请补充收货人身份证信息，收货人姓名与身份证姓名须一致</strong><span>（仅用于海外购的商品入境凭证）</span>
+                    </span>
+                </a>
+                <span class="arrow"></span>
+            </div>
+        </div>
+        <div class="fcode-box hidden">
+            <div class="fcode-box-hd">
+                <h3>使用F码购买商品</h3>
+            </div>
+            <div class="fcode-box-bd">
+                <input type="text" name="fcode" placeholder="输入F码" />
+            </div>
+        </div>
+        <div class="pay-box">
+            <div class="pay-box-hd">
+                <h3>支付方式</h3>
+            </div>
+            <div class="pay-box-bd grid-fat">
+                <div class="row">
+                    <div class="col-1">
+                        <i class="payment-method selected" data-method="alipay"></i>
+                    </div>
+                    <div class="col-2">
+                        <img src="/img/alipay.png" alt="支付宝支付" />
+                    </div>
+                    <div class="col-9">
+                        <h4>支付宝支付</h4>
+                        <p>安全快捷，可支持银行卡支付</p>
+                    </div>
+                </div>
+                <div class="row hidden">
+                    <div class="col-1">
+                        <i class="payment-method" data-method="wxpay"></i>
+                    </div>
+                    <div class="col-2">
+                        <img src="/img/wxpay.png" alt="微信支付" />
+                    </div>
+                    <div class="col-9">
+                        <h4>微信支付</h4>
+                        <p>推荐已在微信中绑定银行卡的用户使用</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order-box">
+            <div class="order-box-hd">
+                <h3>订单信息</h3>
+            </div>
+            <div class="order-box-bd grid-fat"></div>
+            <div class="order-box-ft"></div>
+        </div>
+        <div class="zj-wrap">
+            <div class="zj-fee">
+                <p class="zj">总计：<span></span></p>
+            </div>
+        </div>
+        <div class="grid">
+            <a class="col-12 button gopay-btn" href="javascript:;">支付订单</a>
+        </div>
+    </section>
+
+    <section class="footer hidden J_footer">
+        <p class="info"></p>
+        <p class="tel">客服热线：<span>400-668-0000</span></p>
+        <p class="icp">2014 浙ICP备12005806号</p>
+    </section>
+
+    <script type="text/data" id="address-template">
+        <p>
+            <span class="name">{{address_info.true_name}}</span>
+            <span class="tel">{{address_info.mob_phone}}</span>
+            <a class="edit" href="javascript:;"></a>
+        </p>
+        <p class="address">
+            {{address_info.area_info}} {{address_info.address}}
+        </p>
+    </script>
+    <script type="text/template" id="orderlist-template">
+        {{each store_cart_list as v k}}
+        <div class="row order-itemlist">
+            <div class="col-12 order-from">
+                店铺名称：
+                <span>{{v.store_name}}</span>
+				{{if v.store_zk}}({{v.store_zk}}){{/if}}
+            </div>
+            {{each v.goods_list as v1 k1}}
+            <div class="col-12 order-item">
+                <div class="order-img">
+                    <img src="{{v1.goods_image_url}}" alt="{{v1.goods_name}}" />
+                </div>
+                <div class="order-info">
+                    <h4>{{v1.goods_name}}</h4>
+                    <p>{{v1.goods_spec1}}</p>
+                </div>
+                <div class="order-num">
+                    <h4>{{v1.goods_price*1}}</h4>
+                    <p>&times;{{v1.goods_num}}</p>
+					<span>{{v1.tpl}}</span>
+                </div>
+            </div>
+            {{/each}}
+            <div class="col-12 order-sum">
+                <div>
+                    <p class="order-sum-l">商品金额：</p>
+                    <p class="order-sum-r">{{v.store_goods_total*1}}</p>
+                </div>
+				{{if v.store_mansong_rule_list != null}}
+				<div>
+					<p class="order-sum-l">店铺优惠：{{v.store_mansong_rule_list.desc}}</p>
+					<p class="order-sum-r black">-{{v.store_mansong_rule_list.discount*1}}</p>
+				</div>
+				{{/if}}
+				{{if v.store_voucher_list.length>0}}
+				<div>
+					<p class="order-sum-l">优惠卡券：
+						<select name="voucher" store_id="{{k}}">
+							<option value="0">请选择...</option>
+							{{each v.store_voucher_list as v2 k2}}
+							<option value="{{v2.voucher_t_id}}|{{k}}|{{v2.voucher_price}}">{{v2.voucher_title}}</option>
+							{{/each}}
+						</select>
+					</p>
+					<p id="sv{{k}}" class="order-sum-r black">-0</p>
+				</div>
+				{{/if}}
+                <div>
+                    <p class="order-sum-l">物流运费：</p>
+                    <p class="order-sum-r">{{v.store_freight}}</p>
+                </div>
+                <div>
+                    <p class="order-sum-l">本店合计：</p>
+                    <p id="st{{k}}" class="order-sum-r store_total" store_price="{{v.sp_total}}">{{v.sp_total}}</p>
+                </div>
+            </div>
+            <div class="col-12 order-remark">
+                <input name="pay_message" store_id="{{k}}" type="text" value="" placeholder="您对商家有什么特殊要求可在此添加备注" />
+            </div>
+        </div>
+        {{/each}}
+    </script>
+    <script type="text/template" id="orderft-template">
+		{{if rpt_list.length > 0}}
+		<div class="order-mj">
+			<p class="order-mj-text">平台红包</p>
+			<p class="order-zj-val">
+				<span></span>
+				<select name="rpt">
+					<option value="|0.00">选择平台红包</option>
+					{{each rpt_list as v k}}
+					<option data-limit="{{v.rpacket_limit}}" data-price="{{v.rpacket_price}}" value="{{v.rpacket_t_id}}|{{v.rpacket_price}}">{{v.desc}}</option>
+					{{/each}}
+				</select>
+			</p>
+		</div>
+		{{/if}}
+		{{if available_rc_balance != null && available_rc_balance > 0}}
+		<div class="order-mj">
+			<p class="order-mj-text">充值卡支付</p>
+			<p class="order-mj-val">充值卡余额为<span>{{available_rc_balance*1}}</span><i class="cart-select-dot" id="usercbpay"></i></p>
+		</div>
+		{{/if}}
+		{{if available_predeposit != null && available_predeposit > 0}}
+		<div class="order-mj">
+			<p class="order-mj-text">预存款支付</p>
+			<p class="order-mj-val">预存款余额为<span>{{available_predeposit*1}}</span><i class="cart-select-dot" id="usepdpy"></i></p>
+		</div>
+		{{/if}}
+		<div class="order-mj wrapper-pd hidden">
+			<p class="order-mj-text">支付密码</p>
+			<p class="order-mj-val"><input type="password" name="paypassword" value="" placeholder="填写支付密码" /></p>
+		</div>
+		<aside class="wave"></aside>
+    </script>
+
+   	<link rel="stylesheet" href="/css/trade/buy.css" />
+    <script type="text/javascript" src="/js/trade/buy.js"></script>
+</body>
+</html>

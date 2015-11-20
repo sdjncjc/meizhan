@@ -108,15 +108,37 @@ class mz_member_cartControl extends mobileMemberControl {
             output_error('商品已下架或不存在');
         }
 
+        if ($goods_info['store_id'] == $this->member_info['store_id']) {
+            output_error('不能购买自己发布的商品');
+        }
+		
+		//判断购物车中是否已有该商品
+        $model_cart = Model('cart');
+        $cart_info = $model_cart->getCartInfo(array('goods_id'=>$goods_info['goods_id'], 'buyer_id' => $this->member_info['member_id']));
+		if($cart_info){
+			$quantity = $cart_info['goods_num']+1;
+	
+			//检查库存是否充足
+			if(!$this->_check_goods_storage($cart_info, $quantity, $this->member_info['member_id'])) {
+				output_error('超出限购数或库存不足');
+			}
+	
+			$data = array();
+			$data['goods_num'] = $quantity;
+			$update = $model_cart->editCart($data, array('cart_id'=>$cart_info['cart_id']));
+			if ($update) {
+				output_data('添加购物车成功');
+			} else {
+				output_error('添加购物车失败');
+			}
+		}
+
         //团购
         $logic_buy_1->getGroupbuyInfo($goods_info);
 
         //限时折扣
         $logic_buy_1->getXianshiInfo($goods_info,$quantity);
-
-        if ($goods_info['store_id'] == $this->member_info['store_id']) {
-            output_error('不能购买自己发布的商品');
-        }
+		
         if(intval($goods_info['goods_storage']) < 1 || intval($goods_info['goods_storage']) < $quantity) {
             output_error('库存不足');
         }
