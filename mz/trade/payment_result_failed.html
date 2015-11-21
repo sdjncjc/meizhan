@@ -1,0 +1,16 @@
+<!--#include virtual="/tpl/head.html"-->
+<!--#include virtual="/tpl/navbar.html"-->
+正在加载…
+<script>
+$(function(){
+	set_title('支付结果');
+	$.dialog({
+		content: 'Sorry，支付未完成或失败！',
+		title: "alert",
+		time: 2000
+	});		
+	window.setTimeout(function(){location.href = MzSiteUrl+'/mine/orders.html';},2000); 
+});		
+</script>
+</body>
+</html>

@@ -43,7 +43,7 @@ function get_footer(){
 	var key = getcookie('key');
 	var html = '<div class="info-line">';
 	if (key){
-		html += '<a href="/member.html">我的亲亲</a><a href="javascript:void(0);" class="logout">退出</a>';
+		html += '<a href="/mine/index.html">我的亲亲</a><a href="javascript:void(0);" class="logout">退出</a>';
 	}else{
 		html += '<a href="/home/login.html">登录</a><a href="/home/register.html">注册</a>';
 	}
@@ -56,6 +56,7 @@ function get_footer(){
 			type:'post',
 			url:ApiUrl+'/index.php?act=mz_logout',
 			data:{username:username,key:key,client:'mz'},
+			dataType:'json',
 			success:function(result){
 				if(!result.datas.error){
 					delCookie('username');

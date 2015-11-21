@@ -286,7 +286,14 @@ class mz_goodsControl extends mobileHomeControl{
         if ($memberId = $this->getMemberIdIfExists()) {
             $c = (int) Model('favorites')->getGoodsFavoritesCountByGoodsId($goods_id, $memberId);
             $goods_detail['is_favorate'] = $c > 0;
-            $goods_detail['cart_count'] = Model('cart')->countCartByMemberId($memberId);
+            $cart_goods = Model('cart')->listCart('db',array('buyer_id'=>$memberId));
+            $cart_count = 0;
+            if(!empty($cart_goods) && is_array($cart_goods)) {
+                foreach ($cart_goods as $val) {
+                    $cart_count += $val['goods_num'];
+                }
+            }
+            $goods_detail['cart_count'] = $cart_count;
         }
 //print_r($goods_detail);
         output_data($goods_detail);
