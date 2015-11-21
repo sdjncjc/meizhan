@@ -103,14 +103,16 @@ function open_url(type,sub,id){
 					url = "/mine/orders.html?status=30";
 				}else if (sub== 'unjudge') {
 					url = "/mine/orders.html?status=40";
-				}else if (sub== 'sold') {
-					url = "/mine/orders.html?status=sold";
 				}else if(sub == 'orderinfo'){
 					url = "/mine/orderinfo.html?id="+id;
 				};
 				break;
-			case 'aftersale':
-				url = "/mine/aftersale.html?id="+id;
+			case 'salesupport':
+				if (sub === undefined || sub == "") {
+					url = "/mine/salesupport.html";
+				}else if (sub == 'detial') {
+					url = "/mine/salesupport-detail.html?id="+id;
+				};
 				break;
 			case 'logistics':
 				url = "/mine/logistics.html?id="+id;

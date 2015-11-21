@@ -77,12 +77,17 @@
                                 </div>
                             </div>
                         </a>
-                        {{/each}}
-                        {{if data.aftersale == 1}}
+                        <!--{{if data.aftersale == 1}}
                         <div class="refund-info">
-                            <a href="javascript:void(0)" onclick="open_url('aftersale','',{{data.order_id}})">售后</a>
+                            <a href="/mine/request-return.html?id={{data.order_id}}&goods_id={{order_goods.goods_id}}">售后</a>
                         </div>
-                        {{/if}}
+                        {{/if}}-->
+                        {{/each}}
+                        <!--{{if data.aftersale == 1}}
+                        <div class="refund-info">
+                            <a href="/mine/request-return.html?id={{data.order_id}}&goods_id=0">全部商品售后</a>
+                        </div>
+                        {{/if}}-->
                     </div>
                     {{if data.extend_order_common.has_invoice}}
                     <div class="info-part part5">
@@ -111,11 +116,9 @@
             </script>
         </section>
     </section>
+    <script type="text/javascript" src="/js/member/order.js"></script>
     <script type="text/javascript">
-        set_title("订单详情");
-        var order_id = GetQueryString("id");
-        // 获取订单详情
-        getAjaxResult(getUrl('mz_member_order','getOrderInfo','order_id='+order_id),'order-template',".orders");
+        order.init('orderinfo');
     </script>
 </body>
 

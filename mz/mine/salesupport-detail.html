@@ -1,0 +1,74 @@
+<!--#include virtual="head.html"-->
+<link rel="stylesheet" href="/css/member/salesupport-detail.css" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="wrapper J_wrapper" id="wrapper">
+
+        <section class="full pad bg-white ware-detail"></section>
+
+        <section class="box full">
+            <div class="box-hd bg-grey">
+                售后状态
+            </div>
+            <div class="box-bd bg-white">
+                <div class="box-bd-item">
+                    售后单号：
+                    <span id="orid"></span>
+                </div>
+                <div class="box-bd-item">
+                    申请时间：
+                    <span id="create_time"></span>
+                </div>
+                <div class="box-bd-item">
+                    售后状态：
+                    <span id="salesupport-status"></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="box full">
+            <div class="box-hd bg-grey">
+                买家申请退货
+            </div>
+            <div class="box-bd bg-white">
+                <div class="box-bd-item">
+                    <span class="pull-left">售后原因</span>
+                    <span class="pull-right" id="reason"></span>
+                </div>
+                <div class="box-bd-item">
+                    <span class="pull-left">售后件数</span>
+                    <span class="pull-right" id="num"></span>
+                </div>
+                <div class="box-bd-item">
+                    <span class="pull-left">退款金额</span>
+                    <span class="pull-right color-pink" id="refund"></span>
+                </div>
+                <div class="box-bd-item">
+                    <span class="pull-left">详细描述</span>
+                    <div class="desc-box clear" id="desc"></div>
+                </div>
+            </div>
+        </section>
+        
+	    <script type="text/template" id="ware-template">
+	        <div class="ware-img pull-left">
+	            <img src="{{data.goods_image}}" alt="{{data.goods_name}}" />
+	        </div>
+	        <div class="ware-info pull-left">
+	            <div class="ware-name">
+	                {{data.goods_name}}
+	            </div>
+                <div class="ware-price">
+                    <span class="ware-price-current color-pink">&yen;{{data.refund_amount}}</span>
+                </div>
+	        </div>
+	    </script>
+        <section class="button-box">
+        <a class="button hidden J_cancelRefund" href="javascript:;">取消退货</a>
+        </section>
+    </section>
+    <script type="text/javascript" src="/js/member/order.js"></script>
+    <script type="text/javascript">
+        order.init('salesupport-detail');
+    </script>
+</body>
+</html>

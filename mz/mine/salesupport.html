@@ -1,0 +1,54 @@
+<!--#include virtual="head.html"-->
+<link rel="stylesheet" href="/css/member/refund-orders.css" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="wrapper J_wrapper" id="wrapper">
+        <section class="orders">
+            <script id="order-list-template" type="text/template">
+                {{each data as refund_return}}
+                <section class="orders-list">
+                    <a href="javascript:open_url('salesupport','detial',{{refund_return.order_id}})">
+                        <div class="refund-info">
+                            <p>售后单号：{{refund_return.refund_sn}}</p>
+                            <p>
+                                售后状态：{{if refund_return.refund_state == 1}}处理中{{/if}}{{if refund_return.refund_state == 2}}待管理员处理{{/if}}{{if refund_return.refund_state == 3}}已完成{{/if}}
+                            </p>
+                            <p>退款金额：{{refund_return.refund_amount}}</p>
+                        </div>
+
+                        <div class="item-info">
+                            <img src="{{refund_return.goods_image}}" alt="{{refund_return.goods_name}}">
+                            <p>&nbsp;&nbsp;&nbsp;{{refund_return.goods_name}}</p>
+                        </div>
+                    </a>
+                </section>
+                {{/each}}
+            </script>
+
+            <script id="order-empty-template" type="text/template">
+                <i class="order-img"></i>
+                <p class="order-hint">暂无售后记录</p>
+                <p class="order-hint last">如需申请售后，可在“订单详情”中申请</p>
+                <a class="order-btn" href="/mine/orders.html">查看全部订单</a>
+            </script>
+        </section>
+        <!-- end .orders -->
+        <div class="loading">
+            正在加载...
+        </div>
+    </section>
+    <script type="text/javascript" src="/js/member/order.js"></script>
+    <script type="text/javascript">
+        order.init('salesupport');
+        $(window).scroll(function() {
+            if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+                if(!stop){
+                    $(".loading").show();
+                    order.getSaleSupport();
+                    stop = true;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

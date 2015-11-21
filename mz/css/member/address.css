@@ -726,12 +726,12 @@ body {
 .rDialog-ok,
 .rDialog-ok:hover {
   background: #FBA733;
-  color: #ffffff;
+  color: #fff;
 }
 .rDialog-cancel,
 .rDialog-cancel:hover {
   background: #E6E6E6;
-  color: #a7a7a7;
+  color: #A7A7A7;
 }
 .rDialog-mask {
   position: fixed;

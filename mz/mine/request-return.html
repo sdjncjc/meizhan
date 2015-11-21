@@ -1,0 +1,55 @@
+<!--#include virtual="head.html"-->
+<link rel="stylesheet" href="/css/member/request-return.css" />
+<!--#include virtual="/tpl/navbar.html"-->
+    
+    <section class="wrapper J_wrapper" id="wrapper">
+        <div class="tips"><span class="emphasize">提醒：</span>参加优惠活动（现金券或专场满减）的订单，优惠金额会按比例（商品单价/订单总价）分摊到每个商品。如商品未经试用且不影响二次销售，可享受7天无理由退货服务，否则将不予处理，请谅解。</div>
+
+        <div class="info-box">
+            <label>售后原因</label>
+            <select id="reason_select"></select>
+                <script type="text/template" id="reason-template">
+                    <option value="" selected>请选择</option>
+                    {{each data.reason as reason}}
+                    <option value="{{reason.reason_id}}">{{reason.reason_info}}</option>
+                    {{/each}}
+                </script>
+        </div>
+        <div class="info-box">
+            <label>退款金额</label>
+            <div class="info" id="refund_price"></div>
+        </div>
+        <div class="info-box">
+            <label>详细描述</label>
+            <textarea id="desc_input" rows="5"></textarea>
+        </div>
+        
+        <div id="upload_box" class="info-box">
+            <label>上传图片</label>
+            <div>
+                <div class="uploaddiv">
+                    <div class="add">+</div>
+                    <input type="file" value=""  class="uploadfile" />
+                </div>
+                 <div class="uploaddiv">
+                    <div class="add">+</div>
+                    <input type="file" value=""  class="uploadfile"/>
+                </div>
+                <div class="uploaddiv">
+                    <div class="add">+</div>
+                    <input type="file" value=""  class="uploadfile"/>
+                </div>
+                <div class="uploaddiv">
+                    <div class="add">+</div>
+                    <input type="file" value=""  class="uploadfile"/>
+                </div>
+            </div>
+        </div>
+        <a class="col-12 button goSubmit" href="javascript:;">提交</a>
+    </section>
+    <script type="text/javascript" src="/js/member/order.js"></script>
+    <script type="text/javascript">
+        order.init('request-return');
+    </script>
+</body>
+</html>
