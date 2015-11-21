@@ -52,9 +52,8 @@ var order = {
 		});
 		// 支付订单
 		$(".payOrder").tap(function(){
-			var order_id = $(this).attr("data-tid");
-			var order_fee = $(this).attr("data-fee");
-			_this.payOrder(order_id,order_fee);
+			var pay_sn = $(this).attr("data-tid");
+			_this.payOrder(pay_sn);
 		});
 		// 确认收货
 		$(".makePoint").tap(function(){
@@ -146,8 +145,15 @@ var order = {
 	        reason = "";
 	    });
 	},
-	payOrder:function(id,fee){
-		alert("支付");
+	payOrder:function(pay_sn){
+		var payment_code = "alipay";
+		if(pay_sn != ''){
+            if (payment_code == 'alipay') {
+                location.href = getUrl("mz_member_payment",'pay','pay_sn='+pay_sn);
+            }else if (payment_code == 'wxpay') {
+                location.href = getUrl("mz_member_payment",'pay','pay_sn='+pay_sn+'&payment_code=wxpay_jsapi&showwxpaytitle=1');
+            }
+		}
 	},
 	receiveOrder:function(id){
 		$.dialog({

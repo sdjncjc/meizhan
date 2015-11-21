@@ -56,7 +56,7 @@
                     </footer>
                     <aside class="pay">
                         <span></span>
-                        <a class="payOrder" href="javascript:void(0)" data-tid="${item.tid}" data-fee="${item.orderPay}">立即支付</a>
+                        <a class="payOrder" href="javascript:void(0)" data-tid="{{order_group.pay_sn}}" data-fee="{{order_group.pay_amount}}">立即支付</a>
                     </aside>
                     {{/if}}
                     <aside class="wave"></aside>
