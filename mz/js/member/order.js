@@ -24,9 +24,9 @@ var order = {
 		}else if(type == "orderinfo"){
         	set_title("订单详情");
         	this.getOrderInfo();
-        // }else if (type == "request-return") {
-        // 	set_title("申请售后");
-        // 	this.getReasonInfo();
+        }else if (type == "request-return") {
+        	set_title("申请售后");
+        	this.getReasonInfo();
 		}else if (type == "salesupport") {
         	set_title("我的售后");
 	        this.getSaleSupport();
@@ -63,7 +63,6 @@ var order = {
 		$(".comment").tap(function(){
 			_this.commentOrder($(this).attr("data-order-id"));			
 		})
-		// 售后
 	},
 	getOrderInfo: function(){
         var order_id = GetQueryString("id");
@@ -76,11 +75,35 @@ var order = {
         getAjaxResult(getUrl('mz_member_order','getReasonInfo','order_id='+order_id+"&goods_id="+goods_id),'reason-template','#reason_select','',"order.fillRequestInfo");
 	},
 	fillRequestInfo:function(data){
-		if (data.goods_info.goods_id > 0) {
-			$("#refund_price").html("￥" + data.goods_info.goods_pay_price);
+		var _this = this;
+		var pay_money = 0;
+		if (data.order_info.goods_list.rec_id > 0) {
+			$(".refund_price").val(data.order_info.goods_list.goods_pay_price);
+			pay_money = data.order_info.goods_list.goods_pay_price;
 		}else{
-			$("#refund_price").html("￥" + data.order_info.goods_amount);
+			$(".refund_price").val(data.order_info.allow_refund_amount);
+			pay_money = data.order_info.allow_refund_amount;
 		}
+		$(".refund_price").blur(function(){
+			if (this.value > pay_money) {
+				$.dialog({
+					content : '退款金额不能大于' + pay_money,
+					title: "alert",
+					time : 2000
+				});
+				this.value = pay_money;
+				return;
+			};
+		});
+		$(".uploadfile").on("change", function(c) {
+			$(c.target).attr("readonly", "true");
+			$(c.target).parent().find(".add").html("");
+		});
+		$("#post_form1").attr("action",getUrl('mz_member_order','addRefund',"order_id=" + data.order_info.order_id + "&goods_id=" + data.order_info.goods_list.rec_id));
+		$(".goSubmit").tap(function(){
+			$("#post_form1").submit();
+		});
+
 	},
 	getSaleSupport:function(){
         if(stop)return;

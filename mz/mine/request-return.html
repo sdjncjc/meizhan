@@ -1,13 +1,13 @@
 <!--#include virtual="head.html"-->
 <link rel="stylesheet" href="/css/member/request-return.css" />
 <!--#include virtual="/tpl/navbar.html"-->
-    
+    <form id="post_form1" enctype="multipart/form-data" method="post">
     <section class="wrapper J_wrapper" id="wrapper">
-        <div class="tips"><span class="emphasize">提醒：</span>参加优惠活动（现金券或专场满减）的订单，优惠金额会按比例（商品单价/订单总价）分摊到每个商品。如商品未经试用且不影响二次销售，可享受7天无理由退货服务，否则将不予处理，请谅解。</div>
+        <div class="tips"><span class="emphasize">提醒：</span>到您的余额账户中（充值卡部分只能退回到充值卡余额）。</div>
 
         <div class="info-box">
             <label>售后原因</label>
-            <select id="reason_select"></select>
+            <select id="reason_select" name="reason_id"></select>
                 <script type="text/template" id="reason-template">
                     <option value="" selected>请选择</option>
                     {{each data.reason as reason}}
@@ -17,11 +17,13 @@
         </div>
         <div class="info-box">
             <label>退款金额</label>
-            <div class="info" id="refund_price"></div>
+            <div class="info">&yen;
+            <input type="text" name="refund_amount" class="refund_price"  />
+            </div>
         </div>
         <div class="info-box">
             <label>详细描述</label>
-            <textarea id="desc_input" rows="5"></textarea>
+            <textarea id="desc_input" name="buyer_message" rows="5"></textarea>
         </div>
         
         <div id="upload_box" class="info-box">
@@ -29,24 +31,23 @@
             <div>
                 <div class="uploaddiv">
                     <div class="add">+</div>
-                    <input type="file" value=""  class="uploadfile" />
+                    <input type="file" name="refund_pic1" class="uploadfile" />
                 </div>
                  <div class="uploaddiv">
                     <div class="add">+</div>
-                    <input type="file" value=""  class="uploadfile"/>
+                    <input type="file" name="refund_pic2"  class="uploadfile"/>
                 </div>
                 <div class="uploaddiv">
                     <div class="add">+</div>
-                    <input type="file" value=""  class="uploadfile"/>
-                </div>
-                <div class="uploaddiv">
-                    <div class="add">+</div>
-                    <input type="file" value=""  class="uploadfile"/>
+                    <input type="file" name="refund_pic3" class="uploadfile"/>
                 </div>
             </div>
         </div>
         <a class="col-12 button goSubmit" href="javascript:;">提交</a>
     </section>
+    </form>
+    <script type="text/javascript" src="/js/member/CJL.0.1.min.js"></script>
+    <script type="text/javascript" src="/js/member/upload.js"></script>
     <script type="text/javascript" src="/js/member/order.js"></script>
     <script type="text/javascript">
         order.init('request-return');

@@ -40,7 +40,7 @@ $(function(){
 							});			
 						}else{
 							addcookie('username',result.datas.username);
-							addcookie('key',result.datas.key,30*24);
+							addcookie('key',result.datas.key,365*24);
 							$.dialog({
 								content: '登录成功',
 								title: "ok",

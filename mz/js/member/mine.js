@@ -62,7 +62,11 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
 function getUrl(act,op,params){
 	var key = getcookie('key');
 	if (key){
-		params = "key=" + key + "&" + params;
+		if (params === undefined) {
+			params = "key=" + key;
+		}else{
+			params = "key=" + key + "&" + params;
+		}
 	}
 	return ApiUrl + "/index.php?act=" + act + "&op=" + op + "&" + params;
 }

@@ -255,7 +255,7 @@
         $(".popout").addClass("hidden");
     }
     function uploadfile(input_file){
-        var file = $$("headiconedit"), fu = new QuickUpload(file, {
+        var file = $$(input_file), fu = new QuickUpload(file, {
             action: getUrl('mz_member','uploadHeadIcon'),
             timeout: 6,
             onFinish: function(iframe)

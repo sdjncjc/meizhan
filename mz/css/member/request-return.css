@@ -58,6 +58,10 @@ body {
 .wrapper .info-box .info {
   float: right;
 }
+.wrapper .info-box .info input {
+  border: .1rem solid #e2e2e2;
+  width: 3.5rem;
+}
 .wrapper .uploaddiv {
   width: 2.69rem;
   height: 2.69rem;

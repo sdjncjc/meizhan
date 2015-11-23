@@ -90,8 +90,8 @@ function addcookie(name,value,expireHours){
 	//判断是否设置过期时间
 	if(expireHours>0){
 		var date=new Date();
-		date.setTime(date.getTime+expireHours*3600*1000);
-		cookieString=cookieString+"; expire="+date.toGMTString();
+		date.setTime(date.getTime() + expireHours*3600*1000);
+		cookieString=cookieString+"; expires="+date.toGMTString();
 	}
 	document.cookie=cookieString;
 }

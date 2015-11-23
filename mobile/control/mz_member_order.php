@@ -273,7 +273,6 @@ class mz_member_orderControl extends mobileMemberControl {
     public function getReasonInfoOp(){
         $order_id = intval($_GET['order_id']);
         $goods_id = intval($_GET['goods_id']);
-        $goods_info = array();
         $model_order = Model("order");
         $model_refund = Model('refund_return');
         $reason_list = $model_refund->getReasonList();
@@ -282,21 +281,116 @@ class mz_member_orderControl extends mobileMemberControl {
         $condition['order_id'] = $order_id;
         $condition['buyer_id'] = $this->member_info['member_id'];
 
-        $order_info = $model_order->getOrderInfo($condition,array("order_goods"));
-        $is_return = $model_refund->getRefundState($order_info);
+        $order = $model_refund->getRightOrderList($condition, $goods_id);
+        $is_return = $model_refund->getRefundState($order);
         if ($is_return == 0) {
             output_error("当前订单无法申请售后");
         }
-        if ($goods_id > 0) {
-            foreach ($order_info['extend_order_goods'] as $key => $value) {
-                if ($value['goods_id'] == $goods_id) {
-                    $goods_info = $value;
-                }
-            }
+        if ($order['order_amount'] < ($order['goods_list'][0]['goods_pay_price'] + $order['refund_amount'])) {
+            $order['goods_list'][0]['goods_pay_price'] = $order['order_amount'] - $order['refund_amount'];
         }
+        if ($goods_id == 0) {
+            //禁止退款金额
+            $lock_amount = Logic('order_book')->getDepositAmount($order);
+            $order['allow_refund_amount'] = $order['order_amount'] - $lock_amount;
+            unset($order['goods_list']);
+            $order['goods_list']['rec_id'] = 0;
+        }else{
+            $temp =  $order['goods_list'][0];
+            unset($order['goods_list']);
+            $order['goods_list'] = $temp;
+        }
+        output_data(array('data'=>array('reason'=>$reason_list,'order_info'=>$order)));
+    }
+    public function addRefundOp(){
+        $goods = array();
+        $order_id = intval($_GET['order_id']);
+        $goods_id = intval($_GET['goods_id']);
+        $refund_amount = floatval($_POST['refund_amount']);//退款金额
+        $reason_id = intval($_POST['reason_id']);//退货退款原因
+        $buyer_message = trim($_POST['buyer_message']);//退货退款原因
+        $model_order = Model("order");
+        $model_refund = Model('refund_return');
+        $condition = array();
+        $reason_list = $model_refund->getReasonList($condition);//退款退货原因
 
-        unset($order_info['extend_order_goods']);
-        $goods_info['goods_id'] = $goods_id;
-        output_data(array('data'=>array('reason'=>$reason_list,'order_info'=>$order_info,'goods_info'=>$goods_info)));
+        // 退货原因
+        $refund_array = array();
+        $reason_array = array();
+        $refund_array['reason_info'] = '';
+        $refund_array['reason_id'] = $reason_id;
+        $reason_array['reason_info'] = '其他';
+        if (!empty($reason_list[$reason_id])) {
+            $reason_array = $reason_list[$reason_id];
+        }
+        $refund_array['reason_info'] = $reason_array['reason_info'];
+
+        $order = $model_refund->getRightOrderList($condition, $goods_id);
+
+        // 退款金额
+        $order_amount = $order['order_amount'];//订单金额
+        if ($goods_id > 0 ) {
+            $order_refund_amount = $order['refund_amount'];//订单退款金额
+            $goods_list = $order['goods_list'];
+            $goods = $goods_list[0];
+            $goods_pay_price = $goods['goods_pay_price'];//商品实际成交价
+
+            if ($order_amount < ($goods_pay_price + $order_refund_amount)) {
+                $goods_pay_price = $order_amount - $order_refund_amount;
+            }
+            if (($refund_amount < 0) || ($refund_amount > $goods_pay_price)) {
+                $refund_amount = $goods_pay_price;
+            }
+            $refund_array['goods_num'] = 1;
+        }elseif ($goods_id == 0 ) {
+            if (($refund_amount < 0) || ($refund_amount > $order_amount)) {
+                $refund_amount = $order_amount;
+            }
+            $refund_array['goods_num'] = 0;
+            $refund_array['goods_id'] = '0';
+            $refund_array['order_goods_id'] = '0';
+            $refund_array['reason_id'] = '0';
+            $refund_array['reason_info'] = '取消订单，全部退款';
+            $refund_array['goods_name'] = '订单商品全部退款';
+        }else{
+            output_error("参数错误");
+        }
+        $refund_array['refund_amount'] = ncPriceFormat($refund_amount);
+
+        // 上传凭证
+        $pic_array = array();
+        $pic_array['buyer'] = $this->upload_pic();//上传凭证
+        $info = serialize($pic_array);
+        $refund_array['pic_info'] = $info;
+
+        // 设定订单状态
+        $model_trade = Model('trade');
+        $order_shipped = $model_trade->getOrderState('order_shipped');//订单状态30:已发货
+
+        // 全部退款或已发货订单退款锁定
+        if ($order['order_state'] == $order_shipped || $goods_id == 0) {
+            $refund_array['order_lock'] = '2';//锁定类型:1为不用锁定,2为需要锁定
+        }
+        $order_state_arr = $model_trade->getOrderState();
+        if (in_array($order['order_state'], array($order_state_arr['order_shipped'],$order_state_arr['order_completed']))) {
+            $refund_array['refund_type'] = '2';//类型:1为退款,2为退货
+            $refund_array['return_type'] = '2';//退货类型:1为不用退货,2为需要退货
+        }else{
+            $refund_array['refund_type'] = '1';//类型:1为退款,2为退货
+            $refund_array['return_type'] = '1';//退货类型:1为不用退货,2为需要退货
+        }
+        $refund_array['seller_state'] = '1';//状态:1为待审核,2为同意,3为不同意
+        $refund_array['buyer_message'] = $buyer_message;
+        $refund_array['add_time'] = time();
+        $state = $model_refund->addRefundReturn($refund_array,$order,$goods);
+
+        if ($state) {
+            if ($order['order_state'] == $order_shipped) {
+                $model_refund->editOrderLock($order_id);
+            }
+            output_data("提交售后成功");
+        } else {
+            output_data("系统错误，提交售后失败");
+        }
     }
 }
