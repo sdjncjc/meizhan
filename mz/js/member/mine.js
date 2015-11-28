@@ -150,6 +150,9 @@ function open_url(type,sub,id){
 			case 'about':
 				url = "/mine/about.html";
 				break;
+			case 'team':
+				url = "/team/index.html";
+				break;
 		}
 	}else{
 		switch(type){

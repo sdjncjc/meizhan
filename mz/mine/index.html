@@ -109,13 +109,17 @@ if(window.name != "qinqin"){
             </ul>
             <ul class="my-list other-list">
                 <li class="meizhan">
-                    <a href="javascript:open_url('meizhan')" class="div-line">
+                    <a href="javascript:open_url('team')" class="div-line">
                          我的美站
+                         <span class="income_info"></span>
                         <span class="next-page"></span>
                     </a>
                 </li>
             </ul>
-            <ul class="my-list other-list">
+            <ul class="tip">
+                <li>开启美站,经营美丽生活</li>
+            </ul>
+            <ul class="my-list other-list" style="margin-top:0">
                 <li class="address">
                     <a href="javascript:open_url('address')" class="div-line">
                          收货地址
@@ -162,9 +166,12 @@ if(window.name != "qinqin"){
     <script type="text/javascript">
         set_title("用户中心");
         // 显示用户基本信息
-        getAjaxResult(getUrl('mz_member','getUserInfo'),'tpl-personal',".my-info",'tpl-login');
+        getAjaxResult(getUrl('mz_member','getUserInfo'),'tpl-personal',".my-info",'tpl-login','setincome');
         // 显示订单概况
         getAjaxResult(getUrl('mz_member_order','getSimpleOrderInfo'),'tpl-sum-orderinfo','#sum-orderinfo','tpl-sum-orderinfo-logout');
+        function setincome(data){
+            $(".income_info").html("本期收入：&yen;0");
+        }
     </script>
 </body>
     

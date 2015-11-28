@@ -1,0 +1,91 @@
+<!--#include virtual="/mine/head.html"-->
+<link href="/css/team/index.css" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="grid-wrap wrapper J_wrapper" id="wrapper">
+        <div class="team-info"></div>
+        <div>
+            <ul class="my-list">
+                <li class="wallet-form">
+                    <a href="javascript:void(0)">团队荣誉<span class="next-page hidden"></span></a>
+                </li>
+            </ul>
+            <ul class="sum-box" id="sum-mywallet">
+                <li class="wallet-item">
+                    <a href="javascript:open_url('coupon')">
+                        <i class="icon coupon"></i>
+                        <span class="txt">订单量</span><span id="my-point" class="num"></span>
+                    </a>
+                </li>
+                <li class="wallet-item">
+                    <a href="javascript:open_url('point')">
+                        <i class="icon shell"></i>
+                        <span class="txt">奖金池</span><span id="my-point" class="num"></span>
+                    </a>
+                </li>
+                <li class="wallet-item">
+                    <a id="J_balance_tip" href="javascript:open_url('balance');">
+                        <i class="icon left"></i>
+                        <span class="txt">积分</span><span id="my-balance" class="num"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="my-list other-list">
+                <li class="address">
+                    <a href="javascript:open_url('address')" class="div-line">
+                         团队介绍
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+                <li class="favourite">
+                    <a href="javascript:open_url('favorite')" class="div-line">
+                        团队业绩
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+                <li class="service">
+                    <a href="javascript:open_url('service')" class="div-line">
+                         团队成员
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="my-list other-list">
+                <li class="address">
+                    <a href="javascript:open_url('address')" class="div-line">
+                         地区团队排行
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+                <li class="favourite">
+                    <a href="javascript:open_url('favorite')" class="div-line">
+                        销售精英排行
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <script id="tpl-login" type="text/template">
+        <div class="btn-inline">
+            <a class="btn-login" href="javascript:open_url('login');">加入团队</a><a class="btn-register" href="javascript:open_url('register');">创建团队</a>
+        </div>
+    </script>
+    <script id="tpl-personal" type="text/template">
+        <div class="my-info-cnt">
+            <div class="head">
+                <div class="icon-gender" alt="my-pic"><img src="{{data.member_avatar}}"></div>
+            </div>
+            <div class="info">
+                <p class="my-account"><span>{{data.member_name}}</span><i class="my-grade my-grade-1"></i></p>
+            </div>
+        </div>
+        <a class="personal" onclick="open_url('userinfo')" href="javascript:void(0)">个人中心</a>
+    </script>
+    <script type="text/javascript">
+        set_title("我的美站");
+        // 显示用户基本信息
+        getAjaxResult(getUrl('mz_member','getUserInfo'),'tpl-personal',".my-info",'tpl-login','setincome');
+    </script>
+</body>
+    
+</html>
