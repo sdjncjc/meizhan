@@ -27,21 +27,27 @@ $(function(){
     });
 	//获取头部图片
     $.ajax({
-        url: ApiUrl + "/index.php?act=mz_index&op=get_slider",
+        url: ApiUrl + "/index.php?act=mz_index&op=get_ad&ad_side=0",
         type: 'get',
         dataType: 'json',
         success: function(result) {
 			var html = template('slider-template', result.datas);
 			$('.slider').html(html);
+			window.mySwipe = new Swipe(document.getElementById('swipe'), {
+				auto: 3000,
+				callback: function(index, elem) {
+					$('.slider-status span').eq(index).addClass('sel').siblings().removeClass('sel');
+				}
+			});
         }
     });
 	//获取中部广告
     $.ajax({
-        url: ApiUrl + "/index.php?act=mz_index&op=get_ad",
+        url: ApiUrl + "/index.php?act=mz_index&op=get_ad&ad_side=1",
         type: 'get',
         dataType: 'json',
         success: function(result) {
-			var html = template('ad-template', result.datas.ad);
+			var html = template('ad-template', result.datas);
 			$('.ad').html(html);
         }
     });

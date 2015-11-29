@@ -51,6 +51,8 @@ class mz_loginControl extends mobileHomeControl {
         if(!empty($member_info)) {
             $token = $this->_get_token($member_info['member_id'], $member_info['member_name'], $_POST['client']);
             if($token) {
+        		$member_mz = Model('member_mz')->where(array('member_id'=>$member_info['member_id']))->find();
+				if(!$member_mz)Model('member_mz')->insert(array('member_id'=>$member_info['member_id']));
                 output_data(array('username' => $member_info['member_name'], 'userid' => $member_info['member_id'], 'key' => $token));
             } else {
                 output_error('登录失败');

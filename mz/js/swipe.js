@@ -224,7 +224,8 @@ function Swipe(container, options) {
 
   function stop() {
 
-    delay = 0;
+    //delay = 0;
+    delay = options.auto > 0 ? options.auto : 0;
     clearTimeout(interval);
 
   }

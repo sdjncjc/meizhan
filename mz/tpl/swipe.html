@@ -1,0 +1,20 @@
+<section class="slider"></section>
+<script id="slider-template" type="text/template">
+	<div class="swipe" id="swipe">
+		<ul class="swipe-wrap">
+			{{each ad_list as value index}}
+			<li>
+				<a href="{{value.ad_url}}">
+					<img src="{{value.ad_img_url}}" alt="{{value.ad_name}}"/>
+				</a>
+			</li>
+			{{/each}}
+		</ul>
+	</div>
+	<div class="slider-status">
+		{{each ad_list as value index}}
+		<span{{if index == 0}} class="sel"{{/if}}></span>
+		{{/each}}
+	</div>
+</script>
+<script type="text/javascript" src="/js/swipe.js"></script>

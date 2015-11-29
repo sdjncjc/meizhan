@@ -20,27 +20,31 @@ class mz_indexControl extends mobileHomeControl{
     }
 
     /**
-     * 获取头图
+     * 获取广告
      */
-    public function get_sliderOp() {
-		$pic = '/img/index.png';
-        output_data(array('pic' => $pic));
+    public function get_adOp() {
+		$ad_side = intval($_GET['ad_side']);
+        $ad_list = Model('mz_ad')->where(array('ad_side'=>$ad_side,'ad_close'=>0))->order('ad_sort desc, ad_id desc')->select();
+		if($ad_list){
+			foreach($ad_list as $k=>$v){
+				$ad_list[$k]['ad_img_url'] = UPLOAD_SITE_URL.'/mz/ad/'.$v['ad_img'];
+				if($v['ad_type_id']){
+					$ad_list[$k]['ad_url'] = '/home/'.($v['ad_type'] ? 'detail' : 'article').'.html?id='.$v['ad_type_id'];
+				}else{
+					$ad_list[$k]['ad_url'] = 'javascript:void(0);';
+				}
+			}
+		}
+        output_data(array('ad_list' => $ad_list));
     }
 
     /**
-     * 获取中部广告
+     * 获取文章
      */
-    public function get_adOp() {
-		$ad = array();
-		$ad['ad_target1'] = '';
-		$ad['ad_img1'] = '/img/zad_img1.png';//375x360
-		$ad['ad_target2'] = '';
-		$ad['ad_img2'] = '/img/zad_img2.png';//374x144
-		$ad['ad_target3'] = '';
-		$ad['ad_img3'] = '/img/zad_img3.png';//157x187
-		$ad['ad_target4'] = '';
-		$ad['ad_img4'] = '/img/zad_img4.png';//157x187
-        output_data(array('ad' => $ad));
+    public function get_articleOp() {
+		$article_id = intval($_GET['article_id']);
+        $article = Model('mz_article')->where(array('article_id'=>$article_id))->find();
+        output_data(array('article' => $article));
     }
 
     /**

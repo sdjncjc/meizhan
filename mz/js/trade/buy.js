@@ -91,10 +91,14 @@ $(function() {
 			var html = template('orderft-template', data);
 			$('.order-box-ft').html(html);
 			
-			var m = navigator.userAgent.match(/MicroMessenger\/(\d+)\./);
-			if (parseInt(m && m[1] || 0) >= 5) {
-				// in WX
-				$('.pay-box-bd row').removeClass('hidden');
+//			var m = navigator.userAgent.match(/MicroMessenger\/(\d+)\./);
+//			if (parseInt(m && m[1] || 0) >= 5) {
+//				// in WX
+//				$('.pay-box-bd .row').removeClass('hidden');
+//			}
+			var ua = navigator.userAgent.toLowerCase();
+			if(ua.match(/MicroMessenger/i)=="micromessenger") {
+				$('.pay-box-bd .row').removeClass('hidden');
 			}
 			
 			$('.payment-method').tap(function(){
