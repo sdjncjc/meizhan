@@ -6,7 +6,7 @@
     </section>
     <section class="wrapper">
         <section class="filterbar"></section>
-        <section class="slider"></section>
+		<!--#include virtual="/tpl/swipe.html"-->
         <section class="catebox">
 			<div class="grid">
 				<a class="col-3" href="/home/group_list.html"><i></i>限量购</a>
@@ -27,9 +27,6 @@
     <div class="toolbar">
         <a href="/trade/cart.html"></a>
     </div>
-    <script id="slider-template" type="text/template">
-        <img src="{{pic}}" />
-    </script>
     <script id="filterbar-template" type="text/template">
         <div class="filterbar-dropdown-mask hidden"></div>
         <div class="filterbar-dropdown hidden">
@@ -64,20 +61,13 @@
         </div>
     </script>
     <script id="ad-template" type="text/template">
-        <a class="ad-target1" href="{{ad_target1}}">
-            <img class="ad-img1" src="{{ad_img1}}" />
+		{{each ad_list as value index}}
+		{{if index == 1}}<div class="ad-right">{{/if}}
+        <a class="ad-target{{index+1}}" href="{{value.ad_url}}">
+            <img class="ad-img{{index+1}}" src="{{value.ad_img_url}}" alt="{{value.ad_name}}" />
         </a>
-        <div class="ad-right">
-            <a class="ad-target2" href="{{ad_target2}}">
-                <img class="ad-img2" src="{{ad_img2}}" />
-            </a>
-            <a class="ad-target3" href="{{ad_target3}}">
-                <img class="ad-img3" src="{{ad_img3}}" />
-            </a>
-            <a class="ad-target4" href="{{ad_target4}}">
-                <img class="ad-img4" src="{{ad_img4}}" />
-            </a>
-        </div>
+		{{if index == 3}}</div>{{/if}}
+		{{/each}}
     </script>
 	<!--#include virtual="/tpl/brandsale_list.html"-->
     <script id="goods-list-template" type="text/template">

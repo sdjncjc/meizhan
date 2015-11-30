@@ -5,6 +5,22 @@ $(function(){
 	var page = 1;
 	var clock = 0;
 	
+	//获取头部图片
+    $.ajax({
+        url: ApiUrl + "/index.php?act=mz_index&op=get_ad&ad_side=2",
+        type: 'get',
+        dataType: 'json',
+        success: function(result) {
+			var html = template('slider-template', result.datas);
+			$('.slider').html(html);
+			window.mySwipe = new Swipe(document.getElementById('swipe'), {
+				auto: 3000,
+				callback: function(index, elem) {
+					$('.slider-status span').eq(index).addClass('sel').siblings().removeClass('sel');
+				}
+			});
+        }
+    });
 	//获取团购
     $.ajax({
         url: ApiUrl + "/index.php?act=mz_group&op=get_oversea_list&type=3",

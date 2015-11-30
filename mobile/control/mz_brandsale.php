@@ -61,7 +61,7 @@ class mz_brandsaleControl extends mobileHomeControl{
 			$condition['is_oversea'] = 1;
 		}else{
 			$condition['recommended'] = 1;
-			$size = 5;
+			$size = 10;
 		}
         $page = intval($_GET['page']);
         $page = $page <= 0 ? 1 : $page;

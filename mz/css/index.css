@@ -7,10 +7,6 @@ body{background:#eee;-webkit-user-select:none;-ms-user-select:none;user-select:n
 .navbar .title{color:#ff356a;}
 .myaccount{display:block;width:2rem;height:2rem;background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAjVBMVEUAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMGTs/LAAAALnRSTlMACeSNPvnw6tpkM+fQpp2CeV5YTR0FxcCsJRlh1HMVhzkO9biSe3Efvq+bbkQtriQA9AAAAflJREFUOMudVdt2gkAMXK6KVlQUVKpQatVe8/+f1wmBzYptPafzQohhctnZaIbYhdnhkIU78xe8VTqiDqN05f0WtojpCvHix9DEJ4a/mQXBbNO9JLd0WwLG80nvmMzHBGwHpOsH/v7x2vnItA/rq7gpXIF3kyaAe7p2HOCLlmJfTsWIRsXpYhjLCJxKsEVc2Fp5HZEgqnN2hHjf2n7hF76qIEVRtZywki6xj/qE75WrzypTZdzca8sZoEtJvnAtmufyzRz2Qnh6IyaSuTRxT90xxU07JRhMtMKcjbQISzv0xn3lMFZ4pEgnP82IzkZxJpq1BqpI8YBeunNDy09G8YTG5TShJegPrRjBnujLKL6I9mKhnZ0JiTZGcORaFCj+KNaGKDQZVyJ4IXoRy77a4jNz0JGAPC5tXBmDx07qYM4cqEUe887Oj1yiDTxr6k4BRSl8hQhFU2szQE3InrBOYlg1DG1GxiOYsH6j99KU7xFLdmJ0PO7ALxyXdqlTjrzYgbtH2Ozh+DQ9PsGwb/QIVRQnoueOW4ieiU5WFCozbypqUSyR3LMys8JNhNlCqBIRrnsV3og+BoEfRG9yFdzL5VuRuULz5XK51xWlV4PACu3JdXUXADz5ILAhQBaArhTG+ia1rJThkqL6zpK6s/b+sUjvrOb/Lfv7fx/fVGNUNxLjWK4AAAAASUVORK5CYII=') .6rem center no-repeat;background-size:auto 1rem;position:absolute;left:0}
 
-/*头部图片*/
-.wrapper .slider{margin:0 auto;}
-.slider img{width:100%;}
-
 /*中部导航*/
 .catebox{margin-bottom:.417rem;background:#fff}
 .catebox .grid .col-3{position:relative;height:3.5rem;font-size:.6rem;line-height:5.2rem;text-align:center;color:#333}
