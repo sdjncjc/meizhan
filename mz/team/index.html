@@ -3,6 +3,15 @@
 <!--#include virtual="/tpl/navbar.html"-->
     <section class="grid-wrap wrapper J_wrapper" id="wrapper">
         <div class="team-info"></div>
+	    <script id="tpl-jointeam" type="text/template">
+	        <div class="btn-inline">
+	            <a class="btn-login" href="javascript:open_url('team_join');">加入团队</a><a class="btn-register" href="javascript:open_url('team_create');">创建团队</a>
+	        </div>
+	    </script>
+	    <script id="tpl-teaminfo" type="text/template">
+            <div class="team_title">{{data.extend_team_info.team_name}}{{if data.extend_team_info.team_status == 0}}<span>(审核中)</span>{{/if}}{{if data.extend_team_info.team_status == 2}}<span>(已关闭)</span>{{/if}}</div>
+            <div class="team_desc">{{data.extend_team_info.team_intro}}</div>
+	    </script>
         <div>
             <ul class="my-list">
                 <li class="wallet-form">
@@ -65,26 +74,10 @@
             </ul>
         </div>
     </section>
-    <script id="tpl-login" type="text/template">
-        <div class="btn-inline">
-            <a class="btn-login" href="javascript:open_url('login');">加入团队</a><a class="btn-register" href="javascript:open_url('register');">创建团队</a>
-        </div>
-    </script>
-    <script id="tpl-personal" type="text/template">
-        <div class="my-info-cnt">
-            <div class="head">
-                <div class="icon-gender" alt="my-pic"><img src="{{data.member_avatar}}"></div>
-            </div>
-            <div class="info">
-                <p class="my-account"><span>{{data.member_name}}</span><i class="my-grade my-grade-1"></i></p>
-            </div>
-        </div>
-        <a class="personal" onclick="open_url('userinfo')" href="javascript:void(0)">个人中心</a>
-    </script>
     <script type="text/javascript">
         set_title("我的美站");
         // 显示用户基本信息
-        getAjaxResult(getUrl('mz_member','getUserInfo'),'tpl-personal',".my-info",'tpl-login','setincome');
+        getAjaxResult(getUrl('mz_team_index','getUserTeam'),'tpl-teaminfo',".team-info",'tpl-jointeam');
     </script>
 </body>
     

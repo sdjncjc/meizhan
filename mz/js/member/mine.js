@@ -28,11 +28,15 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
         		}
         		function_data =  result.datas.data;
 	        }else{
+				$.dialog({content:result.datas.error,title: "alert",time: 1000});
+        		if (result.login != undefined) {
+        			delCookie("key");
+        			checklogin(result.login);
+        		}
 	        	if (empty_tpl != "" && empty_tpl != undefined) {
 	        		html = template(empty_tpl, {});
 	        		stop = true;
 	        	}else{
-					$.dialog({content:result.datas.error,title: "alert",time: 1000});
 					if (getcookie('lastvisit')) {
 						window.setTimeout(function(){
 							window.location.href = decodeURIComponent(getcookie('lastvisit'));
@@ -152,6 +156,12 @@ function open_url(type,sub,id){
 				break;
 			case 'team':
 				url = "/team/index.html";
+				break;
+			case 'team_join':
+				url = "/team/join.html";
+				break;
+			case 'team_create':
+				url = "/team/create.html";
 				break;
 		}
 	}else{

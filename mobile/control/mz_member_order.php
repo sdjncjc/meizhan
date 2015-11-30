@@ -302,6 +302,9 @@ class mz_member_orderControl extends mobileMemberControl {
         }
         output_data(array('data'=>array('reason'=>$reason_list,'order_info'=>$order)));
     }
+    /**
+     * 申请售后
+     */
     public function addRefundOp(){
         $goods = array();
         $order_id = intval($_GET['order_id']);
