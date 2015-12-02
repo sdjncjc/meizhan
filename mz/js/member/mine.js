@@ -30,7 +30,6 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
 	        }else{
 				$.dialog({content:result.datas.error,title: "alert",time: 1000});
         		if (result.login != undefined) {
-        			delCookie("key");
         			checklogin(result.login);
         		}
 	        	if (empty_tpl != "" && empty_tpl != undefined) {

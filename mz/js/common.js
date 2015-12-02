@@ -115,6 +115,7 @@ function delCookie(name){//删除cookie
 
 function checklogin(state){
 	if(state == 0){
+		delCookie('key');
 		location.href = MzSiteUrl+'/home/login.html';
 		return false;
 	}else {

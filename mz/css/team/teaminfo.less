@@ -1,0 +1,382 @@
+@charset "utf-8";
+body{
+  margin: 0;
+  padding: 0;
+}
+button,input,select,textarea {
+  font-size: 100%;
+}
+#wrapper {
+  padding-top: 2.5rem;
+}
+.grid-wrap {
+  padding: 0.5rem;
+	.grid {
+	  box-sizing: content-box;
+	  padding-left: .3rem;
+	  padding-right: .3rem;
+	  margin-left: -0.2rem;
+		[class^=col-] {
+		  margin-left: .2rem;
+		  float: left;
+		}
+		.gutter-bottom {
+		  margin-bottom: 0.2rem;
+		}
+		.gutter-right {
+		  margin-right: 0.2rem;
+		}
+		.col-1 {
+		  width: 1.1rem;
+		}
+		.row-1 {
+		  height: 1.1rem;
+		}
+		.col-2 {
+		  width: 2.4rem;
+		}
+		.row-2 {
+		  height: 2.4rem;
+		}
+		.col-3 {
+		  width: 3.7rem;
+		}
+		.row-3 {
+		  height: 3.7rem;
+		}
+		.col-4 {
+		  width: 5rem;
+		}
+		.row-4 {
+		  height: 5rem;
+		}
+		.col-5 {
+		  width: 6.3rem;
+		}
+		.row-5 {
+		  height: 6.3rem;
+		}
+		.col-6 {
+		  width: 7.6rem;
+		}
+		.row-6 {
+		  height: 7.6rem;
+		}
+		.col-7 {
+		  width: 8.9rem;
+		}
+		.row-7 {
+		  height: 8.9rem;
+		}
+		.col-8 {
+		  width: 10.2rem;
+		}
+		.row-8 {
+		  height: 10.2rem;
+		}
+		.col-9 {
+		  width: 11.5rem;
+		}
+		.row-9 {
+		  height: 11.5rem;
+		}
+		.col-10 {
+		  width: 12.8rem;
+		}
+		.row-10 {
+		  height: 12.8rem;
+		}
+		.col-11 {
+		  width: 14.1rem;
+		}
+		.row-11 {
+		  height: 14.1rem;
+		}
+		.col-12 {
+		  width: 15.4rem;
+		}
+		.row-12 {
+		  height: 15.4rem;
+		}
+	}
+	.grid:before,.grid:after {
+	  content: " ";
+	  display: table;
+	}
+	.grid:after {
+	  clear: both;
+	}
+	.grid-fat {
+	  box-sizing: content-box;
+	  padding-left: .6125rem;
+	  padding-right: .6125rem;
+	  margin-left: -0.25rem;
+		[class^=col-] {
+		  margin-left: .25rem;
+		  float: left;
+		}
+		.gutter-bottom {
+		  margin-bottom: 0.25rem;
+		}
+		.gutter-right {
+		  margin-right: 0.25rem;
+		}
+		.col-1 {
+		  width: 1rem;
+		}
+		.row-1 {
+		  height: 1rem;
+		}
+		.col-2 {
+		  width: 2.25rem;
+		}
+		.row-2 {
+		  height: 2.25rem;
+		}
+		.col-3 {
+		  width: 3.5rem;
+		}
+		.row-3 {
+		  height: 3.5rem;
+		}
+		.col-4 {
+		  width: 4.75rem;
+		}
+		.row-4 {
+		  height: 4.75rem;
+		}
+		.col-5 {
+		  width: 6rem;
+		}
+		.row-5 {
+		  height: 6rem;
+		}
+		.col-6 {
+		  width: 7.25rem;
+		}
+		.row-6 {
+		  height: 7.25rem;
+		}
+		.col-7 {
+		  width: 8.5rem;
+		}
+		.row-7 {
+		  height: 8.5rem;
+		}
+		.col-8 {
+		  width: 9.75rem;
+		}
+		.row-8 {
+		  height: 9.75rem;
+		}
+		.col-9 {
+		  width: 11rem;
+		}
+		.row-9 {
+		  height: 11rem;
+		}
+		.col-10 {
+		  width: 12.25rem;
+		}
+		.row-10 {
+		  height: 12.25rem;
+		}
+		.col-11 {
+		  width: 13.5rem;
+		}
+		.row-11 {
+		  height: 13.5rem;
+		}
+		.col-12 {
+		  width: 14.75rem;
+		}
+		.row-12 {
+		  height: 14.75rem;
+		}
+	}
+	.grid-fat:before,.grid-fat:after {
+	  content: " ";
+	  display: table;
+	}
+	.grid-fat:after {
+	  clear: both;
+	}
+	.grid-thin {
+	  box-sizing: content-box;
+	  padding-left: 0rem;
+	  padding-right: 0rem;
+	  margin-left: -0.2rem;
+		[class^=col-] {
+		  margin-left: .2rem;
+		  float: left;
+		}
+		.gutter-bottom {
+		  margin-bottom: 0.2rem;
+		}
+		.gutter-right {
+		  margin-right: 0.2rem;
+		}
+		.col-1 {
+		  width: 1.15rem;
+		}
+		.row-1 {
+		  height: 1.15rem;
+		}
+		.col-2 {
+		  width: 2.5rem;
+		}
+		.row-2 {
+		  height: 2.5rem;
+		}
+		.col-3 {
+		  width: 3.85rem;
+		}
+		.row-3 {
+		  height: 3.85rem;
+		}
+		.col-4 {
+		  width: 5.2rem;
+		}
+		.row-4 {
+		  height: 5.2rem;
+		}
+		.col-5 {
+		  width: 6.55rem;
+		}
+		.row-5 {
+		  height: 6.55rem;
+		}
+		.col-6 {
+		  width: 7.9rem;
+		}
+		.row-6 {
+		  height: 7.9rem;
+		}
+		.col-7 {
+		  width: 9.25rem;
+		}
+		.row-7 {
+		  height: 9.25rem;
+		}
+		.col-8 {
+		  width: 10.6rem;
+		}
+		.row-8 {
+		  height: 10.6rem;
+		}
+		.col-9 {
+		  width: 11.95rem;
+		}
+		.row-9 {
+		  height: 11.95rem;
+		}
+		.col-10 {
+		  width: 13.3rem;
+		}
+		.row-10 {
+		  height: 13.3rem;
+		}
+		.col-11 {
+		  width: 14.65rem;
+		}
+		.row-11 {
+		  height: 14.65rem;
+		}
+		.col-12 {
+		  width: 16rem;
+		}
+		.row-12 {
+		  height: 16rem;
+		}
+	}
+	.grid-thin:before,.grid-thin:after {
+	  content: " ";
+	  display: table;
+	}
+	.grid-thin:after {
+	  clear: both;
+	}
+	.item {
+	  padding-bottom: .4rem;
+	  margin-bottom: .6rem;
+	  border-bottom: solid 1px #DDD;
+	  font-size: 0.7rem;
+		label {
+		  line-height: 1.1rem;
+		  padding-right: 0.3rem;
+		}
+		input {
+		  height: 1.1rem;
+		  border: 0;
+		}
+		input[type=checkbox] {
+		  float: right;
+		  width: 0.8rem;
+		}
+		select {
+		  padding: 0.1rem 0;
+		}
+	}
+}
+.button {
+  margin-top: 2rem;
+  width: 100%;
+  background: #ff4965;
+  border-radius: .2rem;
+  text-align: center;
+  span{
+  	  width: 100%;
+	  display: inline-block;
+	  padding: .6rem;
+	  color: #FFF;
+	  border: #ff4a7a;
+  }
+}
+.team-list-page{
+	.search{
+	 	border-bottom: solid 1px #DDD;
+	 	margin-bottom: .5rem;
+	 	.search_title{
+	 		float: left;
+	 	}
+		.search_item{
+	 		float: left;
+		 	span{
+		 		font-size: 0.6rem;
+		 		margin-left: .2rem;
+		 		list-style: none;
+		 	}
+		}
+		.search_reset{
+			text-align: right;
+		}
+	}
+	.empty{
+		font-size: 0.6rem;
+		text-align: center;
+	}
+	.teams{
+		text-align: center;
+		.team_list_head{
+			background-color: #DDD;
+			margin-bottom: .5rem;
+			font-weight: bold;
+			padding: .3rem;
+		}
+		.team_list{
+		 	border-bottom: solid 1px #DDD;
+		 	margin-bottom: .5rem;
+		 	padding-bottom:.5rem;
+		 	.team_desc{
+		 		text-align: left;
+		 	}
+		 	.join{
+				border-radius: .2rem;
+				text-align: center;
+				width: 100%;
+				background: #ff4965;
+				padding: .3rem .5rem;
+		 	}
+		}
+	}
+}
