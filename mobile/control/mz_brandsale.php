@@ -114,7 +114,12 @@ class mz_brandsaleControl extends mobileHomeControl{
 				$brandsale['remaining_time'] = $brandsale['end_time']-TIMESTAMP;
 			}
 	
-			$goods_list = Model('goods_common')->field('gc_id,gc_name,count(*) as num')->where(array('goods_state'=>1,'goods_verify'=>1,'brand_id'=>$brandsale['brand_id'],'gc_id_1'=>$brandsale['gc_id']))->group('gc_id')->limit(false)->select();
+			$condition = array();
+			$condition['goods_state'] = 1;
+			$condition['goods_verify'] = 1;
+			$condition['brand_id'] = $brandsale['brand_id'];
+			if(!$brandsale['recommended'])$condition['gc_id_1'] = $brandsale['gc_id'];
+			$goods_list = Model('goods_common')->field('gc_id,gc_name,count(*) as num')->where($condition)->group('gc_id')->limit(false)->select();
 			$brandsale_cate = array();
 			$brandsale_cate[0] = array('gc_name'=>'全部','num'=>0);
 			if($goods_list){
@@ -141,7 +146,11 @@ class mz_brandsaleControl extends mobileHomeControl{
 		$goods_list = array();
 		if($brandsale){
 			$size = 10;
-			$condition = array('goods_state'=>1,'goods_verify'=>1,'brand_id'=>$brandsale['brand_id'],'gc_id_1'=>$brandsale['gc_id']);
+			$condition = array();
+			$condition['goods_state'] = 1;
+			$condition['goods_verify'] = 1;
+			$condition['brand_id'] = $brandsale['brand_id'];
+			if(!$brandsale['recommended'])$condition['gc_id_1'] = $brandsale['gc_id'];
 			$stock = intval($_GET['stock']);
 			if($stock)$condition['goods_storage'] = array('gt', 0);
 			$sort = intval($_GET['sort']);
