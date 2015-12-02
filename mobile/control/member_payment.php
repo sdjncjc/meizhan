@@ -94,6 +94,10 @@ class member_paymentControl extends mobileMemberControl {
             $param['orderFee'] = (int) (100 * $order_pay_info['api_pay_amount']);
             $param['orderInfo'] = C('site_name') . '商品订单' . $order_pay_info['pay_sn'];
             $param['orderAttach'] = ($order_pay_info['order_type'] == 'real_order' ? 'r' : 'v');
+	    if($_GET['from'] == 'mz'){
+	            $param['finishedUrl'] = 'http://mz.qinqin.net/trade/payment_result.html?_=2&attach=_attach_';
+	            $param['undoneUrl'] = 'http://mz.qinqin.net/trade/payment_result_failed.html?_=2&attach=_attach_';
+	    }
             $api = new wxpay_jsapi();
             $api->setConfigs($param);
             try {

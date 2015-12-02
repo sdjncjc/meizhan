@@ -263,9 +263,9 @@ $(function() {
         		if(result.datas.pay_sn != ''){
 					var ua = navigator.userAgent.toLowerCase();
 					if(ua.match(/MicroMessenger/i)=="micromessenger") {
-                        location.href = ApiUrl+'/index.php?act=mz_member_payment&op=pay&key='+key+'&pay_sn='+result.datas.pay_sn+'&payment_code=wxpay_jsapi&showwxpaytitle=1';
+                        location.href = ApiUrl+'/index.php?act=member_payment&op=pay&key='+key+'&pay_sn='+result.datas.pay_sn+'&payment_code=wxpay_jsapi&showwxpaytitle=1&from=mz';
 					}else{
-                        location.href = ApiUrl+'/index.php?act=mz_member_payment&op=pay&key='+key+'&pay_sn='+result.datas.pay_sn;
+                        location.href = ApiUrl+'/index.php?act=member_payment&op=pay&key='+key+'&pay_sn='+result.datas.pay_sn;
 					}
         		}
         		return false;
