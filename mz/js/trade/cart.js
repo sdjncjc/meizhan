@@ -93,7 +93,7 @@ $(function(){
 							$('.cart-item-list .selected').each(function(){
 								cart_id_arr.push($(this).attr('data-cart-id')+'|'+parseInt($(this).next().find('input').val()));
 							})
-							location.href = MzSiteUrl + "/trade/buy.html?ifcart=1&cart_id="+cart_id_arr.toString();
+							if(cart_id_arr.length>0){location.href = MzSiteUrl + "/trade/buy.html?ifcart=1&cart_id="+cart_id_arr.toString();}
 						})
 					}else{
 						$.dialog({

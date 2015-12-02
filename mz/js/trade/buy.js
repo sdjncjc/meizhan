@@ -13,7 +13,6 @@ $(function() {
 	
 	set_title('订单确认');
 	
-	var payment_code = 'alipay';
     var pf = function(f) {
         return parseFloat(f) || 0;
     };
@@ -91,21 +90,12 @@ $(function() {
 			var html = template('orderft-template', data);
 			$('.order-box-ft').html(html);
 			
-//			var m = navigator.userAgent.match(/MicroMessenger\/(\d+)\./);
-//			if (parseInt(m && m[1] || 0) >= 5) {
-//				// in WX
-//				$('.pay-box-bd .row').removeClass('hidden');
-//			}
 			var ua = navigator.userAgent.toLowerCase();
 			if(ua.match(/MicroMessenger/i)=="micromessenger") {
-				$('.pay-box-bd .row').removeClass('hidden');
+				$('.pay-box-bd .row').eq(1).removeClass('hidden');
+			}else{
+				$('.pay-box-bd .row').eq(0).removeClass('hidden');
 			}
-			
-			$('.payment-method').tap(function(){
-				$('.payment-method').removeClass('selected');
-				$(this).addClass('selected');
-				payment_code = $(this).attr('data-method');
-			})
 			
 			$('.cart-select-dot').tap(function(){
 				$(this).toggleClass('selected');
@@ -271,11 +261,12 @@ $(function() {
                 }
 
         		if(result.datas.pay_sn != ''){
-                    if (payment_code == 'alipay') {
-                        location.href = ApiUrl+'/index.php?act=mz_member_payment&op=pay&key='+key+'&pay_sn='+result.datas.pay_sn;
-                    }else if (payment_code == 'wxpay') {
-                        location.href = ApiUrl+'/index.php?act=mz_member_payment&op=pay&key='+key+'&pay_sn='+result.datas.pay_sn+'&payment_code=wxpay_jsapi&showwxpaytitle=1';
-                    }
+					var ua = navigator.userAgent.toLowerCase();
+					if(ua.match(/MicroMessenger/i)=="micromessenger") {
+                        location.href = ApiUrl+'/index.php?act=member_payment&op=pay&key='+key+'&pay_sn='+result.datas.pay_sn+'&payment_code=wxpay_jsapi&showwxpaytitle=1&from=mz';
+					}else{
+                        location.href = ApiUrl+'/index.php?act=member_payment&op=pay&key='+key+'&pay_sn='+result.datas.pay_sn;
+					}
         		}
         		return false;
         	}

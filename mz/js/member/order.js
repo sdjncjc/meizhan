@@ -169,13 +169,13 @@ var order = {
 	    });
 	},
 	payOrder:function(pay_sn){
-		var payment_code = "alipay";
 		if(pay_sn != ''){
-            if (payment_code == 'alipay') {
-                location.href = getUrl("mz_member_payment",'pay','pay_sn='+pay_sn);
-            }else if (payment_code == 'wxpay') {
-                location.href = getUrl("mz_member_payment",'pay','pay_sn='+pay_sn+'&payment_code=wxpay_jsapi&showwxpaytitle=1');
-            }
+			var ua = navigator.userAgent.toLowerCase();
+			if(ua.match(/MicroMessenger/i)=="micromessenger") {
+                location.href = getUrl("member_payment",'pay','pay_sn='+pay_sn+'&payment_code=wxpay_jsapi&showwxpaytitle=1&from=mz');
+			}else{
+                location.href = getUrl("member_payment",'pay','pay_sn='+pay_sn);
+			}
 		}
 	},
 	receiveOrder:function(id){
