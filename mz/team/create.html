@@ -30,13 +30,18 @@
             </div>
         </div>
         <div class="button">
-            <span class="submitbutton">确认提交</span>
+            <span class="submitbutton" data-team-id="0">确认提交</span>
+            <span class="deletebutton hidden" data-team-log-id="0">撤销申请</span>
         </div>
     </section>
     <script type="text/javascript" src="/js/team/team.js"></script>
     <script type="text/javascript">
         set_title("创建小组");
-        team.intiAddress();
+        if (GetQueryString('id') != 'undefined') {
+            getAjaxResult(getUrl('mz_team_index','getUserTeam'),'','','',"team.intiAddress");
+        }else{
+            team.intiAddress();
+        }
     </script>
 </body>    
 </html>

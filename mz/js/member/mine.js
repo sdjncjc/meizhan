@@ -160,7 +160,10 @@ function open_url(type,sub,id){
 				url = "/team/join.html";
 				break;
 			case 'team_create':
-				url = "/team/create.html";
+				url = "/team/create.html?id="+id;
+				break;
+			case 'team_audit_member':
+				url = "/team/audit_member.html";
 				break;
 		}
 	}else{
