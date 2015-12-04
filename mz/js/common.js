@@ -40,6 +40,10 @@ var ApiUrl = "http://localhost/mobile";
 var pagesize = 10;
 var MzSiteUrl = "http://mz.qinqin.net";
 
+//记录来源推广号
+var pm = GetQueryString('pm');
+if(pm)addcookie('pm',pm);
+
 function get_footer(){
 	var key = getcookie('key');
 	var html = '<div class="info-line">';

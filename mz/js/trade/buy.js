@@ -208,6 +208,7 @@ $(function() {
 					_data.pd_pay = 1;
 					_data.password = $('input[name=paypassword]').val();
 				}
+				_data.pm = getcookie('pm');
 				//验证密码
 				if(_data.rcb_pay || _data.pd_pay){
 					if(_data.password == ''){
