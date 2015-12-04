@@ -27,10 +27,7 @@ class mz_team_indexControl extends mobileMemberControl {
      * @return [type] [description]
      */
     public function getUserTeamOp(){
-    	$condition = array();
-    	$condition['member_id'] = $this->member_info['member_id'];
-    	$model_mz_member =  Model('mz_member');
-    	$userteam = $model_mz_member->getMemberInfo($condition,"*",array("mz_team"));
+    	$userteam = Model('mz_member')->getMemberInfo(array('member_id'=>$this->member_info['member_id']),"*",array("mz_team"));
     	if (empty($userteam)) {
             $userteam['member_id'] = $this->member_info['member_id'];
             $userteam['team_id'] = 0;
@@ -117,9 +114,9 @@ class mz_team_indexControl extends mobileMemberControl {
         $data['team_status'] = 0;
         $data['createtime'] = TIMESTAMP;
         if ($team_id > 0) {
-            Model("mz_team")->editTeam(array('team_id'=>$team_id),$data);
+            Model("mz_team")->where(array('team_id'=>$team_id))->update($data);
         }else{
-            $team_id = Model('mz_team')->addTeam($data);
+            $team_id = Model('mz_team')->insert($data);
         }
         if ($team_id) {
             $team_apply_info = Model("mz_team_log")->where(array('member_id'=>$this->member_info['member_id'],"type"=>1,'team_id'=>$team_id))->find();
@@ -180,7 +177,7 @@ class mz_team_indexControl extends mobileMemberControl {
     public function joinTeamOp(){
         $result = false;
         $team_id = intval($_GET['team_id']);
-        $team_info = Model("mz_team")->getTeamInfo(array('team_id'=>$team_id));
+        $team_info = Model("mz_team")->where(array('team_id'=>$team_id))->find();
         if (!empty($team_info)) {
             if ($team_info['team_status'] != 1) {
                 output_error("小组状态不正确，无法加入");
@@ -244,9 +241,11 @@ class mz_team_indexControl extends mobileMemberControl {
         }
         // 删除申请记录
         $result = Model("mz_team_log")->where(array('member_id'=>$this->member_info['member_id'],'id'=>$id))->delete();
-        if ($result && $apply_info['type'] == 1) {
-            Model("mz_team")->where(array('team_id'=>$apply_info['team_id']))->delete();
-            Model("mz_member")->editTeamUser(array('member_id'=>$this->member_info['member_id']),array('team_id'=>0));
+        if ($result) {
+            if ($apply_info['type'] == 1) {
+                Model("mz_team")->where(array('team_id'=>$apply_info['team_id']))->delete();
+                Model("mz_member")->editTeamUser(array('member_id'=>$this->member_info['member_id']),array('team_id'=>0));
+            }
             output_data("删除成功");
         }else{
             output_error("删除失败");

@@ -28,12 +28,15 @@ class mz_memberControl extends mobileMemberControl {
      */
     public function getUserInfoOp() {
         $member_info = array();
+
+        $team_member_info = Model("mz_member")->where(array('member_id'=>$this->member_info['member_id']))->find();
         // $member_info = $this->member_info;
         $member_info['member_avatar'] = getMemberAvatar($this->member_info['member_avatar']);
-        $promotionGroupInfo = Model("seller_promotion_group")->getSellerPromotionGroupInfo(array('group_id'=>$this->member_info['group_id']));
-        $member_info['group_name'] = $promotionGroupInfo['group_name'];
+        $member_info['group_name'] = Model("mz_team")->where(array('mz_team'=>$team_member_info['team_id']))->get_field("team_name");
         $member_info['member_name'] = $this->member_info['member_name'];
-        $member_info['member_points'] = $this->member_info['member_points'];
+        $member_info['member_points'] = $team_member_info['integral'];
+        $member_info['member_grade_info'] = $this->getMemberGrade($team_member_info['integral']);
+
         $member_info['available_rc_balance'] = $this->member_info['available_rc_balance'];
         $member_info['available_predeposit'] = $this->member_info['available_predeposit'];
         $member_info['member_email'] = $this->member_info['member_email'];
@@ -47,6 +50,24 @@ class mz_memberControl extends mobileMemberControl {
         $member_info['member_truename'] = encryptShow($this->member_info['member_truename'],2,2);
         $member_info['member_idnum'] = encryptShow($this->member_info['member_idnum'],7,8);
         output_data(array('data'=>$member_info));
+    }
+    /**
+     * 通过积分获取等级信息
+     * @param  [type] $integral [description]
+     * @return [type]           [description]
+     */
+    private function getMemberGrade($integral){
+        $membergrade = "";
+        $mz_member_grade_arr = unserialize(C('mz_member_grade'));
+        if (!empty($mz_member_grade_arr)) {
+            foreach ($mz_member_grade_arr as $key => $value) {
+                if ($integral <= $value['integral']) {
+                    $membergrade = $value;
+                    break;
+                }
+            }
+        }
+        return $membergrade;
     }
     /**
      * 修改用户信息

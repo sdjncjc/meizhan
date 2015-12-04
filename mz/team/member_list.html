@@ -1,0 +1,28 @@
+<!--#include virtual="/mine/head.html"-->
+<link href="/css/team/index.css" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="grid-wrap wrapper" id="wrapper">
+        <div class="member-list grid-wrap"></div>
+        <script type="text/template" id="member-list-tpl">
+            <div class="apply-head grid">
+                <li class="col-4">会员名</li>
+                <li class="col-3">等级</li>
+                <li class="col-2"></li>
+            </div>
+            {{each data as member}}
+            <div class="apply-item grid">
+                <li class="col-4"><img class="member_head" src="{{member.member_avatar}}">{{member.member_name}}</li>
+                <li class="col-3">{{member.member_grade.level_name}}</li>
+                <li class="col-3">详细</li>
+            </div>
+            {{/each}}
+        </script>
+    </section>
+
+    <script type="text/javascript" src="/js/team/team.js"></script>
+    <script type="text/javascript">
+        set_title("小组成员列表");
+        getAjaxResult(getUrl('mz_team_member','getMemberList'),'member-list-tpl',".member-list",'');
+    </script>
+</body>
+</html>

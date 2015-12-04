@@ -165,6 +165,9 @@ function open_url(type,sub,id){
 			case 'team_audit_member':
 				url = "/team/audit_member.html";
 				break;
+			case 'team_member_list':
+				url = "/team/member_list.html";
+				break;
 		}
 	}else{
 		switch(type){

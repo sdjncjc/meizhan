@@ -11,6 +11,22 @@ if(window.name != "qinqin"){
 <!--#include virtual="/tpl/navbar.html"-->
     <section class="grid-wrap wrapper J_wrapper" id="wrapper">
         <div class="my-info"></div>
+        <script id="tpl-login" type="text/template">
+            <div class="btn-inline">
+                <a class="btn-login" href="javascript:open_url('login');">立即登录</a><a class="btn-register" href="javascript:open_url('register');">新人注册</a>
+            </div>
+        </script>
+        <script id="tpl-personal" type="text/template">
+            <div class="my-info-cnt">
+                <div class="head">
+                    <div class="icon-gender" alt="my-pic"><img src="{{data.member_avatar}}"></div>
+                </div>
+                <div class="info">
+                    <p class="my-account"><span>{{data.member_name}}</span><i class="my-grade my-grade-{{data.member_grade_info.level + 1}}"></i></p>
+                </div>
+            </div>
+            <a class="personal" onclick="open_url('userinfo')" href="javascript:void(0)">个人中心</a>
+        </script>
         <div class="order-list">
             <ul class="my-list">
                 <li class="order-form">
@@ -147,22 +163,6 @@ if(window.name != "qinqin"){
             </ul>
         </div>
     </section>
-    <script id="tpl-login" type="text/template">
-        <div class="btn-inline">
-            <a class="btn-login" href="javascript:open_url('login');">立即登录</a><a class="btn-register" href="javascript:open_url('register');">新人注册</a>
-        </div>
-    </script>
-    <script id="tpl-personal" type="text/template">
-        <div class="my-info-cnt">
-            <div class="head">
-                <div class="icon-gender" alt="my-pic"><img src="{{data.member_avatar}}"></div>
-            </div>
-            <div class="info">
-                <p class="my-account"><span>{{data.member_name}}</span><i class="my-grade my-grade-1"></i></p>
-            </div>
-        </div>
-        <a class="personal" onclick="open_url('userinfo')" href="javascript:void(0)">个人中心</a>
-    </script>
     <script type="text/javascript">
         set_title("用户中心");
         // 显示用户基本信息
