@@ -32,7 +32,7 @@ class mz_memberModel extends Model {
 	        }
 	        // 获取团队信息
 	        if (in_array('mz_team', $extend)) {
-	        	$result['extend_team_info'] = Model("mz_team")->getTeamInfo(array('team_id'=>$result['team_id']));
+	        	$result['extend_team_info'] = Model("mz_team")->where(array('team_id'=>$result['team_id']))->find();
 	        }
         }
         return $result;

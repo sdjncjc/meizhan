@@ -217,19 +217,26 @@ body {
   background-size: 0.4rem 0.6rem;
 }
 
-.apply-list{
+.apply-list,.member-list{
 	text-align: center;
 	margin-top: .5rem;
 	.empty{
 		font-size: .8rem;
 		line-height: 2rem;
 	}
-	.apply-head,.apply-item{
+	.apply-head,.apply-item,.member-head,.member-item{
 		margin-bottom: .5rem;
 		padding: .3rem;
 		border-bottom: 1px solid #999;
+		li{
+			float: left;
+			list-style: none;
+			.manager{
+				color: red;
+			}
+		}
 	}
-	.apply-head{
+	.apply-head,.member-head{
 		background-color: #DDD;
 		font-weight: bold;
 	}
@@ -237,5 +244,18 @@ body {
 		img{
 			margin-right: .2rem;
 		}
+	}
+	.btn_agree,.btn_refuse,.btn_dissolution,.btn_layoff{
+		border-radius: .2rem;
+		text-align: center;
+		width: 100%;
+		padding: .1rem .3rem;
+		color: #fff;
+	}
+	.btn_agree,.btn_dissolution{
+		background: #ff4965;
+	}
+	.btn_refuse,.btn_layoff{
+		background: #999;
 	}
 }
