@@ -1,0 +1,47 @@
+<!--#include virtual="/mine/head.html"-->
+<link href="/css/team/teaminfo.css" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="grid-wrap" id="wrapper">
+        <div class="grid">
+            <div class="item row-1">
+                <label class="col-3">所属类别</label>
+                <select class="col-4 team_type">
+                    <option value="0">社会</option>
+                    <option value="1">学生</option>
+                </select>
+            </div>
+            <div class="item address row-2">
+                <label class="col-3">所属地区</label>
+                <select class="provinces"></select>
+                <select class="city_school"></select>
+            </div>
+            <div class="item team_name row-1">
+                <label class="col-3">名称</label>
+                <input class="col-8" type="text" value="" placeholder="请输入小组名称" />
+            </div>
+            <div class="item subdomain row-1">
+                <label class="col-3">子域名</label>
+                <input class="col-2" type="text" value="" placeholder="子域名" />
+                <label class="col-4">.mz.qinqin.net</label>
+            </div>
+            <div class="item team_intro row-3">
+                <label class="col-3">小组简介</label>
+                <textarea class="col-7" rows="4"></textarea>
+            </div>
+        </div>
+        <div class="button">
+            <span class="submitbutton" data-team-id="0">确认提交</span>
+            <span class="deletebutton hidden" data-team-log-id="0">撤销申请</span>
+        </div>
+    </section>
+    <script type="text/javascript" src="/js/team/team.js"></script>
+    <script type="text/javascript">
+        set_title("创建小组");
+        if (GetQueryString('id') != 'undefined') {
+            getAjaxResult(getUrl('mz_team_index','getUserTeam'),'','','',"team.intiAddress");
+        }else{
+            team.intiAddress();
+        }
+    </script>
+</body>    
+</html>

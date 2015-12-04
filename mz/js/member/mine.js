@@ -30,7 +30,6 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
 	        }else{
 				$.dialog({content:result.datas.error,title: "alert",time: 1000});
         		if (result.login != undefined) {
-        			delCookie("key");
         			checklogin(result.login);
         		}
 	        	if (empty_tpl != "" && empty_tpl != undefined) {
@@ -161,7 +160,10 @@ function open_url(type,sub,id){
 				url = "/team/join.html";
 				break;
 			case 'team_create':
-				url = "/team/create.html";
+				url = "/team/create.html?id="+id;
+				break;
+			case 'team_audit_member':
+				url = "/team/audit_member.html";
 				break;
 		}
 	}else{

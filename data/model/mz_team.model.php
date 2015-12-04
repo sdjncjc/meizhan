@@ -37,11 +37,15 @@ class mz_teamModel extends Model {
      * @return [type]             [description]
      */
     public function getAllTeam($condition, $field = '*', $order = 'order_id desc', $pagesize = '',$limit = '', $master = false){
-        $list = $this->field($field)->where($condition)->page($pagesize)->order($order)->limit($limit)->master($master)->select();
+        $list = $this->table("mz_team")->field($field)->where($condition)->page($pagesize)->order($order)->limit($limit)->master($master)->select();
         return $list;
     }
     public function addTeam($data){
         $insert = $this->insert($data);
         return $insert;
+    }
+    public function editTeam($condition,$data){
+        $update = $this->where($condition)->update($data);
+        return $update;
     }
 }
