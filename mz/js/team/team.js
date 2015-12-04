@@ -7,6 +7,7 @@ var team = {
 		city_school_id:0,
 		team_name:"",
 		team_domain_name:"",
+		recommend_id:"0",
 		team_intro:"",
 		team_id:0
 	},
@@ -42,6 +43,7 @@ var team = {
 		$(".team_type").val(_this.team_info.team_type);
 		$(".team_name input").val(_this.team_info.team_name);
 		$(".subdomain input").val(_this.team_info.team_domain_name);
+		$(".recommend_id input").val(_this.team_info.recommend_id);
 		$(".team_intro textarea").val(_this.team_info.team_intro);
 
 		script.get(0).readyState ? script.get(0).onreadystatechange = function() {
@@ -171,6 +173,7 @@ var team = {
 			city_school_id:$(".city_school").val(),
 			city_school:$(".city_school option").eq($(".city_school").attr("selectedIndex")).text(),
 			team_domain_name:$(".subdomain input").val(),
+			recommend_id:$(".recommend_id input").val(),
 			team_type:$(".team_type").val(),
 			team_intro:$(".team_intro textarea").val(),
 			team_id:$(".submitbutton").attr("data-team-id")

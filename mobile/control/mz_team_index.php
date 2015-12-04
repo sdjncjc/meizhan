@@ -101,7 +101,6 @@ class mz_team_indexControl extends mobileMemberControl {
         if ($count > 0) {
             output_error("子域名重复");
         }
-
         $data = array();
         $data['team_type'] = intval($_POST['team_type']);
         $data['team_name'] = trim($_POST['team_name']);
@@ -110,9 +109,14 @@ class mz_team_indexControl extends mobileMemberControl {
         $data['city_school_id'] = trim($_POST['city_school_id']);
         $data['city_school'] = trim($_POST['city_school']);
         $data['team_domain_name'] = trim($_POST['team_domain_name']);
+        $data['recommend_id'] = intval($_POST['recommend_id']);
         $data['team_intro'] = trim($_POST['team_intro']);
         $data['team_status'] = 0;
         $data['createtime'] = TIMESTAMP;
+        // 判断推广人
+        if (!in_array($data['recommend_id'],array(123,164))) {
+            $data['recommend_id'] = 0;
+        }
         if ($team_id > 0) {
             Model("mz_team")->where(array('team_id'=>$team_id))->update($data);
         }else{

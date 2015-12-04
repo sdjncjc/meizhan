@@ -22,6 +22,10 @@ class mz_team_memberControl extends mobileMemberControl {
     public function indexOp() {
         exit;
     }
+    /**
+     * 获取成员申请列表
+     * @return [type] [description]
+     */
     public function getApplyListOp(){
     	$team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
     	if ($team_member_info['type'] != 1) {
@@ -61,6 +65,10 @@ class mz_team_memberControl extends mobileMemberControl {
         }
         return $membergrade;
     }
+    /**
+     * 审核成员加入
+     * @return [type] [description]
+     */
     public function auditMemberOp(){
     	$team_log_id = intval($_GET['id']);
     	$agree = intval($_GET['agree']);
@@ -103,9 +111,13 @@ class mz_team_memberControl extends mobileMemberControl {
     	}
     	output_error("参数错误");
     }
+    /**
+     * 获取小组成员列表
+     * @return [type] [description]
+     */
     public function getMemberListOp(){
         $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
-        $member_list = Model("mz_member")->where(array('team_id'=>$team_member_info['team_id']))->select();
+        $member_list = Model("mz_member")->where(array('team_id'=>$team_member_info['team_id'],'team_id'=>array('gt',0)))->select();
         foreach ($member_list as $key => $value) {
             $member_info = Model('member')->where(array('member_id'=>$value['member_id']))->field('member_name,member_avatar')->find();
             $member_list[$key]['member_name'] = $member_info['member_name'];
@@ -113,6 +125,56 @@ class mz_team_memberControl extends mobileMemberControl {
             $member_list[$key]['member_avatar'] = getMemberAvatar($member_info['member_avatar']);
 
         }
-        output_data(array('data'=>$member_list));
+        output_data(array('data'=>array('self_info'=>$team_member_info,'member_list'=>$member_list)));
+    }
+    /**
+     * 移出小组
+     * @return [type] [description]
+     */
+    public function layoffMemberOp(){
+        $member_id = intval($_GET['member_id']);
+        $layoff_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$member_id));
+        $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        if ($team_member_info['type'] != 1 || ($team_member_info['team_id'] != $layoff_member_info['team_id'])) {
+            output_error("参数错误或无权限");
+        }
+        $result = Model("mz_member")->where(array('member_id'=>$member_id))->update(array('team_id'=>0));
+        if ($result) {
+            $num = Model("mz_team")->where(array('team_id'=>$team_member_info['team_id']))->get_field('num');
+            Model("mz_team")->where(array('team_id'=>$team_member_info['team_id']))->update(array('num'=>$num-1));
+            output_data("操作成功");
+        }else{
+            output_data("系统错误");
+        }
+    }
+    /**
+     * 解散小组
+     * @return [type] [description]
+     */
+    public function dissolutionOp(){
+        $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        if ($team_member_info['type'] != 1) {
+            output_error("无权限");
+        }
+        $team_info = Model("mz_team")->where(array('team_id'=>$team_member_info['team_id']))->find();
+        if ($team_info['team_status'] != 1) {
+            output_error("小组状态不正确");
+        }
+        if ($team_info['num'] > 1) {
+            output_error("成员数大于1,无法解散小组");
+        }
+        $result1 = Model("mz_member")->where(array('member_id'=>$this->member_info['member_id']))->update(array('team_id'=>0,'type'=>0));
+        if ($result1) {
+            $result2 = Model("mz_team")->where(array('team_id'=>$team_info['team_id']))->update(array('num'=>0,'team_status'=>2));
+            if($result2){
+                output_data("小组解散成功");
+            }else{
+                Model("mz_member")->where(array('member_id'=>$this->member_info['member_id']))->update(array('team_id'=>$team_info['team_id'],'type'=>1));
+                output_data("系统错误，小组解散失败");
+            }
+        }else{
+            output_data("系统错误，小组解散失败");
+        }
+
     }
 }

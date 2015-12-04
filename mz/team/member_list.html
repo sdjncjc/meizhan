@@ -4,25 +4,58 @@
     <section class="grid-wrap wrapper" id="wrapper">
         <div class="member-list grid-wrap"></div>
         <script type="text/template" id="member-list-tpl">
-            <div class="apply-head grid">
+            <div class="member-head grid">
                 <li class="col-4">会员名</li>
-                <li class="col-3">等级</li>
-                <li class="col-2"></li>
+                <li class="col-2">等级</li>
+                <li class="col-3">经验</li>
+                {{if data.self_info.type == 1}}
+                <li class="col-3"> <span class="btn_dissolution">解散</span></li>
+                {{/if}}
             </div>
-            {{each data as member}}
-            <div class="apply-item grid">
+            {{each data.member_list as member}}
+            <div class="member-item grid">
                 <li class="col-4">{{member.member_name}}</li>
+                <li class="col-2">{{if member.type==1}}<span class='manager'>组长</span>{{else}}成员{{/if}}</li>
                 <li class="col-3">{{member.member_grade.level_name}}</li>
-                <li class="col-3">详细</li>
+                {{if data.self_info.type == 1}}
+                <li class="col-3">
+                    {{if member.type == 0}}
+                    <span data-id="{{member.member_id}}" class="btn_layoff">移出</span>
+                    {{/if}}
+                </li>
+                {{/if}}
             </div>
             {{/each}}
         </script>
     </section>
-
-    <script type="text/javascript" src="/js/team/team.js"></script>
     <script type="text/javascript">
         set_title("小组成员列表");
-        getAjaxResult(getUrl('mz_team_member','getMemberList'),'member-list-tpl',".member-list",'');
+        getAjaxResult(getUrl('mz_team_member','getMemberList'),'member-list-tpl',".member-list","",'bindEvent');
+        function bindEvent(data){
+            $(".btn_dissolution").tap(function(){
+                $.dialog({
+                    content : '确定解散该小组？解散后无法恢复',
+                    title : 'alert',
+                    ok : function() {
+                        ajax_do(getUrl('mz_team_member','dissolution'));
+                    },
+                    cancel : function() {},
+                    lock : false
+                });
+            });
+            $('.btn_layoff').tap(function(){
+                var member_id = $(this).attr('data-id');
+                $.dialog({
+                    content : '确定将该用户移出小组？',
+                    title : 'alert',
+                    ok : function() {
+                        ajax_do(getUrl('mz_team_member','layoffMember','member_id='+member_id));
+                    },
+                    cancel : function() {},
+                    lock : false
+                });
+            });
+        }
     </script>
 </body>
 </html>
