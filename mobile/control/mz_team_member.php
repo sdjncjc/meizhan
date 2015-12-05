@@ -133,10 +133,18 @@ class mz_team_memberControl extends mobileMemberControl {
      */
     public function layoffMemberOp(){
         $member_id = intval($_GET['member_id']);
-        $layoff_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$member_id));
         $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
-        if ($team_member_info['type'] != 1 || ($team_member_info['team_id'] != $layoff_member_info['team_id'])) {
-            output_error("参数错误或无权限");
+        if ($member_id >0) {
+            $layoff_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$member_id));
+            if ($team_member_info['type'] != 1 || ($team_member_info['team_id'] != $layoff_member_info['team_id'])) {
+                output_error("参数错误或无权限");
+            }
+        }else{
+            if ($team_member_info['type'] == 1) {
+                output_error("组长无法退出小组");
+                exit();
+            }
+            $member_id = $this->member_info['member_id'];
         }
         $result = Model("mz_member")->where(array('member_id'=>$member_id))->update(array('team_id'=>0));
         if ($result) {
@@ -175,6 +183,33 @@ class mz_team_memberControl extends mobileMemberControl {
         }else{
             output_data("系统错误，小组解散失败");
         }
-
+    }
+    /**
+     * 转让小组
+     * @return [type] [description]
+     */
+    public function transferTeamOp(){
+        $member_id = intval($_GET['member_id']);
+        $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        $team_info = Model("mz_team")->where(array('team_id'=>$team_member_info['team_id']))->find();
+        if ($team_info['team_status'] !=1) {
+            output_error("小组状态不正确");
+        }
+        $transfer_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$member_id));
+        if (($team_member_info['type'] !=1) || ($team_member_info['team_id'] != $transfer_member_info['team_id'])) {
+            output_error("无权限");
+        }
+        $result1 = Model("mz_member")->where(array('member_id'=>$team_member_info['member_id']))->update(array('type'=>0));
+        if ($result1) {
+            $result2 =  Model("mz_member")->where(array('member_id'=>$transfer_member_info['member_id']))->update(array('type'=>1));
+            if ($result2) {
+                output_data("小组转让成功");
+            }else{
+                Model("mz_member")->where(array('member_id'=>$team_member_info['member_id']))->update(array('type'=>1));
+                output_error("小组转让失败");
+            }
+        }else{
+            output_error("系统错误，小组转让失败");
+        }
     }
 }

@@ -42,11 +42,7 @@
     <script type="text/javascript" src="/js/team/team.js"></script>
     <script type="text/javascript">
         set_title("创建小组");
-        if (GetQueryString('id') != 'undefined') {
-            getAjaxResult(getUrl('mz_team_index','getUserTeam'),'','','',"team.intiAddress");
-        }else{
-            team.intiAddress();
-        }
+        getAjaxResult(getUrl('mz_team','getUserTeam'),'','','',"team.intiAddress");
     </script>
 </body>    
 </html>

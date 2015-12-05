@@ -13,7 +13,7 @@
 use Shopnc\Tpl;
 
 defined('InShopNC') or exit('Access Invalid!');
-class mz_team_indexControl extends mobileMemberControl {
+class mz_teamControl extends mobileMemberControl {
 
     public function __construct() {
         parent::__construct();
@@ -167,12 +167,19 @@ class mz_team_indexControl extends mobileMemberControl {
         $condition = array();
         $condition['team_type'] = intval($_GET['team_type']);
         $condition['provinceid'] = intval($_GET['provinceid']);
-        $condition['city_school'] = trim($_GET['city_school']);
+        $condition['city_school_id'] = intval($_GET['city_school_id']);
         $condition['team_status'] = 1;
         $condition['team_name'] = array('like','%'.trim($_GET['keywords']).'%');
-
-        $teams = Model("mz_team")->where($condition)->select();
-        output_data(array('data'=>$teams));
+        // 查询数量统计
+        $size = 10;     
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
+        $count = Model("mz_team")->where($condition)->count();
+        $data_info['thispage'] = $page;
+        $data_info['totalpage'] = ceil($count / $size);
+        // 分页设置
+        $teams = Model("mz_team")->where($condition)->limit((($page-1)*$size).','.$size)->select();
+        output_data(array('data'=>$teams,'data_info'=>$data_info));
     }
     /**
      * 加入小组
@@ -254,5 +261,46 @@ class mz_team_indexControl extends mobileMemberControl {
         }else{
             output_error("删除失败");
         }
+    }
+    /**
+     * 获取小组信息
+     * @return [type] [description]
+     */
+    public function getTeamInfoOp(){
+        $team_id = intval($_GET['team_id']);
+        $team_info = Model("mz_team")->where(array('team_id'=>$team_id,'team_status'=>1))->find();
+        $team_member = Model('mz_member')->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        if (!empty($team_info) && !empty($team_member)) {
+            if ($team_member['team_id'] == $team_info['team_id']) {
+                $team_info['is_join'] = 1;
+                $team_info['is_leader'] = $team_member['type'];
+            }else{
+                $team_info['is_join'] = 0;
+                $team_info['is_leader'] = 0;
+            }
+        }
+        output_data(array('data'=>$team_info));
+    }
+    /**
+     * 更新小组信息
+     * @return [type] [description]
+     */
+    public function editTeamInfoOp(){
+        $team_name = trim($_POST['team_name']);
+        $team_intro = trim($_POST['team_intro']);
+        $team_member = Model('mz_member')->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        if ($team_member['type'] == 0) {
+            output_error("无权限");
+        }
+        $data = array();
+        $data['team_name'] = $team_name;
+        $data['team_intro'] = $team_intro;
+        $result = Model("mz_team")->where(array('team_id'=>$team_member['team_id'],'team_status'=>1))->update($data);
+        if ($result) {
+            output_data("更新成功");
+        }else{
+            output_error("更新失败");
+        }
+
     }
 }
