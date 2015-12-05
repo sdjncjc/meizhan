@@ -170,13 +170,18 @@ class mz_brandsaleControl extends mobileHomeControl{
 			$page = intval($_GET['page']);
 			$page = $page <= 0 ? 1 : $page;
 	
-			$goods_list = Model('goods')->field('goods_id,goods_storage,goods_name,goods_image,goods_marketprice,goods_promotion_price,country_id')->where($condition)->group('goods_commonid')->order($order)->limit((($page-1)*$size).','.$size)->select();
+			$goods_list = Model('goods')->field('goods_id,goods_storage,goods_name,goods_image,goods_marketprice,goods_price,goods_promotion_price,goods_promotion_type,distribution_price,country_id')->where($condition)->group('goods_commonid')->order($order)->limit((($page-1)*$size).','.$size)->select();
 			if($goods_list){
 				//国家
 				$country_list = rkcache('country');
 				foreach($goods_list as $k=>$v){
+					if($v['goods_promotion_type'] > 0){
+						$goods_list[$k]['goods_price'] = $v['goods_promotion_price'];
+					}elseif($v['distribution_price'] > 0){
+						$goods_list[$k]['goods_price'] = $v['distribution_price'];
+					}
 					$goods_list[$k]['img_url'] = thumb($v, 360);
-					$goods_list[$k]['discount'] = sprintf('%0.1f', $v['goods_promotion_price']/$v['goods_marketprice']*10);
+					$goods_list[$k]['discount'] = sprintf('%0.1f', $goods_list[$k]['goods_price']/$v['goods_marketprice']*10);
 					$goods_list[$k]['country_icon'] = $country_list[$v['country_id']]['country_img_url'];
 				}
 			}

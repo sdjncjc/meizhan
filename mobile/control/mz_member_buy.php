@@ -42,7 +42,7 @@ class mz_member_buyControl extends mobileMemberControl {
         }
 
         //得到购买数据
-        $result = $logic_buy->buyStep1($cart_id, $_POST['ifcart'], $this->member_info['member_id'], $this->member_info['store_id'],null,$member_discount,$member_level);
+        $result = $logic_buy->buyStep1($cart_id, $_POST['ifcart'], $this->member_info['member_id'], $this->member_info['store_id'],null,$member_discount,$member_level,null,true);
         if(!$result['state']) {
             output_error($result['msg']);
         } else {
@@ -192,7 +192,7 @@ class mz_member_buyControl extends mobileMemberControl {
         } else {
             $member_discount = $member_level = 0;
         }
-        $result = $logic_buy->buyStep2($param, $this->member_info['member_id'], $this->member_info['member_name'], $this->member_info['member_email'],$member_discount,$member_level);
+        $result = $logic_buy->buyStep2($param, $this->member_info['member_id'], $this->member_info['member_name'], $this->member_info['member_email'],$member_discount,$member_level,true);
         if(!$result['state']) {
             output_error($result['msg']);
         }

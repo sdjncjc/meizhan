@@ -55,11 +55,16 @@ class mz_indexControl extends mobileHomeControl{
 		if($recommend_goods_list){
 			$model_goods = Model('goods');
 			foreach($recommend_goods_list as $k=>$v){
-				$goods_list = $model_goods->getGeneralGoodsOnlineList(array('gc_id_1'=>$v['gc_id']), 'goods_id,goods_name,goods_promotion_price,goods_storage,goods_marketprice,goods_image', 6, 'goods_salenum desc');
+				$goods_list = $model_goods->getGeneralGoodsOnlineList(array('gc_id_1'=>$v['gc_id']), 'goods_id,goods_name,goods_price,goods_promotion_price,goods_promotion_type,distribution_price,goods_storage,goods_marketprice,goods_image', 6, 'goods_salenum desc');
 				if($goods_list){
 					foreach($goods_list as $kk=>$vv){
+						if($vv['goods_promotion_type'] > 0){
+							$goods_list[$kk]['goods_price'] = $vv['goods_promotion_price'];
+						}elseif($vv['distribution_price'] > 0){
+							$goods_list[$kk]['goods_price'] = $vv['distribution_price'];
+						}
 						$goods_list[$kk]['img_url'] = thumb($vv, 360);
-						$goods_list[$kk]['discount'] = sprintf('%0.1f', $vv['goods_promotion_price']/$vv['goods_marketprice']*10);
+						$goods_list[$kk]['discount'] = sprintf('%0.1f', $goods_list[$kk]['goods_price']/$vv['goods_marketprice']*10);
 					}
 					$recommend_goods_list[$k]['list'] = $goods_list;
 				}else{

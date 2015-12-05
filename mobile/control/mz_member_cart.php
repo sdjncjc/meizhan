@@ -33,7 +33,7 @@ class mz_member_cartControl extends mobileMemberControl {
         $cart_list  = $model_cart->listCart('db',array('buyer_id'=>$this->member_info['member_id']));
 
         // 购物车列表 [得到最新商品属性及促销信息]
-        $cart_list = $logic_buy_1->getGoodsCartList($cart_list, $jjgObj);
+        $cart_list = $logic_buy_1->getGoodsCartList($cart_list, $jjgObj, true);
 
         //购物车商品以店铺ID分组显示,并计算商品小计,店铺小计与总价由JS计算得出
         $store_cart_list = array();
@@ -131,6 +131,11 @@ class mz_member_cartControl extends mobileMemberControl {
 			} else {
 				output_error('添加购物车失败');
 			}
+		}
+
+        //分销
+		if($goods_info['distribution_price'] > 0){
+			$goods_info['goods_price'] = $goods_info['distribution_price'];
 		}
 
         //团购

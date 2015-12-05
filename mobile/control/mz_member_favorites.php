@@ -86,6 +86,11 @@ class mz_member_favoritesControl extends mobileMemberControl{
             foreach ($favorites_list as $key => $value) {
                 if ($fav_type == 'goods') {
                     $extends_goods =  Model('goods')->getGoodsInfo(array('goods_id'=>$value['fav_id']),'*');
+					if($extends_goods['goods_promotion_type'] > 0){
+						$extends_goods['goods_price'] = $extends_goods['goods_promotion_price'];
+					}elseif($extends_goods['distribution_price'] > 0){
+						$extends_goods['goods_price'] = $extends_goods['distribution_price'];
+					}
                     $favorites_list[$key]['goods_img'] = thumb($extends_goods, 360);
                     $favorites_list[$key]['goods_state'] = $extends_goods['goods_state'];
                     $favorites_list[$key]['is_presell'] = $extends_goods['is_presell'];
