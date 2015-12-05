@@ -36,6 +36,11 @@ class indexControl extends mobileHomeControl{
         $data = $model_mb_special->getMbSpecialItemUsableListByID($_GET['special_id']);
         $this->_output_special($data, $_GET['type'], $_GET['special_id']);
 	}
+	public function special1Op() {
+        $model_mb_special = Model('mb_special'); 
+        $data = $model_mb_special->getMbSpecialItemUsableListByID1($_GET['special_id']);
+        $this->_output_special($data, $_GET['type'], $_GET['special_id']);
+	}
 
     /**
      * 输出专题

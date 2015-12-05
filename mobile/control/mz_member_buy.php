@@ -42,7 +42,7 @@ class mz_member_buyControl extends mobileMemberControl {
         }
 
         //得到购买数据
-        $result = $logic_buy->buyStep1($cart_id, $_POST['ifcart'], $this->member_info['member_id'], $this->member_info['store_id'],null,$member_discount,$member_level);
+        $result = $logic_buy->buyStep1($cart_id, $_POST['ifcart'], $this->member_info['member_id'], $this->member_info['store_id'],null,$member_discount,$member_level,null,true);
         if(!$result['state']) {
             output_error($result['msg']);
         } else {
@@ -179,7 +179,7 @@ class mz_member_buyControl extends mobileMemberControl {
         $param['rcb_pay'] = $_POST['rcb_pay'];
         $param['password'] = $_POST['password'];
         $param['fcode'] = $_POST['fcode'];
-        $param['order_from'] = 2;
+        $param['order_from'] = 3;
         $logic_buy = logic('buy');
 
         //得到会员等级
@@ -192,27 +192,28 @@ class mz_member_buyControl extends mobileMemberControl {
         } else {
             $member_discount = $member_level = 0;
         }
-        $result = $logic_buy->buyStep2($param, $this->member_info['member_id'], $this->member_info['member_name'], $this->member_info['member_email'],$member_discount,$member_level);
+        $result = $logic_buy->buyStep2($param, $this->member_info['member_id'], $this->member_info['member_name'], $this->member_info['member_email'],$member_discount,$member_level,true);
         if(!$result['state']) {
             output_error($result['msg']);
         }
 		
 		//处理推广信息
 		$pm = $_POST['pm'];
+		$team_id = 0;
 		if($pm){//验证pm
-			$pm_arr = explode('.',$pm);
-			if(!Model('mz_member')->where(array('member_id'=>$pm_arr[0]))->count()){
-				unset($pm);
-			}elseif($pm_arr[1] && !Model('mz_team')->where(array('team_id'=>$pm_arr[1],'team_status'=>1))->count()){
-				unset($pm);
+			$member = Model('mz_member')->field('team_id')->where(array('member_id'=>$pm))->find();
+			if($member){
+				$team_id = $member['team_id'];
+			}else{
+				$pm = 0;
 			}
 		}
-		if(!$pm){
-			$member = Model('mz_member')->field('team_id')->where(array('member_id'=>$this->member_info['member_id']))->find();
-			if($member['team_id'] && !Model('mz_team')->where(array('team_id'=>$member['team_id'],'team_status'=>1))->count())unset($member['team_id']);
-			$pm = $member['team_id'] ? '0.'.$member['team_id'] : ''; 
+		$member = Model('mz_member')->field('team_id')->where(array('member_id'=>$this->member_info['member_id']))->find();
+		if($member['team_id'])$team_id = $member['team_id'];
+		if($team_id && !Model('mz_team')->where(array('team_id'=>$team_id,'team_status'=>1))->count())$team_id = 0;
+		if($pm || $team_id){
+			Model('order')->editOrder(array('pm' => $pm,'team_id' => $team_id),array('order_id' => array('in',array_keys($result['data']['order_list']))));
 		}
-		Model('order')->editOrder(array('pm' => $pm),array('order_id' => array('in',array_keys($result['data']['order_list']))));
         output_data(array('pay_sn' => $result['data']['pay_sn']));
     }
 
