@@ -9,7 +9,7 @@
                     个积分
                 </div>
                 <div class="point-declare">
-                    成功注册会员：增加20积分；会员每天登录：增加5积分；评价完成订单：增加10积分
+                    订单积分
                 </div>
             </div>
         </section>
@@ -40,6 +40,9 @@
         </div>
         {{/each}}
     </script>
+    <script type="text/template" id="empty-point-item-template">
+    <div class="empty-record">暂无积分记录</div>
+    </script>
     <script type="text/javascript">
         set_title("我的积分");
         // 获取个人资料
@@ -50,7 +53,7 @@
         function ajax_getPoint(){ 
             if(stop) return;
             // 显示积分列表
-            getAjaxResult(getUrl('mz_member_wallet','pointList',"&page=" + page),'point-item-template',".point-detail-box-bd");
+            getAjaxResult(getUrl('mz_member_wallet','pointList',"&page=" + page),'point-item-template',".point-detail-box-bd",'empty-point-item-template');
         }
         // 获取积分列表
         ajax_getPoint();

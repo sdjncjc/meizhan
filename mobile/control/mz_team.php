@@ -177,8 +177,11 @@ class mz_teamControl extends mobileMemberControl {
         $count = Model("mz_team")->where($condition)->count();
         $data_info['thispage'] = $page;
         $data_info['totalpage'] = ceil($count / $size);
+        // 查询当前已申请的小组id
+        $apply_team_id = Model("mz_team_log")->where(array('member_id'=>$this->member_info['member_id'],'type'=>0,'status'=>0))->getCols('team_id');
         // 分页设置
         $teams = Model("mz_team")->where($condition)->limit((($page-1)*$size).','.$size)->select();
+
         output_data(array('data'=>$teams,'data_info'=>$data_info));
     }
     /**

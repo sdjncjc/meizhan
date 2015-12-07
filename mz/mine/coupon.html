@@ -4,7 +4,10 @@
     <section class="wrapper J_wrapper" id="wrapper">
         <section class="coupon-list"></section>
     </section>
-
+    <div class="loading">
+        正在加载...
+    </div>
+    <a href="javascript:;" class="backtop"></a>
     <script type="text/template" id="coupon-template">
         {{each data as voucher}}
         <div class="coupon-item">
@@ -35,8 +38,30 @@
     </script>
     <script type="text/javascript">
         set_title("我的代金券");
-        // 显示代金券列表
-        getAjaxResult(getUrl('mz_member_wallet','couponList'),'coupon-template',".coupon-list",'coupon-empty-template');
+
+        function ajax_getCoupon(){ 
+            if(stop) return;
+            // 显示积分列表
+            getAjaxResult(getUrl('mz_member_wallet','couponList',"&page=" + page),'coupon-template',".coupon-list",'coupon-empty-template');
+        }
+        // 获取积分列表
+        ajax_getCoupon();
+        $(window).scroll(function() {
+            if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+                if(!stop){
+                    $(".loading").show();
+                    ajax_getCoupon();
+                    stop = true;
+                }
+            }
+            if($('body').scrollTop() > 2000){
+                $('.backtop').show();
+            }else{
+                $('.backtop').hide();
+            }
+        });
+
+        $('.backtop').tap(function(){$('body').scrollTop(0);}); 
     </script>
 </body>
 

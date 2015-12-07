@@ -27,8 +27,13 @@ class mz_member_walletControl extends mobileMemberControl {
      * @return [type] [description]
      */
     public function couponListOp(){
+        $data_info = array();
+        $size = 10;     
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
+
         $model_voucher = Model('voucher');
-        $voucher_list = $model_voucher->getMemberVoucherList($this->member_info['member_id']);
+        $voucher_list = $model_voucher->getMemberVoucherList($this->member_info['member_id'],0,$page);
 
         if (!empty($voucher_list)) {
             foreach ($voucher_list as $key => $value) {
@@ -51,14 +56,19 @@ class mz_member_walletControl extends mobileMemberControl {
                 $voucher_list[$key]['voucher_state'] = date("Y-m-d H:i:s",$value['voucher_end_date']);
             }
         }
-        output_data(array('data'=>$voucher_list));
+        $voucher_count = $model_voucher->getVoucherCount(array('voucher_owner_id'=>$this->member_info['member_id']));
+        $data_info['thispage'] = $page;
+        $data_info['totalpage'] = ceil($voucher_count / $size);
+        
+        output_data(array('data'=>$voucher_list,'data_info'=>$data_info));
     }
     /**
      * 我的积分
      * @return [type] [description]
      */
     public function getMyPointOp(){
-        output_data(array('data'=>$this->member_info['member_points']));
+        $member_interal  = Model("mz_member")->where(array('member_id'=>$this->member_info['member_id']))->get_field("integral");
+        output_data(array('data'=>$member_interal));
     }
     /**
      * 积分列表
@@ -69,16 +79,14 @@ class mz_member_walletControl extends mobileMemberControl {
         $page = intval($_GET['page']);
         $page = $page <= 0 ? 1 : $page;
         //查询积分日志列表
-        $points_model = Model('points');
-        $condition['pl_memberid'] = $this->member_info['member_id'];
-        $condition['limit'] = (($page-1)*$size).','.$size;
-        $point_log = $points_model->getPointsLogList($condition,true);
+        $points_model = Model('mz_integral_log');
+        $point_log = $points_model->where(array('integral_memberid'=>$this->member_info['member_id']))->limit((($page-1)*$size).','.$size)->order('integral_addtime desc')->select();
         if (!empty($point_log)) {
             foreach ($point_log as $key => $value) {
-                $point_log[$key]['pl_addtime'] = date("Y-m-d",$value['pl_addtime']);
+                $point_log[$key]['integral_addtime'] = date("Y-m-d",$value['integral_addtime']);
             }
         }
-        $point_count = model()->table('points_log')->where(array('pl_memberid'=>$this->member_info['member_id']))->count();
+        $point_count = $points_model->where(array('integral_memberid'=>$this->member_info['member_id']))->count();
         $data_info['thispage'] = $page;
         $data_info['totalpage'] = ceil($point_count / $size);
 

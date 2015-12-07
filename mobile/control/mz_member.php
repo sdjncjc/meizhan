@@ -29,13 +29,17 @@ class mz_memberControl extends mobileMemberControl {
     public function getUserInfoOp() {
         $member_info = array();
 
-        $team_member_info = Model('mz_member')->getMemberInfo(array('member_id'=>$this->member_info['member_id']),"*",array("mz_team"));
+        $team_member_info = Model('mz_member')->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
         // $member_info = $this->member_info;
         $member_info['member_avatar'] = getMemberAvatar($this->member_info['member_avatar']);
-        $member_info['team_member_info'] = $team_member_info;
+        $member_info['team_id'] = $team_member_info['team_id'];
+        if ($team_member_info['team_id'] > 0) {
+            $month_income = Model("mz_statistical")->where(array('stat_time'=>date("Y-m"),'stat_team_id'=>$team_member_info['team_id']))->get_field("stat_amount");
+            $member_info['month_income'] = empty($month_income)?0:$month_income;
+        }
         $member_info['member_points'] = $team_member_info['integral'];
         $member_info['member_grade_info'] = $this->getMemberGrade($team_member_info['integral']);
-        
+
         $member_info['member_name'] = $this->member_info['member_name'];
 
         $member_info['available_rc_balance'] = $this->member_info['available_rc_balance'];

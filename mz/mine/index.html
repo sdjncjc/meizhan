@@ -167,8 +167,8 @@ if(window.name != "qinqin"){
         // 显示订单概况
         getAjaxResult(getUrl('mz_member_order','getSimpleOrderInfo'),'tpl-sum-orderinfo','#sum-orderinfo','tpl-sum-orderinfo-logout');
         function setincome(data){
-            if (data.team_member_info.team_id > 0) {
-                $(".income_info").html("本期收入：&yen;" + data.team_member_info.extend_team_info.team_balance);
+            if (data.team_id > 0) {
+                $(".income_info").html("本期收入：&yen;" + data.month_income);
             }else{
                 $(".income_info").html("开启美站,经营美丽生活");
             }
