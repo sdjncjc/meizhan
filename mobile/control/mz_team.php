@@ -301,6 +301,36 @@ class mz_teamControl extends mobileMemberControl {
         }else{
             output_error("更新失败");
         }
+    }
+    /**
+     * 获取小组金额日志
+     * @return [type] [description]
+     */
+    public function getTeamBalanceLogOp(){
+        $type = trim($_GET['type']);
+        $team_member_info = Model('mz_member')->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        $condition = array();
+        $condition['balance_teamid'] = $team_member_info['team_id'];
+        if (empty($type) || $type=='income') {
+            $condition['balance_stage'] = "order";
+        }else{
+            $condition['balance_stage'] = "allot";
+        }
 
+        // 查询数量统计
+        $size = 10;     
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
+        $count = Model("mz_team")->where($condition)->count();
+        $data_info['thispage'] = $page;
+        $data_info['totalpage'] = ceil($count / $size);
+
+        $log_list = Model("mz_balance_log")->where($condition)->limit((($page-1)*$size).','.$size)->select();
+        if (!empty($log_list)) {
+            foreach ($log_list as $key => $value) {
+                $log_list[$key]['balance_addtime'] = date("Y-m-d",$value['balance_addtime']);
+            }
+        }
+        output_data(array('data'=>$log_list,'data_info'=>$data_info));
     }
 }

@@ -21,11 +21,12 @@ var team = {
 		}else{
 			$(".team_page").show();
 			$(".team_log_page").addClass("hidden");
-			$("#team-balance").html(data.extend_team_info.team_balance);
+			$("#team-balance").html("&yen;" + data.extend_team_info.team_balance);
 			$("#team-member-num").html(data.extend_team_info.num);
 			if (data.type == 1) {
 				$('.apply-member').removeClass("hidden");
 				$("#apply-member-num").html(data.apply_member_num);
+				$("#team-balance").parent().attr("href","javascript:open_url('balance_allot')");
 			};
 			$(".team_info").attr('href',"javascript:open_url('team_info','','"+data.team_id+"')");
 		}
@@ -202,5 +203,10 @@ var team = {
 	// 加入小组
 	joinTeam:function(team_id){
 		ajax_do(getUrl('mz_team','joinTeam',"team_id="+team_id));
+	},
+	// 获取小组收入日志
+	getTeamBalanceLog:function(type){
+        if(stop) return;
+		getAjaxResult(getUrl('mz_team','getTeamBalanceLog','type='+type),"team-list-tpl",".balance_log","empty-team-list-tpl");
 	}
 };

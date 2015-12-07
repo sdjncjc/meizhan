@@ -29,13 +29,14 @@ class mz_memberControl extends mobileMemberControl {
     public function getUserInfoOp() {
         $member_info = array();
 
-        $team_member_info = Model("mz_member")->where(array('member_id'=>$this->member_info['member_id']))->find();
+        $team_member_info = Model('mz_member')->getMemberInfo(array('member_id'=>$this->member_info['member_id']),"*",array("mz_team"));
         // $member_info = $this->member_info;
         $member_info['member_avatar'] = getMemberAvatar($this->member_info['member_avatar']);
-        $member_info['group_name'] = Model("mz_team")->where(array('mz_team'=>$team_member_info['team_id']))->get_field("team_name");
-        $member_info['member_name'] = $this->member_info['member_name'];
+        $member_info['team_member_info'] = $team_member_info;
         $member_info['member_points'] = $team_member_info['integral'];
         $member_info['member_grade_info'] = $this->getMemberGrade($team_member_info['integral']);
+        
+        $member_info['member_name'] = $this->member_info['member_name'];
 
         $member_info['available_rc_balance'] = $this->member_info['available_rc_balance'];
         $member_info['available_predeposit'] = $this->member_info['available_predeposit'];

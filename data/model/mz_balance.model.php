@@ -17,7 +17,7 @@ class mz_balanceModel extends Model{
 	 * @param  array $insertarr 该数组可能包含信息 array('balance_memberid'=>'会员编号','balance_membername'=>'会员名称','balance_points'=>'余额','balance_desc'=>'描述','orderprice'=>'订单金额','order_sn'=>'订单编号','order_id'=>'订单序号');
 	 * @return bool
 	 */
-	function saveMzBalanceLog($stage,$insertarr){
+	public function saveMzBalanceLog($stage,$insertarr){
 		if (!$insertarr['balance_teamid']){
 			return false;
 		}
@@ -37,9 +37,9 @@ class mz_balanceModel extends Model{
 		}
 		//新增日志
 		$value_array = array();
-		$value_array['balance_memberid'] = $insertarr['balance_teamid'];
-		$value_array['balance_membername'] = $insertarr['balance_teamname'];
-		$value_array['balance_points'] = $insertarr['balance_price'];
+		$value_array['balance_teamid'] = $insertarr['balance_teamid'];
+		$value_array['balance_teamname'] = $insertarr['balance_teamname'];
+		$value_array['balance_price'] = $insertarr['balance_price'];
 		$value_array['balance_addtime'] = time();
 		$value_array['balance_desc'] = $insertarr['balance_desc'];
 		$value_array['balance_stage'] = $stage;
