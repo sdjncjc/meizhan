@@ -91,18 +91,6 @@ class mz_integralModel extends Model{
 	}
 	
 	/**
-	 * 积分日志总条数
-	 *
-	 * @param array $where 条件数组
-	 * @param array $field   查询字段
-	 * @param array $group   分组
-	 */
-	public function getMzIntegralLogCount($where, $field = '*', $group = '') {
-	    $count = $this->table('mz_integral_log')->field($field)->where($where)->group($group)->count();
-	    return $count;
-	}
-	
-	/**
 	 * 积分日志列表
 	 *
 	 * @param array $where 条件数组
