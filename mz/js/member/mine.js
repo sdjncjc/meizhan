@@ -171,6 +171,16 @@ function open_url(type,sub,id){
 			case 'team_info':
 				url = "/team/team_info.html?team_id="+id;
 				break;
+			case 'team_balance':
+				if (sub === undefined || sub == "" || sub=="income") {
+					url = "/team/team_income_log.html";
+				}else if (sub == "outcome") {
+					url = "/team/team_outcome_log.html";
+				};
+				break;
+			case 'balance_allot':
+				url = "/team/balance_allot.html";
+				break;
 		}
 	}else{
 		switch(type){

@@ -116,7 +116,7 @@ class mz_team_memberControl extends mobileMemberControl {
      * @return [type] [description]
      */
     public function getMemberListOp(){
-        $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']),'*',array('mz_team'));
         $member_list = Model("mz_member")->where(array('team_id'=>$team_member_info['team_id'],'team_id'=>array('gt',0)))->select();
         foreach ($member_list as $key => $value) {
             $member_info = Model('member')->where(array('member_id'=>$value['member_id']))->field('member_name,member_avatar')->find();
@@ -211,5 +211,46 @@ class mz_team_memberControl extends mobileMemberControl {
         }else{
             output_error("系统错误，小组转让失败");
         }
+    }
+    public function balanceAllotOp(){
+        $params = trim($_POST['params']);
+        $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']),'',array('mz_team'));
+        if ($team_member_info['type'] != 1) {
+            output_error("无权限");
+        }
+        $member_list = array();
+        $total_amount = 0;
+        $params_arr = explode(",", $params);
+        foreach ($params_arr as $key => $value) {
+            $temp = explode("|", $value);
+            if (empty($temp[1])) {
+                $temp[1] = 0;
+            }
+            $member_list[] = $temp;
+            $total_amount += $temp[1];
+        }
+        if ($total_amount > $team_member_info["extend_team_info"]['team_balance']) {
+            output_error("金额超出");
+        }
+        foreach ($member_list as $key => $value) {
+            $member = Model('member')->where(array('member_id'=>$value['0']))->field('member_id,member_name')->find();
+            if (!empty($member)) {
+                $data = array();
+                $data["balance_teamid"] = $team_member_info["extend_team_info"]['team_id'];
+                $data["balance_teamname"] = $team_member_info["extend_team_info"]['team_name'];
+                $data["balance_price"] = $value['1'];
+                $data["balance_desc"] = '小组'.$team_member_info["extend_team_info"]['team_name'].'给'.$member['member_name'].'分配佣金';
+                $result1 = Model("mz_balance")->saveMzBalanceLog("allot",$data);
+                if ($result1) {
+                    $log_array = array();
+                    $log_array['member_id'] = $member['member_id'];
+                    $log_array['member_name'] = $member['member_name'];
+                    $log_array['lg_desc'] = '小组'.$team_member_info["extend_team_info"]['team_name'].'分配佣金';
+                    $log_array['amount'] = $value["1"];
+                    $result2 = Model('predeposit')->changePd('mz_divided', $log_array);
+                }
+            }
+        }
+        output_data("佣金分配完成");
     }
 }
