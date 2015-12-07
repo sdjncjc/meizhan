@@ -69,18 +69,6 @@ class mz_balanceModel extends Model{
 	}
 	
 	/**
-	 * 余额日志总条数
-	 *
-	 * @param array $where 条件数组
-	 * @param array $field   查询字段
-	 * @param array $group   分组
-	 */
-	public function getMzBalanceLogCount($where, $field = '*', $group = '') {
-	    $count = $this->table('mz_balance_log')->field($field)->where($where)->group($group)->count();
-	    return $count;
-	}
-	
-	/**
 	 * 余额日志列表
 	 *
 	 * @param array $where 条件数组

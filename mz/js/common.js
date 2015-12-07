@@ -140,7 +140,7 @@ $(function(){
 	$('body').append('<a href="javascript:;" class="backtop"></a>');
 	$('.backtop').tap(function(){$('body').scrollTop(0);});
 	$(window).scroll(function() {
-		if($('body').scrollTop() > 2000){
+		if($('body').scrollTop() > $(document).height()*2){
 			$('.backtop').show();
 		}else{
 			$('.backtop').hide();
