@@ -17,7 +17,7 @@ var team = {
 			$(".team_page").hide();
 			$(".team_log_page").removeClass("hidden");
 	        set_title("小组申请记录");
-	        getAjaxResult(getUrl('mz_team_index','getApplyList'),'apply-list-tpl',".apply-list",'empty-apply-list-tpl',"team.bindEvent");
+	        getAjaxResult(getUrl('mz_team','getApplyList'),'apply-list-tpl',".apply-list",'empty-apply-list-tpl',"team.bindEvent");
 		}else{
 			$(".team_page").show();
 			$(".team_log_page").addClass("hidden");
@@ -27,6 +27,7 @@ var team = {
 				$('.apply-member').removeClass("hidden");
 				$("#apply-member-num").html(data.apply_member_num);
 			};
+			$(".team_info").attr('href',"javascript:open_url('team_info','','"+data.team_id+"')");
 		}
 	},
 	// 初始化地址信息
@@ -43,7 +44,9 @@ var team = {
 		$(".team_type").val(_this.team_info.team_type);
 		$(".team_name input").val(_this.team_info.team_name);
 		$(".subdomain input").val(_this.team_info.team_domain_name);
-		$(".recommend_id input").val(_this.team_info.recommend_id);
+		if (_this.team_info.recommend_id > 0) {
+			$(".recommend_id input").val(_this.team_info.recommend_id);
+		};
 		$(".team_intro textarea").val(_this.team_info.team_intro);
 
 		script.get(0).readyState ? script.get(0).onreadystatechange = function() {
@@ -84,10 +87,9 @@ var team = {
 			});
 		});
 		$('.searchbutton').tap(function(){
-			_this.searchTeam();
-		});
-		$(".search_reset").tap(function(){
-			location.reload();
+			var team_type = $(".team_type").val(),params = "team_type="+team_type;
+			params += "&provinceid=" + $(".provinces").val() + "&city_school_id="+$(".city_school").val() + "&keywords="+$(".keywords").val();
+			location.href = "team_list.html?" + params;
 		});
 		$(".delete_apply").tap(function(){
 			var app_id = $(this).attr("data-id");
@@ -95,7 +97,7 @@ var team = {
 				content : '确定删除申请？',
 				title : 'alert',
 				ok : function() {
-					ajax_do(getUrl("mz_team_index",'deleteApply','id='+app_id));
+					ajax_do(getUrl("mz_team",'deleteApply','id='+app_id));
 				},
 				cancel : function() {},
 				lock : false
@@ -130,7 +132,7 @@ var team = {
 				$(".city_school").val(this.team_info.city_school_id);
 			}
 		}else if (team_type == "1") {
-			getAjaxResult(getUrl('mz_team_index','getSchoollist','province_id='+province_id),"","","","team.school2html");
+			getAjaxResult(getUrl('mz_team','getSchoollist','province_id='+province_id),"","","","team.school2html");
 		};
 	},
 	// 学校列表转换
@@ -178,34 +180,27 @@ var team = {
 			team_intro:$(".team_intro textarea").val(),
 			team_id:$(".submitbutton").attr("data-team-id")
 		};
-        ajax_do(getUrl('mz_team_index','createTeam'),params);
+        ajax_do(getUrl('mz_team','createTeam'),params);
 	},
 	// 撤销小组申请
 	deleteTeamApply:function(){
-		ajax_do(getUrl("mz_team_index",'deleteApply','id='+$(".deletebutton").attr("data-team-log-id")));
+		ajax_do(getUrl("mz_team",'deleteApply','id='+$(".deletebutton").attr("data-team-log-id")));
 	},
 	// 搜索小组
 	searchTeam:function(){
-		var team_type = $(".team_type").val(),params = "team_type="+team_type;
-		params += "&provinceid=" + $(".provinces").val() + "&keywords="+$(".keywords").val();
-		params += "&city_school="+$(".city_school option").eq($(".city_school").attr("selectedIndex")).text();
-		var search_html = "<span>" + $(".team_type option").eq($(".team_type").attr("selectedIndex")).text() + "</span>"
-						+ "<span>" + $(".provinces option").eq($(".provinces").attr("selectedIndex")).text() + "</span>"
-						+ "<span>" + $(".city_school option").eq($(".city_school").attr("selectedIndex")).text() + "</span>"
-						+ "<span>" + $(".keywords").val() + "</span>";
-		$(".search_item").html(search_html);
-		getAjaxResult(getUrl('mz_team_index','searchTeamList',params),"team-list-tpl",".teams","empty-team-list-tpl",'team.show');
+        if(stop) return;
+		var params = "team_type="+GetQueryString("team_type");
+		params += "&provinceid=" + GetQueryString("provinceid") + "&city_school_id="+ GetQueryString("city_school_id") + "&keywords="+ GetQueryString("keywords");
+		getAjaxResult(getUrl('mz_team','searchTeamList',params + "&page=" + page),"team-list-tpl",".teams","empty-team-list-tpl",'team.show');
 	},
 	show:function(data){
 		var _this = this;
-		$(".search-form-page").hide();
-		$(".team-list-page").removeClass("hidden");
 		$(".join").tap(function(){
 			_this.joinTeam($(this).attr('data-team-id'));
 		});
 	},
 	// 加入小组
 	joinTeam:function(team_id){
-		ajax_do(getUrl('mz_team_index','joinTeam',"team_id="+team_id));
+		ajax_do(getUrl('mz_team','joinTeam',"team_id="+team_id));
 	}
 };

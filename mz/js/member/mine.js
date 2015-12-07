@@ -169,7 +169,7 @@ function open_url(type,sub,id){
 				url = "/team/member_list.html";
 				break;
 			case 'team_info':
-				url = "/team/team_info.html";
+				url = "/team/team_info.html?team_id="+id;
 				break;
 		}
 	}else{

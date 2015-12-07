@@ -56,7 +56,7 @@
             </ul>
             <ul class="my-list other-list">
                 <li class="address">
-                    <a href="javascript:open_url('team_info')" class="div-line">
+                    <a href="javascript:void(0)" class="team_info div-line">
                          小组介绍
                         <span class="next-page"></span>
                     </a>
@@ -115,7 +115,7 @@
     <script type="text/javascript">
         set_title("我的美站");
         // 显示用户基本信息
-        getAjaxResult(getUrl('mz_team_index','getUserTeam'),'tpl-teaminfo',".team-info",'',"team.checkTeam");
+        getAjaxResult(getUrl('mz_team','getUserTeam'),'tpl-teaminfo',".team-info",'',"team.checkTeam");
     </script>
 </body>
 </html>

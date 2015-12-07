@@ -25,35 +25,10 @@
 	            <span class="searchbutton">搜索小组</span>
 	        </div>
 	     </section>
-	     <section class="team-list-page grid-wrap hidden">
-	     	<div class="search gird">
-	     		<div class="search_title">搜索：</div>
-	     		<div class="search_item"></div>
-	     		<div class="search_reset">重新搜索</div>
-	     	</div>
-	     	<div class="teams"></div>
-	     </section>
-	     <script type="text/template" id="team-list-tpl">
-	        <div class="grid team_list_head">
-	        	<div class="col-3">小组名称</div>
-	        	<div class="col-5">简介</div>
-	        	<div class="col-2"></div>
-	        </div>
-	     	{{each data as team}}
-	        <div class="grid team_list">
-	        	<div class="col-3">{{team.team_name}}</div>
-	        	<div class="col-5 team_desc">{{team.team_intro}}</div>
-	        	<div class="col-2"><span class="join" data-team-id="{{team.team_id}}">加入</span></div>
-	        </div>
-	        {{/each}}
-	     </script>
-	     <script type="text/template" id="empty-team-list-tpl">
-	     	<div class="empty">暂无小组</div>
-	     </script>
     </section>
     <script type="text/javascript" src="/js/team/team.js"></script>
     <script type="text/javascript">
-        set_title("加入小组");
+        set_title("搜索小组");
         team.intiAddress();
     </script>
 </body>    
