@@ -1,5 +1,5 @@
 <!--#include virtual="/mine/head.html"-->
-<link href="/css/team/teaminfo.css" rel="stylesheet" media="all" />
+<link href="/css/team/teaminfo.js<!--#include virtual='/tpl/version.html'-->" rel="stylesheet" media="all" />
 <!--#include virtual="/tpl/navbar.html"-->
     <section class="grid-wrap" id="wrapper">
         <div class="grid">
@@ -39,7 +39,7 @@
             <span class="deletebutton hidden" data-team-log-id="0">撤销申请</span>
         </div>
     </section>
-    <script type="text/javascript" src="/js/team/team.js"></script>
+    <script type="text/javascript" src="/js/team/team.js<!--#include virtual='/tpl/version.html'-->"></script>
     <script type="text/javascript">
         set_title("创建小组");
         getAjaxResult(getUrl('mz_team','getUserTeam'),'','','',"team.intiAddress");
