@@ -29,10 +29,10 @@
             <div class="balance-amount">
                 <div class="balance-desc">{{balance.lg_desc}}</div>
                 <span class="balance-income">
-                    收入:&yen;{{if balance.lg_av_amount >= 0}}{{balance.lg_av_amount}}{{/if}}
+                    收入:&yen;{{if balance.lg_av_amount >= 0}}{{balance.lg_av_amount}}{{else}}0.00{{/if}}
                 </span>
                 <span class="balance-spending">
-                    支出:&yen;{{if balance.lg_av_amount < 0}}{{balance.lg_av_amount}}{{/if}}
+                    支出:&yen;{{if balance.lg_av_amount < 0}}{{balance.lg_av_amount}}{{else}}0.00{{/if}}
                 </span>
                 <span class="balance-freeze">
                     冻结:&yen;{{balance.lg_freeze_amount}}

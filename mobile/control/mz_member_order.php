@@ -74,14 +74,14 @@ class mz_member_orderControl extends mobileMemberControl {
         $order_group_list = array();
         $order_pay_sn_array = array();
         foreach ($order_list_array as $value) {
+            //显示放入回收站
+            $value['if_delete'] = $model_order->getOrderOperateState('delete',$value);
             //显示取消订单
             $value['if_cancel'] = $model_order->getOrderOperateState('buyer_cancel',$value);
             //显示收货
             $value['if_receive'] = $model_order->getOrderOperateState('receive',$value);
-            //显示锁定中
-            $value['if_lock'] = $model_order->getOrderOperateState('lock',$value);
-            //显示物流跟踪
-            $value['if_deliver'] = $model_order->getOrderOperateState('deliver',$value);
+            //显示评价
+            $value['if_evaluation'] = $model_order->getOrderOperateState('evaluation',$value);
             // 商品数量
             $value['goods_num'] = 0;
             //商品图

@@ -171,6 +171,12 @@ function open_url(type,sub,id){
 			case 'team_info':
 				url = "/team/team_info.html?team_id="+id;
 				break;
+			case 'team_order':
+				url = "/team/team_order.html";
+				break;
+			case 'team_orderinfo':
+				url = "/team/team_orderinfo.html?order_id="+id;
+				break;
 			case 'team_balance':
 				if (sub === undefined || sub == "" || sub=="income") {
 					url = "/team/team_income_log.html";

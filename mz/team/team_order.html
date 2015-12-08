@@ -1,0 +1,77 @@
+<!--#include virtual="/mine/head.html"-->
+    <link rel="stylesheet" href="/css/member/orders.css<!--#include virtual='/tpl/version.html'-->" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="wrapper J_wrapper" id="wrapper">
+        <section class="grid-wrap orders">
+            <script id="order-list-template" type="text/template">
+
+                {{each data as order_group}}
+                <section class="grid orders-list">
+                    <header class="row-1">
+                        下单时间：
+                        <span>{{order_group.add_time}}</span>
+                    </header>
+                    <!-- end header -->
+                    {{each order_group.order_list as order}}
+                    <div class="row-3 orders-item-list"> 
+                        {{each order.extend_order_goods as goods index}}
+                        {{if index == 0}}
+                        <img class="col-3" src="{{goods.goods_image_url}}" alt="{{goods.goods_name}}">
+                        {{/if}}
+                        {{/each}}
+                        <a href="javascript:open_url('team_orderinfo','',{{order.order_id}})" >
+                            <div class="col-9 orders-item-info">
+                                <p>订单编号：
+                                    <span class="order-no">{{order.order_sn}}</span>
+                                </p>
+                                <p>订单金额：¥
+                                    <span class="order-price">{{order.order_amount}}</span>
+                                    <span class="order-count">共{{order.goods_num}}件&nbsp;&nbsp;&nbsp;&gt;</span>
+                                </p>
+                                <p>订单状态：
+                                    <span class="order-status">{{order.state_desc}}</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    {{/each}}
+                    <footer>
+                        总计：¥
+                        <span>{{order_group.pay_amount}}</span>
+                        推广人:<span>{{order_group.promoter}}</span>
+                    </footer>
+                    <aside class="wave"></aside>
+                </section>
+                {{/each}}
+            </script>
+            <script id="order-empty-template" type="text/template">
+                <i class="order-img"></i>
+                <p class="order-hint">暂无推广订单</p>
+                <a class="order-btn" href="/">逛逛今日特卖</a>
+            </script>
+        </section>
+        <!-- end .orders -->
+        <div class="loading">
+            正在加载...
+        </div>
+    </section>
+    <script type="text/javascript">
+        set_title("小组业绩");
+        ajax_teamOrder();
+        function ajax_teamOrder(){ 
+            if(stop) return;
+            getAjaxResult(getUrl('mz_team','getTeamOrder',"page=" + page),'order-list-template',".orders",'order-empty-template');
+        }
+        $(window).scroll(function() {
+            if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+                if(!stop){
+                    $(".loading").show();
+                    ajax_teamOrder();
+                    stop = true;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

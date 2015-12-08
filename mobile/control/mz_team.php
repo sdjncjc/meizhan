@@ -364,4 +364,88 @@ class mz_teamControl extends mobileMemberControl {
         }
         output_data(array('data'=>$log_list,'data_info'=>$data_info));
     }
+    /**
+     * 获取小组订单列表
+     * @return [type] [description]
+     */
+    public function getTeamOrderOp(){
+        $team_member_info = Model('mz_member')->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        $pagesize = 10;     
+        $model_order = Model("order");
+        $fields = "order_id,order_sn,add_time,order_amount,order_state,refund_state,lock_state,refund_amount,shipping_code,pm,team_id,goods_amount,shipping_fee,pay_sn";
+        $condition = array();
+        $condition['order_state'] = array('neq',ORDER_STATE_CANCEL);
+        $condition['buyer_id'] = $this->member_info['member_id'];
+        $condition['order_from'] = "mz";
+        $condition['team_id'] = $team_member_info['team_id'];
+        $order_list_array = $model_order->getNormalOrderList($condition,'',$fields,'order_id desc',(($this->page - 1) * $pagesize).','.$pagesize,array('order_goods'));
+
+        $order_count = $model_order->getOrderCount($condition);
+        $data_info['thispage'] = $page;
+        $data_info['totalpage'] = ceil($order_count / $pagesize);
+
+        $order_group_list = array();
+        foreach ($order_list_array as $value) {
+            // 商品数量
+            $value['goods_num'] = 0;
+            //商品图
+            foreach ($value['extend_order_goods'] as $k => $goods_info) {
+                $value['extend_order_goods'][$k]['goods_image_url'] = cthumb($goods_info['goods_image'], 240, $value['store_id']);
+                $value['goods_num'] += $goods_info['goods_num'];
+            }
+
+            $order_group_list[$value['pay_sn']]['order_list'][] = $value;
+
+            //如果有在线支付且未付款的订单则显示合并付款链接
+            $order_group_list[$value['pay_sn']]['pay_amount'] += $value['order_amount'] - $value['rcb_amount'] - $value['pd_amount'];
+            $order_group_list[$value['pay_sn']]['add_time'] = date("Y-m-d H:i:s",$value['add_time']);
+            $promoter = Model("member")->where(array('member_id'=>$value['pm']))->get_field("member_name");
+            $order_group_list[$value['pay_sn']]['promoter'] = empty($promoter)?"(无)":$promoter;
+        }
+
+        $new_order_group_list = array();
+        foreach ($order_group_list as $key => $value) {
+            $value['pay_sn'] = strval($key);
+            $new_order_group_list[] = $value;
+        }
+        output_data(array('data'=>$new_order_group_list,'data_info'=>$data_info));
+    }
+    /**
+     * 获取小组订单详情
+     * @return [type] [description]
+     */
+    public function getTeamOrderInfoOp(){
+        $order_id = intval($_GET['order_id']);
+        if ($order_id <= 0) {
+            output_error("参数错误");
+        }
+        $team_member_info = Model('mz_member')->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        // 查询条件
+        $condition = array();
+        $condition['order_id'] = $order_id;
+        $condition['order_from'] = "mz";
+        $condition['team_id'] = $team_member_info['team_id'];
+
+        $order_model = Model('order');
+        $fields = "order_id,order_sn,add_time,order_amount,order_state,refund_state,lock_state,refund_amount,shipping_code,pm,team_id,goods_amount,shipping_fee,pay_sn";
+        $order_info = $order_model->getOrderInfo($condition,array('order_common','order_goods'),$fields);
+        if (empty($order_info)) {
+            output_error("订单不存在！");
+        }
+        // 推广人信息
+        $promoter = Model("member")->where(array('member_id'=>$order_info['pm']))->get_field("member_name");
+        $order_info['promoter'] = empty($promoter)?"(无)":$promoter;
+
+        if (!empty($order_info['extend_order_common']['invoice_info'])) {
+            $order_info['extend_order_common']['has_invoice'] = true;
+        }else{
+            $order_info['extend_order_common']['has_invoice'] = false;
+        }
+        if (!empty($order_info['extend_order_goods'])) {
+            foreach ($order_info['extend_order_goods'] as $k => $v) {
+                $order_info['extend_order_goods'][$k]['img_url'] = thumb($v, 360);
+            }
+        }
+        output_data(array('data'=>$order_info));
+    }
 }

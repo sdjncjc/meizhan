@@ -31,16 +31,16 @@
                                 <p>订单状态：
                                     <span class="order-status">{{order.state_desc}}</span>
                                     <span class="order-del">
-                                        {{if order.order_state == 0}}
+                                        {{if order.if_delete}}
                                         <a class="delOrder" href="javascript:void(0);" data-order-id="{{order.order_id}}">删除订单</a>
                                         {{/if}}
-                                        {{if order.order_state == 10}}
+                                        {{if order.if_cancel}}
                                         <a class="dropOrder" href="javascript:void(0);" data-order-id="{{order.order_id}}">取消订单</a>
                                          {{/if}}
-                                        {{if order.order_state == 30}}
+                                        {{if order.if_receive}}
                                         <a class="makePoint" href="javascript:void(0);" data-order-id="{{order.order_id}}">确认收货</a>
                                          {{/if}}
-                                        {{if order.order_state == 40}}
+                                        {{if order.if_evaluation}}
                                         <a class="comment" href="javascript:void(0);" data-order-id="{{order.order_id}}">订单评价</a>
                                          {{/if}}
                                     </span>
