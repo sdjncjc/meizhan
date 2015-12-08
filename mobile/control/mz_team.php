@@ -178,9 +178,24 @@ class mz_teamControl extends mobileMemberControl {
         $data_info['thispage'] = $page;
         $data_info['totalpage'] = ceil($count / $size);
         // 查询当前已申请的小组id
-        $apply_team_id = Model("mz_team_log")->where(array('member_id'=>$this->member_info['member_id'],'type'=>0,'status'=>0))->getCols('team_id');
+        $apply_teams = Model("mz_team_log")->where(array('member_id'=>$this->member_info['member_id'],'type'=>0,'status'=>0))->field('team_id')->select();
+        $apply_team_ids = array();
+        if (!empty($apply_teams)) {
+            foreach ($apply_teams as $key => $value) {
+                $apply_team_ids[] = $value['team_id'];
+            }
+        }
         // 分页设置
         $teams = Model("mz_team")->where($condition)->limit((($page-1)*$size).','.$size)->select();
+        if (!empty($teams)) {
+            foreach ($teams as $key => $value) {
+                if (in_array($value['team_id'], $apply_team_ids)) {
+                    $teams[$key]['has_apply'] = 1;
+                }else{
+                    $teams[$key]['has_apply'] = 1;
+                }
+            }
+        }
 
         output_data(array('data'=>$teams,'data_info'=>$data_info));
     }
@@ -278,6 +293,19 @@ class mz_teamControl extends mobileMemberControl {
                 $team_info['is_join'] = 1;
                 $team_info['is_leader'] = $team_member['type'];
             }else{
+                // 查询当前已申请的小组id
+                $apply_teams = Model("mz_team_log")->where(array('member_id'=>$this->member_info['member_id'],'type'=>0,'status'=>0))->field('team_id')->select();
+                $apply_team_ids = array();
+                if (!empty($apply_teams)) {
+                    foreach ($apply_teams as $key => $value) {
+                        $apply_team_ids[] = $value['team_id'];
+                    }
+                }
+                if (in_array($team_id, $apply_team_ids)) {
+                    $team_info['has_apply'] = 1;
+                }else{
+                    $team_info['has_apply'] = 0;
+                }
                 $team_info['is_join'] = 0;
                 $team_info['is_leader'] = 0;
             }
@@ -328,7 +356,7 @@ class mz_teamControl extends mobileMemberControl {
         $data_info['thispage'] = $page;
         $data_info['totalpage'] = ceil($count / $size);
 
-        $log_list = Model("mz_balance_log")->where($condition)->limit((($page-1)*$size).','.$size)->select();
+        $log_list = Model("mz_balance_log")->where($condition)->limit((($page-1)*$size).','.$size)->order("balance_addtime desc")->select();
         if (!empty($log_list)) {
             foreach ($log_list as $key => $value) {
                 $log_list[$key]['balance_addtime'] = date("Y-m-d",$value['balance_addtime']);

@@ -181,6 +181,12 @@ function open_url(type,sub,id){
 			case 'balance_allot':
 				url = "/team/balance_allot.html";
 				break;
+			case 'team_rank':
+				url = "/team/team_rank.html";
+				break;
+			case 'team_member_rank':
+				url = "/team/team_member_rank.html";
+				break;
 		}
 	}else{
 		switch(type){

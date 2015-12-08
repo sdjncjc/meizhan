@@ -1,0 +1,61 @@
+<!--#include virtual="/mine/head.html"-->
+<link href="/css/team/teaminfo.css<!--#include virtual='/tpl/version.html'-->" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="grid-wrap" id="wrapper">
+	     <section class="team-list-page grid-wrap">
+	     	<div class="search address grid">
+                <input type="hidden" class="team_type">
+                <select class="provinces col-2"></select>
+                <select class="city_school col-6"></select>
+	     		<div class="search_reset col-2">查询</div>
+	     	</div>
+	     	<div class="teams"></div>
+	     </section>
+	     <script type="text/template" id="team-list-tpl">
+	        <div class="grid team_list_head">
+	        	<div class="col-1">&nbsp;</div>
+	        	<div class="col-4">会员名</div>
+	        	<div class="col-3">所在小组</div>
+	        	<div class="col-2">经验值</div>
+	        </div>
+	     	{{each data.team_member_list as member index}}
+	        <div class="grid team_list">
+	        	<div class="col-1">{{index +1}}</div>
+	        	<div class="col-4">{{member.member_name}}</div>
+	        	<div class="col-3">{{member.team_name}}</div>
+	        	<div class="col-2">{{member.integral}}</div>
+	        </div>
+	        {{/each}}
+	     </script>
+	     <script type="text/template" id="empty-team-list-tpl">
+	     	<div class="empty">暂无精英排名</div>
+	     </script>
+    </section>
+    <a href="javascript:;" class="backtop"></a>
+    <script type="text/javascript" src="/js/team/team.js<!--#include virtual='/tpl/version.html'-->"></script>
+    <script type="text/javascript">
+        set_title("地区销售精英排行榜");
+        getAjaxResult(getUrl('mz_team_rank','getTeamMemberRank'),'team-list-tpl',".teams",'empty-team-list-tpl','setSelect');
+        function setSelect(data){
+        	if (data.team_member_list.length == 0) {
+        		$(".teams").html(template("empty-team-list-tpl", {}));
+        	};
+			team.team_info = {
+				team_type:data.city_info.team_type,
+				provinceid:data.city_info.provinceid,
+				city_school_id:data.city_info.city_school_id
+			};
+        	team.intiAddress();
+        }
+    	$(".search_reset").tap(function(){
+    		var city_school_id = $('.city_school').val();
+    		if (city_school_id > 0) {
+	    		$(".teams").empty();
+	    		getAjaxResult(getUrl('mz_team_rank','getTeamMemberRank','city_school_id='+city_school_id),'team-list-tpl',".teams",'empty-team-list-tpl','setSelect');
+	    	}else{
+				$.dialog({content:"请选择地区",title: "alert",time: 1000});
+	    	}
+    	});
+    </script>
+</body>    
+</html>

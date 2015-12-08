@@ -3,46 +3,40 @@
 <!--#include virtual="/tpl/navbar.html"-->
     <section class="grid-wrap" id="wrapper">
 	     <section class="team-list-page grid-wrap">
-	     	<div class="search gird">
-	     		<div class="search_title">搜索结果</div>
-	     		<div class="search_reset" onclick="open_url('team_join')">重新搜索</div>
+	     	<div class="balance gird">
+	     		<div class="balance_income" onclick="open_url('team_balance','income')">收入信息</div>
+	     		<div class="balance_outcome current">支出信息</div>
 	     	</div>
-	     	<div class="teams"></div>
+	     	<div class="balance_log"></div>
 	     </section>
 	     <script type="text/template" id="team-list-tpl">
 	        <div class="grid team_list_head">
-	        	<div class="col-3">小组名称</div>
-	        	<div class="col-5">简介</div>
-	        	<div class="col-2"></div>
+	        	<div class="col-5">描述</div>
+	        	<div class="col-2">金额</div>
+	        	<div class="col-3">时间</div>
 	        </div>
-	     	{{each data as team}}
+	     	{{each data as team_balance}}
 	        <div class="grid team_list">
-	        	<div class="col-3"><a href="javascript:open_url('team_info','','{{team.team_id}}')">{{team.team_name}}</a>({{team.num}}/{{team.max_num}})</div>
-	        	<div class="col-5 team_desc">{{team.team_intro}}</div>
-	        	<div class="col-2">
-	        	{{if team.has_apply == 0}}
-	        	<span class="join" data-team-id="{{team.team_id}}">加入</span>
-	        	{{else}}
-	        	<span>已申请</span>
-	        	{{/if}}
-	        	</div>
+	        	<div class="col-5">{{team_balance.balance_desc}}</div>
+	        	<div class="col-2">&yen;{{team_balance.balance_price}}</div>
+	        	<div class="col-3">{{team_balance.balance_addtime}}</div>
 	        </div>
 	        {{/each}}
 	     </script>
 	     <script type="text/template" id="empty-team-list-tpl">
-	     	<div class="empty">暂无小组</div>
+	     	<div class="empty">暂无信息</div>
 	     </script>
     </section>
     <a href="javascript:;" class="backtop"></a>
     <script type="text/javascript" src="/js/team/team.js<!--#include virtual='/tpl/version.html'-->"></script>
     <script type="text/javascript">
-        set_title("小组列表");
-        team.searchTeam();
+        set_title("小组支出");
+        team.getTeamBalanceLog('outcome');
         $(window).scroll(function() {
             if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
                 if(!stop){
                     $(".loading").show();
-                    team.searchTeam();
+        			team.getTeamBalanceLog('outcome');
                     stop = true;
                 }
             }

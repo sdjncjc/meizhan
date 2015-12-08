@@ -38,7 +38,11 @@
 	            <span class="submitbutton" data-team-id="0">确认修改</span>
                 {{/if}}
                 {{if data.is_join == 0}}
+                {{if data.has_apply == 0}}
                 <span class="joinbutton" data-team-id="{{data.team_id}}">加入小组</span>
+                {{else}}
+                <span>已提交申请</span>
+                {{/if}}
                 {{/if}}
 	        </div>
         </script>
