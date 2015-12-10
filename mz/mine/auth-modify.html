@@ -1,0 +1,86 @@
+<!--#include virtual="head.html"-->
+<link href="/css/member/perinfo.css<!--#include virtual='/tpl/version.html'-->" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="get-mobilecode-page">
+        <section class="wrapper grid-wrap">
+            <div class="grid">
+                <div class="item row-1">
+                    <label class="col-4">身份认证方式：</label>
+                    <select class="auth_type col-7"></select>
+                </div>
+                <div class="item pin row-1">
+                    <label class="col-4">安全验证码：</label>
+                    <input class="col-3" type="text" value="" placeholder="安全验证码" />
+                    <button class="col-4 pin-btn">获取验证码</button>
+                </div>
+            <div class="next-btn">
+                <span>下一步</span>
+            </div>
+        </section>
+    </section>
+
+    <section class="edit-mobile-page">
+        <section class="wrapper grid-wrap">
+            <div class="grid">
+                <div class="item mobile row-1">
+                    <label class="col-3">手机号码</label>
+                    <input class="col-8" type="text" maxlength="11" value="" placeholder="请输入手机号码" />
+                </div>
+                <div class="item pin2 row-1">
+                    <label class="col-3">短信验证码</label>
+                    <input class="col-4" type="text" value="" placeholder="短信验证码" />
+                    <button class="col-4 pin-btn2">获取验证码</button>
+                </div>
+            <div class="submit-btn">
+                <span>绑定</span>
+            </div>
+        </section>
+    </section>
+    <section class="edit-email-page">
+        <section class="wrapper grid-wrap">
+            <div class="grid">
+                <div class="item email row-1">
+                    <label class="col-3">邮箱地址：</label>
+                    <input class="col-8" type="text" value="" placeholder="请输入绑定邮箱地址" />
+                </div>
+            <div class="submit-btn">
+                <span>绑定</span>
+            </div>
+        </section>
+    </section>
+    <section class="get-password-page">
+        <section class="wrapper grid-wrap">
+            <div class="grid">
+                <div class="item pwd row-1">
+                    <label class="col-4">密码：</label>
+                    <input type="password" class="col-7">
+                </div>
+                <div class="item repwd row-1">
+                    <label class="col-4">重复密码：</label>
+                    <input type="password" class="col-7">
+                </div>
+            <div class="submit-btn">
+                <span>确定</span>
+            </div>
+        </section>
+    </section>
+    <script type="text/javascript" src="/js/member/auth_security.js<!--#include virtual='/tpl/version.html'-->"></script>
+    <script type="text/javascript">
+        var type = GetQueryString("type");
+        switch(type){
+            case 'mobile':
+                auth.init("绑定手机号码"); 
+                break;
+            case 'email':
+                auth.init("绑定邮箱"); 
+                break;
+            case 'pwd':
+                auth.init("设置登陆密码"); 
+                break;
+            case 'paypwd':
+                auth.init("设置支付密码"); 
+                break;
+        }
+    </script>
+</body>
+</html>
