@@ -40,23 +40,20 @@
                 <label class="answer"></label>
             </div>
         </div>
-<!--         <div class="promotion_group">
-            <div class="promotion_group-inner">
-                <label>专属客服</label>
-                <label class="answer"></label>
-            </div>
-        </div> -->
         <div class="password">
             <div class="password-inner">
                 <label>修改密码</label>
                 <label class="answer"></label>
             </div>
         </div>
+        <div class="paypassword">
+            <div class="paypassword-inner">
+                <label>支付密码</label>
+                <label class="answer"></label>
+            </div>
+        </div>
     </section>
 
-    <!-- <div class="save-info-btn">
-        保存
-    </div> -->
     <div id="logout">
         退出登录
     </div>
@@ -113,25 +110,6 @@
                 <div class="pop-confirm" data-type="date">保存</div>
             </div>
         </div>
-        <div class="promotion_group-pop popout">
-            <h2 class="pop-title">确认删除</h2>
-            <p class="promotion_group-notification">
-                <label class="promotion_group-notion">确定要取消该专属客服吗？<br/>下次购买时还可以重新设置</label>
-            </p>
-            <div class="pop-sure">
-                <div class="pop-cancle">取消</div>
-                <div class="pop-confirm" data-type="promotion_group">确定</div>
-            </div>
-        </div>
-        <div class="password-pop popout">
-            <h2 class="pop-title">修改密码</h2>
-            &nbsp;原密码：<input type="password" class="passwordedit"/><br/>
-            &nbsp;新密码：<input type="password" class="repasswordedit"/>
-            <div class="pop-sure">
-                <div class="pop-cancle">取消</div>
-                <div class="pop-confirm" data-type="password">保存</div>
-            </div>
-        </div>
     </div>
 <script type="text/javascript" src="/js/member/CJL.0.1.min.js<!--#include virtual='/tpl/version.html'-->"></script>
 <script type="text/javascript" src="/js/member/upload.js<!--#include virtual='/tpl/version.html'-->"></script>
@@ -147,7 +125,6 @@
         $(".email-inner").find(".answer").text(data.member_email);
         $(".gender-inner").find(".answer").text((data.member_sex==3)?'保密':(data.member_sex==2)?'女':'男');
         $(".birthday-inner").find(".answer").text(data.member_birthday);
-        $(".promotion_group-inner").find(".answer").text(data.group_name);
     }
     $(".headicon").tap(function(){
         showMask();
@@ -181,19 +158,14 @@
             d.find(".birthdate").val("");
         }
     });
-
     $(".verified").tap(function(){
         open_url("verified");
     });
-    $(".promotion_group").tap(function(){
-        if ($(".promotion_group-inner").find(".answer").text() != "") {
-            showMask();
-            $(".promotion_group-pop").removeClass("hidden");
-        }
-    });
     $(".password").tap(function(){
-        showMask();
-        $(".password-pop").removeClass("hidden");
+        open_url("auth-modify","pwd");
+    });
+    $(".paypassword").tap(function(){
+        open_url("auth-modify","paypwd");
     });
     $(".pop-confirm").tap(function(){
         var params = "";
@@ -230,13 +202,6 @@
                     return void $(".date-alert-note").removeClass("hidden");
                 }
                 ajax_do(getUrl('mz_member','editUser'),{member_birthday:d});
-                break;
-            case "promotion_group":
-                ajax_do(getUrl('mz_member','editUser'),{group_id:0});
-                break;
-            case "password":
-                params = {member_passwd:$(".password-pop").find(".passwordedit").val(),member_repasswd:$(".password-pop").find(".repasswordedit").val()};
-                ajax_do(getUrl('mz_member','editUser'),params);
                 break;
         }
         hideEditPage();

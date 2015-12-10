@@ -147,6 +147,9 @@ function open_url(type,sub,id){
 			case 'verified':
 				url = "/mine/verified.html";
 				break;
+			case 'auth-modify':
+				url = "/mine/auth-modify.html?type="+sub;
+				break;
 			case 'service':
 				url = "http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODAyMTA0N182OTMxM180MDAwNTAwNzc1XzJf";
 				break;
