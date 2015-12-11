@@ -30,17 +30,29 @@
     <script id="filterbar-template" type="text/template">
         <div class="filterbar-dropdown-mask hidden"></div>
         <div class="filterbar-dropdown hidden">
-            <div class="filterbar-dropdown-item active" data="index">
-                <div class="filterbar-dropdown-item-inner">上新</div>
-            </div>
-            <div class="filterbar-dropdown-item" data="lastminute">
-                <div class="filterbar-dropdown-item-inner">最后疯抢</div>
-            </div>
             {{each gc_id_1_list as value index}}
             <div class="filterbar-dropdown-item" data="{{value.gc_id}}">
                 <div class="filterbar-dropdown-item-inner">{{value.gc_name}}</div>
             </div>
             {{/each}}
+            <div class="filterbar-dropdown-item" data="index">
+                <div class="filterbar-dropdown-item-inner">今日上新</div>
+            </div>
+            <div class="filterbar-dropdown-item" data="lastminute">
+                <div class="filterbar-dropdown-item-inner">最后疯抢</div>
+            </div>
+            <div class="filterbar-dropdown-item" data="group_list">
+                <div class="filterbar-dropdown-item-inner">限量购</div>
+            </div>
+            <div class="filterbar-dropdown-item" data="top">
+                <div class="filterbar-dropdown-item-inner">TOP排行</div>
+            </div>
+            <div class="filterbar-dropdown-item" data="oversea_index">
+                <div class="filterbar-dropdown-item-inner">海外购</div>
+            </div>
+            <div class="filterbar-dropdown-item" data="category">
+                <div class="filterbar-dropdown-item-inner">更多分类</div>
+            </div>
         </div>
         <div class="filterbar-inner-container">
             <div class="filterbar-inner-mask hidden">
@@ -48,11 +60,15 @@
             </div>
             <div class="filterbar-inner-wrapper">
                 <div class="filterbar-inner">
-                    <div class="filterbar-inner-item active" data="index">上新</div>
-                    <div class="filterbar-inner-item" data="lastminute">最后疯抢</div>
                     {{each gc_id_1_list as value index}}
                     <div class="filterbar-inner-item" data="{{value.gc_id}}">{{value.gc_name}}</div>
                     {{/each}}
+                    <div class="filterbar-inner-item" data="index">今日上新</div>
+                    <div class="filterbar-inner-item" data="lastminute">最后疯抢</div>
+                    <div class="filterbar-inner-item" data="group_list">限量购</div>
+                    <div class="filterbar-inner-item" data="top">TOP排行</div>
+                    <div class="filterbar-inner-item" data="oversea_index">海外购</div>
+                    <div class="filterbar-inner-item" data="category">更多分类</div>
                 </div>
             </div>
             <div class="filterbar-more">

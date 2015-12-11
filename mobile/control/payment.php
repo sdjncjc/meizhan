@@ -54,8 +54,13 @@ class paymentControl extends mobileHomeControl{
             Tpl::output('result', 'fail');
             Tpl::output('message', '支付失败');
         }
-
-        Tpl::showpage('payment_message');
+		
+		//验证来源
+        if(Model('order')->getOrderCount(array('order_from'=>3,'pay_sn'=>$callback_info['out_trade_no']))){
+			Tpl::showpage('payment_message_mz');
+		}else{
+			Tpl::showpage('payment_message');
+		}
     }
 
     /**

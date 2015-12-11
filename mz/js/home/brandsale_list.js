@@ -26,7 +26,11 @@ $(function(){
 			})
 			$('[data="'+cate+'"]').addClass('active');
 			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
-				location.href=MzSiteUrl+'/home/brandsale_list.html?cate='+$(this).attr('data');
+				if($(this).index() > 7){
+					location.href=MzSiteUrl+'/home/'+$(this).attr('data')+'.html';
+				}else{
+					location.href=MzSiteUrl+'/home/brandsale_list.html?cate='+$(this).attr('data');
+				}
 			})
 			set_title($('.filterbar-inner .active').html());
         }

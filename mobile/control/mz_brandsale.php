@@ -52,9 +52,9 @@ class mz_brandsaleControl extends mobileHomeControl{
 		$t = strtotime("today");
         $type = intval($_GET['type']);
 		if($_GET['cate'] == 'index'){
-			$condition['start_time'] = array('gt', $t);
+			$condition['start_time'] = array('between', array($t, TIMESTAMP));
 		}elseif($_GET['cate'] == 'lastminute'){
-			$condition['end_time'] = array('lt', $t+86400);
+			$condition['end_time'] = array('between', array(TIMESTAMP,$t+86400));
 		}elseif($_GET['cate'] > 0){
 			$condition['gc_id'] = intval($_GET['cate']);
 		}elseif($type){
