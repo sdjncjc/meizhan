@@ -68,7 +68,7 @@ $(function(){
 			$('.item-sorted-popularity').tap(function(){
 				$('.item-sorted-price').removeClass('current');
 				$(this).toggleClass('current');
-				_stock = _stock==1 ? 0 : 1;
+				_sort = _sort==1 ? 0 : 1;
 				page = 1;
 				clock = 0;
 				ajax_goods();
@@ -77,7 +77,7 @@ $(function(){
 			$('.item-sorted-price').tap(function(){
 				$('.item-sorted-popularity').removeClass('current');
 				$(this).toggleClass('current');
-				_stock = _stock==2 ? 0 : 2;
+				_sort = _sort==2 ? 0 : 2;
 				page = 1;
 				clock = 0;
 				ajax_goods();
