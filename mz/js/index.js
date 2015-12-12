@@ -21,7 +21,11 @@ $(function(){
 				$('.filterbar-inner-mask,.filterbar-dropdown,.filterbar-dropdown-mask').toggleClass('hidden');
 			})
 			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
-				location.href=MzSiteUrl+'/home/brandsale_list.html?cate='+$(this).attr('data');
+				if($(this).index() > 7){
+					location.href=MzSiteUrl+'/home/'+$(this).attr('data')+'.html';
+				}else{
+					location.href=MzSiteUrl+'/home/brandsale_list.html?cate='+$(this).attr('data');
+				}
 			})
         }
     });
