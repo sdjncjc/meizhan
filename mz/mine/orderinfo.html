@@ -13,13 +13,13 @@
                             <p class="address-info">{{data.extend_order_common.reciver_info.address}}</p>
                         </div>
                     </div>
-                    {{if data.order_state == 30 || data.order_state == 40 }}
+                    {{if data.shipping_code > 0 }}
                     <div class="interflow-box">
                         <div class="interflow-info">
                             <a href="javascript:open_url('logistics','',{{data.order_id}});">
                                 <div class="node-box">
-                                    <p class="node-text green-node">{{data.withdrawal}}</p>
-                                    <p class="time-node">${shipment.last_detail.create}</p>
+                                    <p class="node-text green-node">{{data.express_info.e_name}}</p>
+                                    <p class="time-node">物流单号：{{data.shipping_code}}</p>
                                     <div class="node-sign green-sign"></div>
                                 </div>
                             </a>

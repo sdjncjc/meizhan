@@ -64,7 +64,7 @@ class mz_member_orderControl extends mobileMemberControl {
             $condition['order_state'] = $status;
         }
         $condition['delete_state'] = 0;
-        $condition['buyer_id'] = $this->member_info['member_id'];
+        // $condition['buyer_id'] = $this->member_info['member_id'];
         $order_count = Model('order')->getOrderCount($condition);
         $data_info['thispage'] = $page;
         $data_info['totalpage'] = ceil($order_count / $size);
@@ -180,7 +180,7 @@ class mz_member_orderControl extends mobileMemberControl {
         // 查询条件
         $condition = array();
         $condition['order_id'] = $order_id;
-        $condition['buyer_id'] = $this->member_info['member_id'];
+        // $condition['buyer_id'] = $this->member_info['member_id'];
 
         $order_model = Model('order');
         $order_info = $order_model->getOrderInfo($condition,array('order_common','order_goods','member'));
@@ -197,11 +197,52 @@ class mz_member_orderControl extends mobileMemberControl {
                 $order_info['extend_order_goods'][$k]['img_url'] = thumb($v, 360);
             }
         }
+        //显示快递信息
+        if ($order_info['shipping_code'] != '') {
+            $express = rkcache('express',true);
+            $order_info['express_info']['e_code'] = $express[$order_info['extend_order_common']['shipping_express_id']]['e_code'];
+            $order_info['express_info']['e_name'] = $express[$order_info['extend_order_common']['shipping_express_id']]['e_name'];
+            $order_info['express_info']['e_url'] = $express[$order_info['extend_order_common']['shipping_express_id']]['e_url'];
+        }
         // 获取售后信息
         $model_refund = Model('refund_return');
         $order_info['aftersale'] = $model_refund->getRefundState($order_info);
-        // $this->debuger($order_info);
         output_data(array('data'=>$order_info));
+    }
+    /**
+     * 从第三方取快递信息
+     *
+     */
+    public function get_expressOp(){
+        $order_id = intval($_GET['order_id']);
+        // 查询条件
+        $condition = array();
+        $condition['order_id'] = $order_id;
+        // $condition['buyer_id'] = $this->member_info['member_id'];
+        $order_model = Model('order');
+        $order_info = $order_model->getOrderInfo($condition,array('order_common'),'order_id,shipping_code');
+        if (empty($order_info)) {
+            output_error("订单不存在！");
+        }
+        //显示快递信息
+        if ($order_info['shipping_code'] != '') {
+            $express = rkcache('express',true);
+
+            $shipinfo['shipping_code'] = $order_info['shipping_code'];
+            $shipinfo['e_code'] = $express[$order_info['extend_order_common']['shipping_express_id']]['e_code'];
+            $shipinfo['e_name'] = $express[$order_info['extend_order_common']['shipping_express_id']]['e_name'];
+
+            $e_code = $express[$order_info['extend_order_common']['shipping_express_id']]['e_code'];
+            $content = Model('express')->get_express($e_code, $order_info['shipping_code']);
+            $output = array();
+            foreach ($content as $k=>$v) {
+                if ($v['time'] == '') continue;
+                $output[]= $v['time'].'&nbsp;&nbsp;'.$v['context'];
+            }
+            output_data(array('data'=>array('express_info'=>$content,'shipinfo'=>$shipinfo)));
+        }else{
+            output_error("参数错误");
+        }
     }
     /**
      * 确认收货

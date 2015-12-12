@@ -1,0 +1,39 @@
+<!--#include virtual="head.html"-->
+    <link rel="stylesheet" href="/css/member/shipment.css<!--#include virtual='/tpl/version.html'-->" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="wrapper J_wrapper" id="wrapper">
+        <section class="shipment-info">
+            <h4 class="shipment-name">
+            </h4>
+            <div class="shipment-id">
+                运单编号：
+                <span></span>
+            </div>
+        </section>
+        <section class="shipment-detail">
+            <div class="shipment-items">
+            </div>
+        </section>
+    </section>
+    <script type="text/template" id="shipment-item-template">
+        {{each data.express_info as shipment}}
+        <div class="shipment-item">
+            <div class="shipment-place">
+                {{shipment.context}}
+            </div>
+            <div class="shipment-time">
+                {{shipment.time}}
+            </div>
+        </div>
+        {{/each}}
+    </script>
+    <script type="text/javascript">
+        set_title("物流详情");        
+        getAjaxResult(getUrl('mz_member_order','get_express','order_id='+GetQueryString("id")),'shipment-item-template',".shipment-items",'empty-shipment-item-template','showshipinfo');
+        function showshipinfo(data){
+            $(".shipment-info .shipment-name").html(data.shipinfo.e_name);
+            $(".shipment-info .shipment-id span").html(data.shipinfo.shipping_code);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+@charset "utf-8";
+html {
+  background: #f2f2f2;
+}
+body {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+#shipping_code {
+  margin-top: 2rem;
+}
+.shipment-info {
+  height: 2.6rem;
+  padding: .6rem .9rem;
+  background: #fff;
+}
+.shipment-info .shipment-name {
+  margin-bottom: 0.4rem;
+}
+.shipment-info .shipment-id {
+  font-size: 0.7rem;
+}
+.shipment-detail {
+  padding: 0.9rem;
+}
+.shipment-detail .shipment-items {
+  position: relative;
+  padding: 0 .7rem;
+  border-left: solid 0.05rem #b8b8b8;
+}
+.shipment-detail .shipment-items .shipment-item {
+  margin-bottom: .6rem;
+  color: #686868;
+}
+.shipment-detail .shipment-items .shipment-item .shipment-place {
+  margin-bottom: 0.4rem;
+}
+.shipment-detail .shipment-items .shipment-item::before {
+  position: absolute;
+  left: -0.4rem;
+  display: block;
+  width: .6rem;
+  height: .6rem;
+  content: "";
+  border-radius: 50%;
+  background: #ddd;
+}
+.shipment-detail .shipment-items .shipment-item.current .shipment-place {
+  color: #64a374;
+}
+.shipment-detail .shipment-items .shipment-item.current::before {
+  background: #64a374;
+}
+.loading {
+  font-size: .6rem;
+  line-height: 1.2rem;
+  text-align: center;
+  color: #999;
+}
