@@ -64,7 +64,7 @@ class mz_member_orderControl extends mobileMemberControl {
             $condition['order_state'] = $status;
         }
         $condition['delete_state'] = 0;
-        // $condition['buyer_id'] = $this->member_info['member_id'];
+        $condition['buyer_id'] = $this->member_info['member_id'];
         $order_count = Model('order')->getOrderCount($condition);
         $data_info['thispage'] = $page;
         $data_info['totalpage'] = ceil($order_count / $size);
@@ -180,7 +180,7 @@ class mz_member_orderControl extends mobileMemberControl {
         // 查询条件
         $condition = array();
         $condition['order_id'] = $order_id;
-        // $condition['buyer_id'] = $this->member_info['member_id'];
+        $condition['buyer_id'] = $this->member_info['member_id'];
 
         $order_model = Model('order');
         $order_info = $order_model->getOrderInfo($condition,array('order_common','order_goods','member'));
@@ -218,7 +218,7 @@ class mz_member_orderControl extends mobileMemberControl {
         // 查询条件
         $condition = array();
         $condition['order_id'] = $order_id;
-        // $condition['buyer_id'] = $this->member_info['member_id'];
+        $condition['buyer_id'] = $this->member_info['member_id'];
         $order_model = Model('order');
         $order_info = $order_model->getOrderInfo($condition,array('order_common'),'order_id,shipping_code');
         if (empty($order_info)) {
