@@ -192,7 +192,7 @@ class mz_teamControl extends mobileMemberControl {
                 if (in_array($value['team_id'], $apply_team_ids)) {
                     $teams[$key]['has_apply'] = 1;
                 }else{
-                    $teams[$key]['has_apply'] = 1;
+                    $teams[$key]['has_apply'] = 0;
                 }
             }
         }
