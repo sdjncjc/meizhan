@@ -13,13 +13,14 @@
                     <input class="col-3" type="text" value="" placeholder="安全验证码" />
                     <button class="col-4 pin-btn">获取验证码</button>
                 </div>
-            <div class="next-btn">
-                <span>下一步</span>
+                <div class="next-btn">
+                    <span>下一步</span>
+                </div>
             </div>
         </section>
     </section>
 
-    <section class="edit-mobile-page">
+    <section class="edit-mobile-page hidden">
         <section class="wrapper grid-wrap">
             <div class="grid">
                 <div class="item mobile row-1">
@@ -31,24 +32,26 @@
                     <input class="col-4" type="text" value="" placeholder="短信验证码" />
                     <button class="col-4 pin-btn2">获取验证码</button>
                 </div>
-            <div class="submit-btn">
-                <span>绑定</span>
+                <div class="submit-btn">
+                    <span>绑定</span>
+                </div>
             </div>
         </section>
     </section>
-    <section class="edit-email-page">
+    <section class="edit-email-page hidden">
         <section class="wrapper grid-wrap">
             <div class="grid">
                 <div class="item email row-1">
                     <label class="col-3">邮箱地址：</label>
                     <input class="col-8" type="text" value="" placeholder="请输入绑定邮箱地址" />
                 </div>
-            <div class="submit-btn">
-                <span>绑定</span>
+                <div class="submit-btn">
+                    <span>绑定</span>
+                </div>
             </div>
         </section>
     </section>
-    <section class="get-password-page">
+    <section class="get-password-page hidden">
         <section class="wrapper grid-wrap">
             <div class="grid">
                 <div class="item pwd row-1">
@@ -59,8 +62,46 @@
                     <label class="col-4">重复密码：</label>
                     <input type="password" class="col-7">
                 </div>
-            <div class="submit-btn">
-                <span>确定</span>
+                <div class="submit-btn">
+                    <span>确定</span>
+                </div>
+            </div>
+        </section>
+    </section>
+    <section class="applycash-page hidden">
+        <section class="wrapper grid-wrap">
+            <div class="grid">
+                <div class="item pdc_amount row-1">
+                    <label class="col-3">提现金额</label>
+                    <input class="col-4" type="text" value="" placeholder="提现金额" />
+                    <label class="col-3">元</label>
+                </div>
+                <div class="item pdc_bank_user row-1">
+                    <label class="col-3">收款人姓名</label>
+                    <input class="col-7" type="text" value="" placeholder="收款人姓名" />
+                </div>
+                <div class="item bank_type row-1">
+                    <label class="col-3">收款方式</label>
+                    <select class="col-7">
+                        <option value="1">支付宝</option>
+                        <option value="2">银行</option>
+                    </select>
+                </div>
+                <div class="item bank_name row-1 hidden">
+                    <label class="col-3">收款银行</label>
+                    <input class="col-7" type="text" value="" placeholder="收款银行" />
+                </div>
+                <div class="item pdc_bank_no row-1">
+                    <label class="col-3">账号</label>
+                    <input class="col-7" type="text" value="" placeholder="账号" />
+                </div>
+                <div class="item paypwd row-1">
+                    <label class="col-3">支付密码</label>
+                    <input class="col-7" type="password" value="" />
+                </div>
+                <div class="submit-btn">
+                    <span>确定</span>
+                </div>
             </div>
         </section>
     </section>
@@ -79,6 +120,9 @@
                 break;
             case 'paypwd':
                 auth.init("设置支付密码"); 
+                break;
+            case 'applycash_add':
+                auth.init("申请提现"); 
                 break;
         }
     </script>

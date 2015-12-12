@@ -201,6 +201,19 @@ class paymentControl extends mobileHomeControl{
             $log_buyer_id = $order_info['buyer_id'];
             $log_buyer_name = $order_info['buyer_name'];
             $log_desc = '虚拟订单使用'.orderPaymentName($paymentCode).'成功支付，支付单号：'.$out_trade_no;
+        } elseif ($order_type == 'p'){
+            $result = $logic_payment->getPdOrderInfo($out_trade_no);
+            if (intval($result['data']['pdr_payment_state'])) {
+                return array('state'=>true);
+            }
+            $payment_info = $logic_payment->getPaymentInfo($paymentCode);
+            $result = $logic_payment->updatePdOrder($out_trade_no, $trade_no,$payment_info,$result['data']);
+
+            $api_pay_amount = $result['data']['pdr_amount'];
+            $log_buyer_id = $order_pay_info['buyer_id'];
+            $log_buyer_name = $order_pay_info['buyer_name'];
+            $log_desc = '预存款充值成功，使用'.orderPaymentName($payment_info['payment_code']).'成功支付，充值单号：'.$out_trade_no;
+
         }
         if ($result['state']) {
             //记录消费日志

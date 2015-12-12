@@ -1,0 +1,116 @@
+<!--#include virtual="head.html"-->
+<link rel="stylesheet" href="/css/member/point.css<!--#include virtual='/tpl/version.html'-->" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="recharge-page hidden">
+        <section class="wrapper grid-wrap">
+            <div class="grid">
+                <div class="item pdr_amount row-1">
+                    <label class="col-3">充值金额：</label>
+                    <input class="col-4" type="text" value="" placeholder="充值金额" />
+                    <label class="col-3">元</label>
+                </div>
+            </div>
+            <div class="pay-box">
+                <div class="pay-box-hd">
+                    <h3>支付方式</h3>
+                </div>
+                <div class="pay-box-bd grid-fat">
+                    <div class="row hidden">
+                        <div class="col-1">
+                            <i class="payment-method selected"></i>
+                        </div>
+                        <div class="col-2">
+                            <img src="/img/alipay.png" alt="支付宝支付" />
+                        </div>
+                        <div class="col-9">
+                            <h4>支付宝支付</h4>
+                            <p>安全快捷，可支持银行卡支付</p>
+                        </div>
+                    </div>
+                    <div class="row hidden">
+                        <div class="col-1">
+                            <i class="payment-method selected"></i>
+                        </div>
+                        <div class="col-2">
+                            <img src="/img/wxpay.png" alt="微信支付" />
+                        </div>
+                        <div class="col-9">
+                            <h4>微信支付</h4>
+                            <p>推荐已在微信中绑定银行卡的用户使用</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sure-btn">
+                <span>去支付</span>
+            </div>
+        </section>
+    </section>
+    <section class="list-page hidden">
+        <section class="wrapper grid-wrap">
+            <section class="point-info-box">
+                <div class="balance-btn grid">
+                    <li class="col-3"><span onclick="open_url('cash','recharge')">充值明细</span></li>
+                    <li class="col-3"><span onclick="open_url('cash','recharge_add')">在线充值</span></li>
+                    <li class="col-3"><span onclick="open_url('cash','applycash')">提现明细</span></li>
+                    <li class="col-3"><span onclick="open_url('cash','applycash_add')">余额提现</span></li>
+                </div>
+            </section>
+            <div class="list-head grid">
+                <li class="col-4">创建时间</li>
+                <li class="col-2">金额(元)</li>
+                <li class="col-3">状态</li>
+                <li class="col-3">操作</li>
+            </div>
+            <div class="list"></div>
+            <script type="text/template" id="recharge-list-template">
+            {{each data as list}}
+            <div class="list-info grid">
+                <li class="col-4">{{list.pdr_add_time}}</li>
+                <li class="col-2">{{list.pdr_amount}}</li>
+                <li class="col-3">{{if list.pdr_payment_state==0}}未支付{{else}}已支付{{/if}}</li>
+                <li class="col-3"><span class="btn pay-btn" data-pdr-amount="{{list.pdr_amount}}" data-pdr-sn="{{list.pdr_sn}}">支付</span><span class="btn gray del-btn" data-pdr-sn="{{list.pdr_sn}}">删除</span></li>
+            </div>
+            {{/each}}
+            </script>
+            <script type="text/template" id="pdcash-list-template">
+            {{each data as list}}
+            <div class="list-info grid">
+                <li class="col-4">{{list.pdc_add_time}}</li>
+                <li class="col-2">{{list.pdc_amount}}</li>
+                <li class="col-3">{{if list.pdc_payment_state==0}}未支付{{else}}已完成{{/if}}</li>
+                <li class="col-3"><span class="btn pay-btn" data-pdc-id="{{list.pdc_id}}">详细</span><span class="btn gray del-btn" data-pdc-id="{{list.pdc_id}}">删除</span></li>
+            </div>
+            {{/each}}
+            </script>
+        </section>
+        <script type="text/template" id="empty-item-template">
+            <div class="empty-record">暂无记录</div>
+        </script>
+    </section>
+    <div class="loading">
+        正在加载...
+    </div>
+    <a href="javascript:;" class="backtop"></a>
+    <script type="text/javascript" src="/js/member/cash.js<!--#include virtual='/tpl/version.html'-->"></script>
+    <script type="text/javascript">
+        cash.init();
+        $(window).scroll(function() {
+            if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+                if(!stop){
+                    $(".loading").show();
+                    cash.getListInfo();
+                    stop = true;
+                }
+            }
+            if($('body').scrollTop() > 2000){
+                $('.backtop').show();
+            }else{
+                $('.backtop').hide();
+            }
+        });
+
+        $('.backtop').tap(function(){$('body').scrollTop(0);}); 
+    </script>
+</body>
+</html>

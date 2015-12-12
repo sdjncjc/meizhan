@@ -28,7 +28,9 @@ function getAjaxResult(url,tpl,obj,empty_tpl,myfun){
         		}
         		function_data =  result.datas.data;
 	        }else{
-				$.dialog({content:result.datas.error,title: "alert",time: 1000});
+	        	if (result.datas.error != "") {
+					$.dialog({content:result.datas.error,title: "alert",time: 1000});
+				};
         		if (result.login != undefined) {
         			checklogin(result.login);
         		}
@@ -140,6 +142,9 @@ function open_url(type,sub,id){
 				break;
 			case 'balance':
 				url = "/mine/balance.html";
+				break;
+			case 'cash':
+				url = "/mine/cash.html?type="+sub;
 				break;
 			case 'favorite':
 				url = "/mine/favorite.html";

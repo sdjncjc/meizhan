@@ -16,6 +16,13 @@ var auth = {
 	setuserinfo:function(data){
 		var _this = this;
 		var options = "";
+
+		if (this.type == 'applycash_add') {
+			if (data.member_mobile_bind == 0 && data.member_email_bind == 0) {
+				$.dialog({content:"请先绑定手机或邮箱",title:"alert",time:1000});
+				window.setTimeout(function(){open_url('verified');},1000); 
+			};
+		};
 		if (data.member_mobile_bind == 1) {
 			options += '<option value="mobile">手机[' + data.member_mobile + "]</option>";
 		}else{
@@ -129,6 +136,9 @@ var auth = {
 				case "paypwd":
 					_this.modify_pwd();
 					break;
+				case "applycash_add":
+					_this.applycash_add();
+					break;
 			}
 		}else{
 			$.dialog({content:data.message,title:"alert",time:1000});
@@ -174,6 +184,29 @@ var auth = {
 			if (_this.type == "pwd") {
 				delCookie("key");
 			};
+		});
+	},
+	applycash_add:function(){
+		var _this = this;
+		$(".get-mobilecode-page").addClass("hidden");
+		$(".applycash-page").removeClass("hidden");
+		$(".bank_type select").change(function(){
+			if ($(this).val()==1) {
+				$('.bank_name').addClass("hidden");
+			}else if ($(this).val() == 2) {
+				$('.bank_name').removeClass("hidden");
+			};
+		});
+		$(".submit-btn").tap(function(){
+			var params = {
+				captcha:$(".get-mobilecode-page .pin input").val(),
+				pdc_amount:$(".pdc_amount input").val(),
+				pdc_bank_user:$(".pdc_bank_user input").val(),
+				pdc_bank_name:($(".bank_type select").val() == 1)?"支付宝":$(".bank_name input").val(),
+				pdc_bank_no:$(".pdc_bank_no input").val(),
+				paypwd:$(".paypwd input").val(),
+			}
+			ajax_do(getUrl('mz_auth_modify','applycash_add'),params);
 		});
 	}
 };

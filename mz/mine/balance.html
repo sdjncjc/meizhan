@@ -3,13 +3,18 @@
 <link rel="stylesheet" href="/css/member/point.css<!--#include virtual='/tpl/version.html'-->" media="all" />
     <section class="wrapper J_wrapper" id="wrapper">
         <section class="point-info-box">
-            <div class="balance-info"></div>
-            <script type="text/template" id="balance-info-template">
-                <li>预存款可用金额:<span>&yen;{{data.available_predeposit}}</span></li>
-                <li>预存款冻结金额:<span>&yen;{{data.freeze_predeposit}}</span></li>
-                <li>可用充值卡余额:<span>&yen;{{data.available_rc_balance}}</span></li>
-                <li>冻结充值卡余额:<span>&yen;{{data.freeze_rc_balance}}</span></li>
-            </script>
+            <div class="balance-info">
+                <li>预存款可用金额:<span class="available_predeposit"></span></li>
+                <li>预存款冻结金额:<span class="freeze_predeposit"></span></li>
+                <li>可用充值卡余额:<span class="available_rc_balance"></span></li>
+                <li>冻结充值卡余额:<span class="freeze_rc_balance"></span></li>
+            </div>
+            <div class="balance-btn grid">
+                <li class="col-3"><span onclick="open_url('cash','recharge')">充值明细</span></li>
+                <li class="col-3"><span onclick="open_url('cash','recharge_add')">在线充值</span></li>
+                <li class="col-3"><span onclick="open_url('cash','applycash')">提现明细</span></li>
+                <li class="col-3"><span onclick="open_url('cash','applycash_add')">余额提现</span></li>
+            </div>
         </section>
 
         <div class="point-detail-box">
@@ -52,7 +57,13 @@
     <script type="text/javascript">
         set_title("金额明细");
         // 获取个人资料
-        getAjaxResult(getUrl('mz_member_wallet','getMyBalance'),'balance-info-template','.balance-info');
+        getAjaxResult(getUrl('mz_member_wallet','getMyBalance'),'','','','setBalanceInfo');
+        function setBalanceInfo(data){
+            $(".available_predeposit").html("&yen;"+data.available_predeposit);
+            $(".freeze_predeposit").html("&yen;"+data.freeze_predeposit);
+            $(".available_rc_balance").html("&yen;"+data.available_rc_balance);
+            $(".freeze_rc_balance").html("&yen;"+data.freeze_rc_balance);
+        }
         function ajax_getPoint(){ 
             if(stop) return;
             // 显示积分列表

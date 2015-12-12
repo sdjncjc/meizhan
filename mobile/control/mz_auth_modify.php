@@ -64,9 +64,9 @@ class mz_auth_modifyControl extends mobileMemberControl {
                 $result = false;
             }
         } elseif ($_GET['type'] == 'mobile') {
-        	$result = true;
-            // $sms = new Sms();
-            // $result = $sms->send($member_info["member_mobile"],$message);
+        	// $result = true;
+            $sms = new Sms();
+            $result = $sms->send($member_info["member_mobile"],$message);
         }
         if ($result) {
             $data = array();
@@ -140,9 +140,9 @@ class mz_auth_modifyControl extends mobileMemberControl {
         $param['send_time'] = date('Y-m-d H:i',TIMESTAMP);
         $param['verify_code'] = $verify_code;
         $message    = ncReplaceText($tpl_info['content'],$param);
-        $result = true;
-        // $sms = new Sms();
-        // $result = $sms->send($_GET["mobile"],$message);
+        // $result = true;
+        $sms = new Sms();
+        $result = $sms->send($_GET["mobile"],$message);
         if ($result) {
             $data = array();
             $data['auth_code'] = $verify_code;
@@ -236,6 +236,10 @@ class mz_auth_modifyControl extends mobileMemberControl {
         }
         output_data('手机号绑定成功');
     }
+    /**
+     * 绑定邮箱
+     * @return [type] [description]
+     */
     public function modify_emailOp(){
         $model_member = Model('member');
         $obj_validate = new Validate();
@@ -301,6 +305,81 @@ class mz_auth_modifyControl extends mobileMemberControl {
 
         \Shopnc\Lib::messager()->send($_POST["email"],$subject,$message);
         output_data("验证邮件已经发送至您的邮箱，请于24小时内登录邮箱并完成验证！如果您始终未收到邮件，请于60秒后重新发送".$verify_url);
+    }
+    /**
+     * 添加提现申请
+     * @return [type] [description]
+     */
+    public function applycash_addOp(){
+        $model_member = Model('member');
+        $pdc_amount = abs(floatval($_POST['pdc_amount']));
+        $obj_validate = new Validate();
+        $obj_validate->validateparam = array(
+            array("input"=>$pdc_amount, "require"=>"true",'validator'=>'Compare','operator'=>'>=',"to"=>'0.01',"message"=>'请正确填写安全验证码'),
+            array("input"=>$_POST["pdc_amount"], "require"=>"true", 'validator'=>'number',"message"=>'请正确填写提现金额'),
+            array("input"=>$_POST["pdc_bank_user"], "require"=>"true", 'validator'=>'chinese',"message"=>'请正确填写收款人姓名'),
+            array("input"=>$_POST["pdc_bank_name"], "require"=>"true", "message"=>'收款银行不能为空'),
+            array("input"=>$_POST["pdc_bank_no"], "require"=>"true", "message"=>'银行账号不能为空'),
+            array("input"=>$_POST["paypwd"], "require"=>"true", "message"=>'请输入支付密码')
+        );
+        $error = $obj_validate->validate();
+        if ($error != ''){
+            output_error($error);
+        }
+
+        $result_checkcode = self::checkCode(intval($_POST['captcha']));
+        if ($result_checkcode['result'] != 'succ') {
+            output_error($result_checkcode['message']);
+        }else{
+            $data = array();
+            $data['auth_code'] = '';
+            $data['send_acode_time'] = 0;
+            $update = $model_member->editMemberCommon($data,array('member_id'=>$this->member_info['member_id']));
+            if (!$update) {
+                output_error('系统发生错误，如有疑问请与管理员联系');
+            }
+        }
+        $model_pd = Model('predeposit');
+        $model_member = Model('member');
+        $member_info = $model_member->getMemberInfoByID($this->member_info['member_id']);
+        //验证支付密码
+        if (md5($_POST['paypwd']) != $member_info['member_paypwd']) {
+            output_error("支付密码错误");
+        }
+        //验证金额是否足够
+        if (floatval($member_info['available_predeposit']) < $pdc_amount){
+            output_error("提现余额不足，无法提现");
+        }
+        try {
+            $model_pd->beginTransaction();
+            $pdc_sn = $model_pd->makeSn();
+            $data = array();
+            $data['pdc_sn'] = $pdc_sn;
+            $data['pdc_member_id'] = $this->member_info['member_id'];
+            $data['pdc_member_name'] = $this->member_info['member_name'];
+            $data['pdc_amount'] = $pdc_amount;
+            $data['pdc_bank_name'] = $_POST['pdc_bank_name'];
+            $data['pdc_bank_no'] = $_POST['pdc_bank_no'];
+            $data['pdc_bank_user'] = $_POST['pdc_bank_user'];
+            $data['pdc_add_time'] = TIMESTAMP;
+            $data['pdc_payment_state'] = 0;
+            $insert = $model_pd->addPdCash($data);
+            if (!$insert) {
+                output_error("系统错误");
+            }
+            //冻结可用预存款
+            $data = array();
+            $data['member_id'] = $member_info['member_id'];
+            $data['member_name'] = $member_info['member_name'];
+            $data['amount'] = $pdc_amount;
+            $data['order_sn'] = $pdc_sn;
+            $model_pd->changePd('cash_apply',$data);
+            $model_pd->commit();
+            output_data("申请提现成功");
+        } catch (Exception $e) {
+            $model_pd->rollback();
+            output_error($e->getMessage());
+        }
     }
     /**
      * 判断验证码
