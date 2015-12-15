@@ -3,6 +3,9 @@
     <section class="wrapper">
         <section class="filterbar"></section>
         <section class="itemlist-brand"></section>
+        <section class="grid-wrap">
+            <ul class="grid item-list"></ul>
+        </section>
         <div class="loading">
             正在加载...
         </div>
@@ -19,7 +22,7 @@
                 <div class="filterbar-dropdown-item-inner">{{value.gc_name}}</div>
             </div>
             {{/each}}
-            <div class="filterbar-dropdown-item" data="index">
+            <div class="filterbar-dropdown-item" data="new">
                 <div class="filterbar-dropdown-item-inner">今日上新</div>
             </div>
             <div class="filterbar-dropdown-item" data="lastminute">
@@ -44,10 +47,11 @@
             </div>
             <div class="filterbar-inner-wrapper">
                 <div class="filterbar-inner">
+                    <div class="filterbar-inner-item" data="index">首页</div>
                     {{each gc_id_1_list as value index}}
                     <div class="filterbar-inner-item" data="{{value.gc_id}}">{{value.gc_name}}</div>
                     {{/each}}
-                    <div class="filterbar-inner-item" data="index">今日上新</div>
+                    <div class="filterbar-inner-item" data="new">今日上新</div>
                     <div class="filterbar-inner-item" data="lastminute">最后疯抢</div>
                     <div class="filterbar-inner-item" data="group_list">限量购</div>
                     <div class="filterbar-inner-item" data="top">TOP排行</div>
@@ -61,6 +65,7 @@
         </div>
     </script>
 	<!--#include virtual="/tpl/brandsale_list.html"-->
+	<!--#include virtual="/tpl/goods_list.html"-->
 	<script type="text/template" id="empty-list-template">
         <div class="empty">
             <div class="icon"></div>

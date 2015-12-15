@@ -21,7 +21,9 @@ $(function(){
 				$('.filterbar-inner-mask,.filterbar-dropdown,.filterbar-dropdown-mask').toggleClass('hidden');
 			})
 			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
-				if($(this).index() > 7){
+				if($(this).index() == 0){
+					location.href=MzSiteUrl+'/'+$(this).attr('data')+'.html';
+				}else if($(this).index() > 8){
 					location.href=MzSiteUrl+'/home/'+$(this).attr('data')+'.html';
 				}else{
 					location.href=MzSiteUrl+'/home/brandsale_list.html?cate='+$(this).attr('data');
@@ -61,7 +63,7 @@ $(function(){
         type: 'get',
         dataType: 'json',
         success: function(result) {
-			var html = template('item-list-template', result.datas);
+			var html = template('brandsale-list-template', result.datas);
 			$('.itemlist-brand').append(html);
 			$('img.lazy').picLazyLoad();
         }

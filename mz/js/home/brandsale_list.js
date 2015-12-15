@@ -4,6 +4,8 @@ $(function(){
     var cate = GetQueryString("cate");
 	var page = 1;
 	var clock = 0;
+	var _page = 1;
+	var _clock = 0;
 	
 	//获取品牌特卖分类
     $.ajax({
@@ -26,7 +28,9 @@ $(function(){
 			})
 			$('[data="'+cate+'"]').addClass('active');
 			$('.filterbar-dropdown-item,.filterbar-inner-item').tap(function(){
-				if($(this).index() > 7){
+				if($(this).index() == 0){
+					location.href=MzSiteUrl+'/'+$(this).attr('data')+'.html';
+				}else if($(this).index() > 8){
 					location.href=MzSiteUrl+'/home/'+$(this).attr('data')+'.html';
 				}else{
 					location.href=MzSiteUrl+'/home/brandsale_list.html?cate='+$(this).attr('data');
@@ -46,12 +50,16 @@ $(function(){
 			success: function(result) {
 				var html = '';
 				if(result.datas.brandsale_list.length>0){
-					html = template('item-list-template', result.datas);
+					html = template('brandsale-list-template', result.datas);
 					page++;
 					clock = 0;
 				}else{
-					if(page == 1)html = template('empty-list-template', result.datas);
-					$('.loading').hide();
+					if(!isNaN(cate)){
+						ajax_goods();
+					}else{
+						if(page == 1)html = template('empty-list-template', result.datas);
+						$('.loading').hide();
+					}
 				}
 				$('.itemlist-brand').append(html);
 				$('img.lazy').picLazyLoad();
@@ -59,11 +67,45 @@ $(function(){
 		});
 	}
 	ajax_brandsale();
+	
+	//获取商品
+	function ajax_goods(){
+		if(_clock)return;
+		_clock = 1;
+		$.ajax({
+			url: ApiUrl + '/index.php?act=mz_goods&op=get_category_goods&cate='+cate+'&type=gc_id_1&page='+_page,
+			type: 'get',
+			dataType: 'json',
+			success: function(result) {
+				if(result.datas.goods_list.length>0){
+					var html = template('item-list-template', result.datas);
+					$('.item-list').append(html);
+					$('img.lazy').picLazyLoad();
+					_page++;
+					_clock = 0;
+				}else{
+					$('.loading').hide();
+				}
+			}
+		});
+	}
+	if(!isNaN(cate)){
+		ajax_goods();
+	}
 
 	$(window).scroll(function() {
 		if(!clock){
 			if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
 				ajax_brandsale();
+			}
+		}					  
+		if(clock && !_clock){
+			if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+				ajax_goods();
+				if(_page<6){
+					_clock = 0;
+					$('.loading').hide();
+				}
 			}
 		}					  
 	});

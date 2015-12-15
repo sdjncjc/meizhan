@@ -127,6 +127,7 @@ class mz_goodsControl extends mobileHomeControl{
      */
     public function get_category_goodsOp() {
 		$cate = intval($_GET['cate']);
+		$type = isset($_GET['type']) ? trim($_GET['type']) : 'gc_id_2';
 		$key = trim($_GET['key']);
 		$cates = trim($_GET['cates']);
 		$brands = trim($_GET['brands']);
@@ -146,7 +147,7 @@ class mz_goodsControl extends mobileHomeControl{
 		$page = $page <= 0 ? 1 : $page;
 		$goods_list = array();
 		if($cate){
-			$condition['gc_id_2'] = $cate;
+			$condition[$type] = $cate;
 			$goods_list = Model('goods')->field('goods_id,goods_storage,goods_name,goods_image,goods_type,goods_marketprice,goods_price,goods_promotion_price,goods_promotion_type,distribution_price')->where($condition)->group('goods_commonid')->order($order)->limit((($page-1)*$size).','.$size)->select();
 		}elseif($key != ''){
 			$condition['goods_name'] = array('like','%'.$key.'%');
