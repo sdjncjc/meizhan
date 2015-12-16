@@ -192,6 +192,9 @@ function open_url(type,sub,id){
 					url = "/team/team_outcome_log.html";
 				};
 				break;
+			case 'team_pm':
+				url = "/team/team_promote.html";
+				break;
 			case 'balance_allot':
 				url = "/team/balance_allot.html";
 				break;

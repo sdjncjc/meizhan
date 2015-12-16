@@ -253,4 +253,20 @@ class mz_team_memberControl extends mobileMemberControl {
         }
         output_data("佣金分配完成");
     }
+    public function getPromoteOp(){
+        // $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        $url = "http://mz.qiqin.net/index.html?pm=".$this->member_info['member_id'];
+        $mobile_app = 'mb_app.png';
+        require_once(BASE_RESOURCE_PATH.DS.'phpqrcode'.DS.'index.php');
+        $PhpQRCode = new PhpQRCode();
+        $PhpQRCode->set('pngTempDir',BASE_UPLOAD_PATH.DS.ATTACH_MOBILE.DS);
+        $PhpQRCode->set('date',$url);
+        $PhpQRCode->set('matrixPointSize',15);
+        $PhpQRCode->set('pngTempName', $mobile_app);
+        $PhpQRCode->init();
+        $data = array();
+        $data['url'] = $url;
+        $data['qrcode'] = UPLOAD_SITE_URL.DS.ATTACH_MOBILE.DS.C('mobile_app');
+        output_data(array('data'=>$data));
+    }
 }
