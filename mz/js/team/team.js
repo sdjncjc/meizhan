@@ -25,6 +25,7 @@ var team = {
 			$("#team-member-num").html(data.extend_team_info.num);
 			if (data.type == 1) {
 				$('.apply-member').removeClass("hidden");
+				$('.shop_config').removeClass("hidden");
 				$("#apply-member-num").html(data.apply_member_num);
 				$("#team-balance").parent().attr("href","javascript:open_url('balance_allot')");
 			};

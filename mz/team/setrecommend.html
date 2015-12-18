@@ -1,0 +1,167 @@
+<!--#include virtual="/mine/head.html"-->
+<link href="/css/team/teaminfo.css<!--#include virtual='/tpl/version.html'-->" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="grid-wrap" id="wrapper">
+    	<section class="goods_category">
+    		<div class="goods_class"></div>
+    		<script type="text/template" id="goods-class-tpl">
+    		{{each gc_id_1_list as category}}
+    		<span data-id="{{category.gc_id}}">{{category.gc_name}}</span>
+    		{{/each}}
+    		</script>
+    	</section>
+	     <section class="team-list-page grid-wrap">
+	     	<div class="search grid">
+	     		<div class="top_left_btn current col-2">未添加</div>
+	     		<div class="top_right_btn col-2">已添加</div>
+	     	</div>
+	     	<div class="brands"></div>
+	     </section>
+	     <script type="text/template" id="team-list-tpl">
+	        <div class="grid team_list_head">
+	        	<div class="col-5 brand_name">商品名称</div>
+	        	<div class="col-3">价格</div>
+	        	<div class="col-2">操作</div>
+	        </div>
+	     	{{each data as goods}}
+	        <div class="grid team_list">
+	        	<div class="col-5 team_desc">{{goods.goods_name}}</div>
+	        	<div class="col-3">{{goods.goods_price}}</div>
+	        	<div class="col-2">
+	        		{{if goods.is_add }}
+	        		<div class="remove" data-id='{{goods.goods_id}}'>删除</div>
+	        		{{else}}
+	        		<div class="join" data-id='{{goods.goods_id}}'>添加</div>
+	        		{{/if}}
+	        	</div>
+	        </div>
+	        {{/each}}
+	        <div class="grid pages">
+	        	<div class="col-5 uppage disabled">上页</div>
+	        	<div class="col-5 downpage">下页</div>
+	        </div>
+	     </script>
+	     <script type="text/template" id="empty-team-list-tpl">
+	     	<div class="empty">暂无信息</div>
+	     </script>
+    </section>
+    <a href="javascript:;" class="backtop"></a>
+    <script type="text/javascript">
+        set_title("推荐商品设置");
+        
+        var type = getcookie("show_type")?getcookie("show_type"):"no_add";
+        var cate_id = getcookie("cate_id")?getcookie("cate_id"):0;
+
+        setCurrent(type);
+        if (type == "no_add") {
+	        if (getcookie("no_add_page")) {
+	        	page = getcookie("no_add_page");
+	        }else{
+	        	page = 1;
+	        }
+    	}else{
+	        if (getcookie("is_add_page")) {
+	        	page = getcookie("is_add_page");
+	        }else{
+	        	page = 1;
+	        }
+    	}
+        $(".top_left_btn").tap(function(){
+        	page = getcookie("no_add_page");
+        	type = "no_add";
+        	setCurrent(type);
+        	getGoodsList(page);
+        });
+        $(".top_right_btn").tap(function(){
+        	page = 1;
+        	type = "is_add";
+        	setCurrent(type);
+        	getGoodsList(page);
+        });
+	    $.ajax({
+	        url: getUrl('mz_goods','get_gc_id_1_list'),
+	        type: 'get',
+	        dataType: 'json',
+	        success: function(result) {
+				var html = template('goods-class-tpl', result.datas);
+				$('.goods_class').html(html);
+				if (cate_id > 0) {
+					var default_span = $(".goods_class span[data-id='"+cate_id+"']");
+					$(default_span).addClass("selected");
+				}else{
+					var default_span = $(".goods_class span").get(0);
+					$(default_span).addClass("selected");
+					cate_id = $(default_span).attr("data-id");
+				}
+				getGoodsList(page);
+				$(".goods_class span").tap(function(){
+					page = 1;
+					$(".goods_class span").removeClass("selected");
+					$(this).addClass("selected");
+					cate_id = $(this).attr("data-id");
+        			addcookie("cate_id",cate_id);
+					getGoodsList(page);
+				});
+	        }
+	    });
+        function setCurrent(type){
+        	if (type == "no_add") {
+	        	$(".top_right_btn").removeClass("current");
+	        	$(".top_left_btn").addClass("current");
+        	}else{
+	        	$(".top_left_btn").removeClass("current");
+	        	$(".top_right_btn").addClass("current");
+        	}
+        	addcookie('show_type',type);
+        }
+        function getGoodsList(thispage){
+        	if (type == "no_add") {
+        		addcookie("no_add_page",thispage);
+        	}else{
+        		addcookie("is_add_page",thispage);
+        	}
+        	$('.brands').empty();
+			getAjaxResult(getUrl('mz_goods','getGoodsByCategory','type='+type+'&cate_id='+cate_id+'&page='+thispage),'team-list-tpl',".brands",'empty-team-list-tpl','bindEvent');
+        }
+	    function bindEvent(data){
+	    	if (page <= 2) {
+	    		$(".pages .uppage").addClass("disabled");
+	    	}else{
+	    		$(".pages .uppage").removeClass("disabled");
+	    	}
+	    	if (stop) {
+	    		$(".pages .downpage").addClass("disabled");
+	    	}
+	        $(".pages .uppage").tap(function(){
+	        	if ($(this).hasClass("disabled")) {
+	        		return;
+	        	};
+	        	page = page - 2;
+	        	getGoodsList(page);
+	        });
+	        $(".pages .downpage").tap(function(){
+	        	if ($(this).hasClass("disabled")) {
+	        		return;
+	        	};
+	        	getGoodsList(page);
+	        });
+	        $(".join").tap(function(){
+	        	var goods_id = $(this).attr("data-id");
+	        	ajax_do(getUrl("mz_goods",'addTeamRecommend'),{cate_id:cate_id,goods_id:goods_id});
+	        });
+	        $(".remove").tap(function(){
+	        	var goods_id = $(this).attr("data-id");
+				$.dialog({
+					content : '确认删除？',
+					title : 'alert',
+					ok : function() {
+	        			ajax_do(getUrl("mz_goods",'removeTeamRecommend'),{cate_id:cate_id,goods_id:goods_id});
+					},
+					cancel : function() {},
+					lock : false
+				});
+	        });
+	    }
+    </script>
+</body>    
+</html>

@@ -195,6 +195,12 @@ function open_url(type,sub,id){
 			case 'team_pm':
 				url = "/team/team_promote.html";
 				break;
+			case 'setbrandsale':
+				url = "/team/setbrandsale.html";
+				break;
+			case 'setrecommend':
+				url = "/team/setrecommend.html";
+				break;
 			case 'balance_allot':
 				url = "/team/balance_allot.html";
 				break;

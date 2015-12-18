@@ -210,5 +210,105 @@ class mz_brandsaleControl extends mobileHomeControl{
 
         output_data(array('brand_list' => $brand_list));
     }
+    /**
+     * 小组品牌特卖列表
+     * @return [type] [description]
+     */
+    public function get_team_brand_listOp() {
+		$size = 10;
 
+		$team_user_info = Model("mz_member")->where(array('member_id'=>$this->getMemberIdIfExists()))->find();
+		$hasadd_brands_json = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->get_field("brandsale");
+		$hasadd_brands_arr = json_decode($hasadd_brands_json);
+
+        $condition = array();
+		$condition['is_open'] = 1;
+		$condition['start_time'] = array('lt', TIMESTAMP);
+		$condition['end_time'] = array('gt', TIMESTAMP);
+		$type = isset($_GET['type'])?trim($_GET['type']):'no_add';
+		if ($type == 'no_add') {
+			$condition['rec_id'] = array('not in',$hasadd_brands_arr);
+		}else{
+			$condition['rec_id'] = array('in',$hasadd_brands_arr);
+		}
+
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
+        $brandsale_list = Model('brandsale')->where($condition)->order('sort desc')->limit((($page-1)*$size).','.$size)->select();
+		if($brandsale_list){
+        	$goods_common_model = Model('goods_common');
+			foreach($brandsale_list as $k=>$v){
+				$brandsale_list[$k]['img_url'] = UPLOAD_SITE_URL."/shop/brandsale/".$v['image'];
+				$brandsale_list[$k]['end_time'] = date("m-d",$v['end_time']);
+				if ($type == 'no_add') {
+					$brandsale_list[$k]['is_add'] = false;
+				}else{
+					$brandsale_list[$k]['is_add'] = true;
+				}
+			}
+		}
+		$data_info = array();
+        $count = Model('brandsale')->where($condition)->count();
+        $data_info['thispage'] = $page;
+        $data_info['totalpage'] = ceil($count / $size);
+        output_data(array('data' => $brandsale_list,'data_info'=>$data_info));
+    }
+    public function addTeamBrandSaleOp(){
+    	$rec_id = intval($_POST['id']);
+    	if ($rec_id <= 0) {
+    		output_error("参数错误");
+    	}
+		$team_user_info = Model("mz_member")->where(array('member_id'=>$this->getMemberIdIfExists()))->find();
+		if ($team_user_info['type'] == 0) {
+			output_error("无权限");
+		}
+		$team_count = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->count();
+		if ($team_count > 0) {
+			$hasadd_brands_json = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->get_field("brandsale");
+			$hasadd_brands_arr = @json_decode($hasadd_brands_json);
+			if (!empty($hasadd_brands_arr)) {
+				if (count($hasadd_brands_arr) >=10) {
+					output_error("已达最大添加数");
+				}
+				if (!in_array($rec_id, $hasadd_brands_arr)) {
+					$hasadd_brands_arr[] = $rec_id;
+					$result = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->update(array('brandsale'=>json_encode($hasadd_brands_arr)));
+				}else{
+					output_error("已添加");
+				}
+			}else{
+				$hasadd_brands_arr[] = $rec_id;
+				$result = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->update(array('brandsale'=>json_encode($hasadd_brands_arr)));
+			}
+		}else{
+			$result = Model("mz_team_sale")->insert(array('team_id'=>$team_user_info['team_id'],'brandsale'=>json_encode(array($rec_id))));
+		}
+		if ($result) {
+			output_data("添加成功");
+		}else{
+			output_error("系统错误，添加失败");
+		}
+    }
+    public function removeTeamBrandSaleOp(){
+    	$rec_id = intval($_POST['id']);
+    	if ($rec_id <= 0) {
+    		output_error("参数错误");
+    	}
+		$team_user_info = Model("mz_member")->where(array('member_id'=>$this->getMemberIdIfExists()))->find();
+		if ($team_user_info['type'] == 0) {
+			output_error("无权限");
+		}
+		$hasadd_brands_json = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->get_field("brandsale");
+		if (!empty($hasadd_brands_json)) {
+			$hasadd_brands_arr = json_decode($hasadd_brands_json);
+			if (!empty($hasadd_brands_arr)) {
+				$key = array_search($rec_id,$hasadd_brands_arr);
+				if ($key !== false) {
+					array_splice($hasadd_brands_arr, $key, 1);
+				}
+				$result = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->update(array('brandsale'=>json_encode($hasadd_brands_arr)));
+			}
+		}
+		output_data("删除成功");
+    }
 }

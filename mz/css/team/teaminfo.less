@@ -343,7 +343,7 @@ button,input,select,textarea {
 	 	border-bottom: solid 1px #DDD;
 	 	margin-bottom: .5rem;
 	 	padding-bottom: .1rem;
-	 	.search_title,.balance_income{
+	 	.search_title,.balance_income,.top_left_btn{
 	 		float: left;
 	 		text-align: center;
 	 	}
@@ -355,7 +355,7 @@ button,input,select,textarea {
 		 		list-style: none;
 		 	}
 		}
-		.search_reset,.balance_outcome{
+		.search_reset,.balance_outcome,.top_right_btn{
 			float: right;
 	 		text-align: center;
 			span{
@@ -377,7 +377,7 @@ button,input,select,textarea {
 		font-size: 0.6rem;
 		text-align: center;
 	}
-	.teams,.balance_log{
+	.teams,.brands,.balance_log{
 		text-align: center;
 		.team_list_head{
 			background-color: #DDD;
@@ -392,7 +392,7 @@ button,input,select,textarea {
 		 	.team_desc{
 		 		text-align: left;
 		 	}
-		 	.join{
+		 	.join,.remove{
 				border-radius: .2rem;
 				text-align: center;
 				width: 100%;
@@ -401,8 +401,39 @@ button,input,select,textarea {
 				color: #fff;
 		 	}
 		}
+		.pages{
+			text-align: center;
+			.uppage,.downpage{
+				border-radius: .2rem;
+				text-align: center;
+				background: #ff4965;
+				color: #fff;
+				padding: .2rem 0;
+			}
+			.disabled{
+				background: #ddd;
+			}
+		}
 	}
 }
 .qrcode{
 	text-align: center;
+}
+// 商品分类
+.goods_category{
+	text-align: center;
+	.goods_class{
+		clear: both;
+    	border-bottom: 1px solid #666;
+    	padding-bottom: .5rem;
+		span{
+			list-style: none;
+			margin: .5rem;
+		}
+		.selected{
+			background:#ff4965;
+			color: #fff;
+			padding: .2rem;
+		}
+	}
 }

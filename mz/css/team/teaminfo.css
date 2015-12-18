@@ -353,7 +353,9 @@ textarea {
 .team-list-page .search .search_title,
 .team-list-page .balance .search_title,
 .team-list-page .search .balance_income,
-.team-list-page .balance .balance_income {
+.team-list-page .balance .balance_income,
+.team-list-page .search .top_left_btn,
+.team-list-page .balance .top_left_btn {
   float: left;
   text-align: center;
 }
@@ -370,14 +372,18 @@ textarea {
 .team-list-page .search .search_reset,
 .team-list-page .balance .search_reset,
 .team-list-page .search .balance_outcome,
-.team-list-page .balance .balance_outcome {
+.team-list-page .balance .balance_outcome,
+.team-list-page .search .top_right_btn,
+.team-list-page .balance .top_right_btn {
   float: right;
   text-align: center;
 }
 .team-list-page .search .search_reset span,
 .team-list-page .balance .search_reset span,
 .team-list-page .search .balance_outcome span,
-.team-list-page .balance .balance_outcome span {
+.team-list-page .balance .balance_outcome span,
+.team-list-page .search .top_right_btn span,
+.team-list-page .balance .top_right_btn span {
   border-radius: .2rem;
   background: #ff4965;
   display: inline-block;
@@ -396,10 +402,12 @@ textarea {
   text-align: center;
 }
 .team-list-page .teams,
+.team-list-page .brands,
 .team-list-page .balance_log {
   text-align: center;
 }
 .team-list-page .teams .team_list_head,
+.team-list-page .brands .team_list_head,
 .team-list-page .balance_log .team_list_head {
   background-color: #DDD;
   margin-bottom: .5rem;
@@ -407,17 +415,23 @@ textarea {
   padding: .3rem;
 }
 .team-list-page .teams .team_list,
+.team-list-page .brands .team_list,
 .team-list-page .balance_log .team_list {
   border-bottom: solid 1px #DDD;
   margin-bottom: .5rem;
   padding-bottom: .5rem;
 }
 .team-list-page .teams .team_list .team_desc,
+.team-list-page .brands .team_list .team_desc,
 .team-list-page .balance_log .team_list .team_desc {
   text-align: left;
 }
 .team-list-page .teams .team_list .join,
-.team-list-page .balance_log .team_list .join {
+.team-list-page .brands .team_list .join,
+.team-list-page .balance_log .team_list .join,
+.team-list-page .teams .team_list .remove,
+.team-list-page .brands .team_list .remove,
+.team-list-page .balance_log .team_list .remove {
   border-radius: .2rem;
   text-align: center;
   width: 100%;
@@ -425,6 +439,45 @@ textarea {
   padding: .3rem .5rem;
   color: #fff;
 }
+.team-list-page .teams .pages,
+.team-list-page .brands .pages,
+.team-list-page .balance_log .pages {
+  text-align: center;
+}
+.team-list-page .teams .pages .uppage,
+.team-list-page .brands .pages .uppage,
+.team-list-page .balance_log .pages .uppage,
+.team-list-page .teams .pages .downpage,
+.team-list-page .brands .pages .downpage,
+.team-list-page .balance_log .pages .downpage {
+  border-radius: .2rem;
+  text-align: center;
+  background: #ff4965;
+  color: #fff;
+  padding: .2rem 0;
+}
+.team-list-page .teams .pages .disabled,
+.team-list-page .brands .pages .disabled,
+.team-list-page .balance_log .pages .disabled {
+  background: #ddd;
+}
 .qrcode {
   text-align: center;
+}
+.goods_category {
+  text-align: center;
+}
+.goods_category .goods_class {
+  clear: both;
+  border-bottom: 1px solid #666;
+  padding-bottom: .5rem;
+}
+.goods_category .goods_class span {
+  list-style: none;
+  margin: .5rem;
+}
+.goods_category .goods_class .selected {
+  background: #ff4965;
+  color: #fff;
+  padding: .2rem;
 }

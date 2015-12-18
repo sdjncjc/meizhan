@@ -401,4 +401,148 @@ class mz_goodsControl extends mobileHomeControl{
 		}
         output_data(array('goodsevallist' => $goodsevallist));
     }
+    /**
+     * 根据一级分类获取商品列表
+     * @return [type] [description]
+     */
+    public function getGoodsByCategoryOp(){
+
+        $team_user_info = Model("mz_member")->where(array('member_id'=>$this->getMemberIdIfExists()))->find();
+        $hasadd_recommend_json = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->get_field("recommend");
+        $hasadd_recommend_arr = json_decode($hasadd_recommend_json,true);
+
+        $cate = intval($_GET['cate_id']);
+        $condition = array();
+        $condition['goods_state']   = 1;
+        $condition['goods_verify']  = 1;
+        $condition['gc_id_1'] = $cate;
+
+        $type = isset($_GET['type'])?trim($_GET['type']):'no_add';
+        if (isset($hasadd_recommend_arr[$cate])) {
+            if ($type == 'no_add') {
+                $condition['goods_id'] = array('not in',$hasadd_recommend_arr[$cate]);
+            }else{
+                $condition['goods_id'] = array('in',$hasadd_recommend_arr[$cate]);
+            }
+        }else{
+            if ($type == "is_add") {
+                output_data(array('data'=>array()));
+            }
+        }
+
+        $order = "goods_salenum desc";
+        $size = 10;
+        $page = intval($_GET['page']);
+        $page = $page <= 0 ? 1 : $page;
+        $goods_list = array();
+        $goods_list = Model('goods')->field('goods_id,goods_storage,goods_name,goods_image,goods_type,goods_marketprice,goods_price,goods_promotion_price,goods_promotion_type,distribution_price')->where($condition)->group('goods_commonid')->order($order)->limit((($page-1)*$size).','.$size)->select();
+
+        if($goods_list){
+            foreach($goods_list as $k=>$v){
+                if($v['goods_promotion_type'] > 0){
+                    $goods_list[$k]['goods_price'] = $v['goods_promotion_price'];
+                }elseif($v['distribution_price'] > 0){
+                    $goods_list[$k]['goods_price'] = $v['distribution_price'];
+                }
+                $goods_list[$k]['img_url'] = thumb($v, 360);
+                $goods_list[$k]['discount'] = sprintf('%0.1f', $goods_list[$k]['goods_price']/$v['goods_marketprice']*10);
+                if ($type == 'no_add') {
+                    $goods_list[$k]['is_add'] = false;
+                }else{
+                    $goods_list[$k]['is_add'] = true;
+                }
+            }
+        }
+        $data_info = array();
+        $all_goods = Model('goods')->field("goods_id")->where($condition)->group('goods_commonid')->select();
+        $all_goods_arr = array();
+        if (!empty($all_goods)) {
+            foreach ($all_goods as $key => $value) {
+                if (!in_array($value['goods_id'], $all_goods_arr)) {
+                    $all_goods_arr[] = $value['goods_id'];
+                }
+            }
+        }
+        $count = count($all_goods_arr);
+        $data_info['thispage'] = $page;
+        $data_info['totalpage'] = ceil($count / $size);
+        output_data(array('data' => $goods_list,'data_info'=>$data_info,"dsd"=>$hasadd_recommend_arr));
+    }
+    /**
+     * 添加推荐列表
+     */
+    public function addTeamRecommendOp(){        
+        $cate_id = intval($_POST['cate_id']);
+        $goods_id = intval($_POST['goods_id']);
+        if ($goods_id <= 0 || $cate_id <= 0) {
+            output_error("参数错误");
+        }
+        $team_user_info = Model("mz_member")->where(array('member_id'=>$this->getMemberIdIfExists()))->find();
+        if ($team_user_info['type'] == 0) {
+            output_error("无权限");
+        }
+        // 判断是否已经有该小组记录
+        $team_count = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->count();
+        if ($team_count >0) {
+            // 读取字段
+            $hasadd_recommend_json = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->get_field("recommend");
+            $hasadd_recommend_arr = @json_decode($hasadd_recommend_json,true);
+            if (!empty($hasadd_recommend_arr)) {
+                if (!isset($hasadd_recommend_arr[$cate_id])) {
+                    $hasadd_recommend_arr[$cate_id] = array();
+                }
+                if (count($hasadd_recommend_arr[$cate_id]) >=6) {
+                    output_error("已达最大添加数");
+                }
+                if (!in_array($goods_id, $hasadd_recommend_arr[$cate_id])) {
+                    $hasadd_recommend_arr[$cate_id][] = $goods_id;
+                    $result = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->update(array('recommend'=>json_encode($hasadd_recommend_arr)));
+                }else{
+                    output_error("已添加");
+                }
+            }else{
+                $hasadd_recommend_arr[$cate_id][] = $goods_id;
+                $result = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->update(array('recommend'=>json_encode($hasadd_recommend_arr)));
+            }
+        }else{
+            // 添加该小组信息
+            $hasadd_recommend_arr[$cate_id][] = $goods_id;
+            $result = Model("mz_team_sale")->insert(array('team_id'=>$team_user_info['team_id'],'recommend'=>json_encode($hasadd_recommend_arr)));
+        }
+        if ($result) {
+            output_data("添加成功");
+        }else{
+            output_error("系统错误，添加失败");
+        }
+    }
+    /**
+     * 删除小组推荐产品
+     * @return [type] [description]
+     */
+    public function removeTeamRecommendOp(){
+        $cate_id = intval($_POST['cate_id']);
+        $goods_id = intval($_POST['goods_id']);
+        if ($goods_id <= 0 || $cate_id <= 0) {
+            output_error("参数错误");
+        }
+        $team_user_info = Model("mz_member")->where(array('member_id'=>$this->getMemberIdIfExists()))->find();
+        if ($team_user_info['type'] == 0) {
+            output_error("无权限");
+        }
+        $hasadd_recommend_json = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->get_field("recommend");
+        if (!empty($hasadd_recommend_json)) {
+            $hasadd_recommend_arr = @json_decode($hasadd_recommend_json,true);
+            if (!empty($hasadd_recommend_arr)) {
+                if (!isset($hasadd_recommend_arr[$cate_id])) {
+                    output_error("参数错误，该分类不存在");
+                }
+                $key = array_search($goods_id,$hasadd_recommend_arr[$cate_id]);
+                if ($key !== false) {
+                    array_splice($hasadd_recommend_arr[$cate_id], $key, 1);
+                }
+                $result = Model("mz_team_sale")->where(array('team_id'=>$team_user_info['team_id']))->update(array('recommend'=>json_encode($hasadd_recommend_arr)));
+            }
+        }
+        output_data("删除成功");
+    }
 }
