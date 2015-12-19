@@ -3,7 +3,15 @@
 	<a href="/home/brandsale.html?rec_id={{value.rec_id}}" class="item-box">
 		<div class="item-box-content">
 			<img class="lazy" src="/img/blank.png" data-original="{{value.img_url}}">
-			{{if value.preferential!=''}}
+			{{if value.country_name}}
+			<div class="item-box-promotion is_oversea">
+                <p>
+				<img src="{{value.country_icon}}" />
+                <span class="desc">{{value.country_name}}直采</span>
+				</p>
+				<div class="background"></div>
+			</div>
+			{{else if value.preferential!=''}}
 			<div class="item-box-promotion">
 				<p>{{value.preferential}}</p>
 				<div class="background"></div>
@@ -11,7 +19,7 @@
 			{{/if}}
 		</div>
 		<div class="item-box-header">
-			<div class="item-box-discount">
+			<div class="item-box-discount{{if value.country_name}} is_oversea{{/if}}">
 				{{if value.isnew}}
 				<i></i>
 				{{/if}}
