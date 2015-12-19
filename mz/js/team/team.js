@@ -90,7 +90,7 @@ var team = {
 		});
 		$('.searchbutton').tap(function(){
 			var team_type = $(".team_type").val(),params = "team_type="+team_type;
-			params += "&provinceid=" + $(".provinces").val() + "&city_school_id="+$(".city_school").val() + "&keywords="+$(".keywords").val();
+			params += "&provinceid=" + $_$("#provinces").val() + "&city_school_id="+$_$("#city_school").val() + "&keywords="+$(".keywords").val();
 			location.href = "team_list.html?" + params;
 		});
 		$(".delete_apply").tap(function(){
@@ -118,21 +118,24 @@ var team = {
 		if (_this.team_info.provinceid > 0) {
 			addr.find(".provinces").val(_this.team_info.provinceid);
 		};
+
+		$_$("#provinces").select2();
 		_this.fillcity_school();
 		
-		$(".provinces").on("change", function() {
+		$_$("#provinces").on("change", function() {
 			_this.fillcity_school();
 		});
 	},
 	// 赋值级联下拉选框
 	fillcity_school:function(){
-		var citys_arr,city_options,team_type = $(".team_type").val(),province_id = $(".provinces").val();
+		var citys_arr,city_options,team_type = $(".team_type").val(),province_id = $_$("#provinces").val();
 		if (team_type == "0") {
 			city_options = this.area2html(province_id);
 			$(".provinces").siblings(".city_school").html(city_options);
 			if ((this.team_info.city_school_id > 0) && (this.team_info.team_type == 0)) {
-				$(".city_school").val(this.team_info.city_school_id);
+				$_$("#city_school").val(this.team_info.city_school_id);
 			}
+			$_$("#city_school").select2();
 		}else if (team_type == "1") {
 			getAjaxResult(getUrl('mz_team','getSchoollist','province_id='+province_id),"","","","team.school2html");
 		};
@@ -143,9 +146,10 @@ var team = {
 		data.forEach(function(data) {
 			options += '<option value="' + data.id + '" text="' + data.school_name +'">' + data.school_name + "</option>"
 		});
-		$(".address").find(".city_school").html(options);
+		$(".city_school").html(options);
+		$_$("#city_school").select2();
 		if ((this.team_info.city_school_id > 0) && (this.team_info.team_type == 1)) {
-			$(".address").find(".city_school").val(this.team_info.city_school_id);
+			$_$("#city_school").val(this.team_info.city_school_id);
 		}
 	},
 	// 地区列表转换
@@ -172,10 +176,10 @@ var team = {
 	createTeam:function(){
 		var params = {
 			team_name:$(".team_name input").val(),
-			provinceid:$(".provinces").val(),
-			province:$(".provinces option").eq($(".provinces").attr("selectedIndex")).text(),
-			city_school_id:$(".city_school").val(),
-			city_school:$(".city_school option").eq($(".city_school").attr("selectedIndex")).text(),
+			provinceid:$_$("#provinces").val(),
+			province:$_$("#provinces").find("option:selected").text(),
+			city_school_id:$_$("#city_school").val(),
+			city_school:$_$("#city_school").find("option:selected").text(),
 			team_domain_name:$(".subdomain input").val(),
 			recommend_id:$(".recommend_id input").val(),
 			team_type:$(".team_type").val(),
