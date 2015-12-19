@@ -79,8 +79,12 @@ class mz_goodsControl extends mobileHomeControl{
 		$class_list = Model('goods_class')->get_all_category();
 		if($class_list){
 			foreach($class_list as $k=>$v){
+				$i=0;
 				foreach($v['class2'] as $kk=>$vv){
-					$class_list[$k]['class2'][$kk]['img'] = UPLOAD_SITE_URL.'/'.ATTACH_COMMON.'/category-pic-'.$kk.'.jpg';
+					unset($class_list[$k]['class2'][$kk]);
+					$class_list[$k]['class2'][$i] = $vv;
+					$class_list[$k]['class2'][$i]['img'] = UPLOAD_SITE_URL.'/'.ATTACH_COMMON.'/category-pic-'.$kk.'.jpg';
+					$i++;
 				}
 				$class_list[$k]['yu'] = count($v['class2'])%3;
 			}

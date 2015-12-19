@@ -184,12 +184,15 @@ iframe{display:none}
 .itemlist-brand .item-box-header i{display:block;float:left;width:1.17rem;height:.78rem;margin-right:.1rem;background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAWCAMAAACMu474AAAABGdBTUEAALGPC/xhBQAAADNQTFRF7zxy7zxy7zxy7zxy7zxy80+A/Y+x/Y+x/Y+x7zxy+Xef7zxy7zxy7zxyAAAA7zxy/Y+xZwAnMwAAAA90Uk5Tj69bn3AgueiR4xJ+PMEAZ5GiwgAAANxJREFUKM+9k0sCwyAIRP0bVCD3P22BaJu2iyabziIL8kAYxdFW95+qG6ncVhr9VCtGu3qBFboavNMl7f+AEbTzjjTYhDFqGHjIN8EHzH3BwxQUGIwatkQzb8KoNQye03OWf14iUj8s8ybcPb7BhEJAGpKTuR1Wl7bgBumAUTXIRaGyVg0480tZsIzRDO6qTANssOgp9oPdan7ChP7cBnFGRxSYYKwu6AVrBycYk/nG6Yic3TDn+GWduqvukQf/dSkKN3heCutBdi+B0//exlX41uO/tFZ5rtWdhX0AT3Qx0aS3XDkAAAAASUVORK5CYII=') no-repeat center;background-size:contain}
 .itemlist-brand .item-title{float:left;height:.78rem;max-width:8rem;margin-left:.2rem;color:#333;line-height:.78rem;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
 .itemlist-brand .item-box-discount{float:left;color:#ff4965;height:.78rem;line-height:.78rem;white-space:nowrap}
+.itemlist-brand .is_oversea{color:#984aff;}
 .itemlist-brand .item-timer{float:right;padding-left:.77rem;color:#666;height:.78rem;line-height:.78rem}
 .itemlist-brand .item-timer.red{color:red}
 .itemlist-brand .item-box-content{position:relative;padding-bottom:.125rem;background-color:#fff;overflow:hidden;zoom:1}
 .itemlist-brand .item-box-content img{width:100%;max-height:7.5rem}
 .itemlist-brand .item-box-promotion{position:absolute;bottom:.5rem;left:0;height:1rem}
-.itemlist-brand .item-box-promotion p{float:left;padding-left:.4rem;color:#666;line-height:1rem;height:1rem;vertical-align:middle;text-align:left;font-size:.55rem;background-color:rgba(255,255,255,.7);padding-right:.04rem}
+.itemlist-brand .item-box-promotion p{float:left;padding-left:.4rem;color:#666;line-height:1rem;height:1rem;vertical-align:middle;text-align:left;font-size:.55rem;background-color:rgba(255,255,255,.8);padding-right:.04rem}
+.itemlist-brand .is_oversea p{padding-left:0;}
+.itemlist-brand .is_oversea img{float:left;width:.8rem;height:.5rem;margin:.25rem .3rem;}
 .itemlist-brand .item-box-promotion .background{float:left;background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoAgMAAACDXzJIAAAABGdBTUEAALGPC/xhBQAAAAxQTFRF////////AAAA////BQBkwgAAAAR0Uk5TmjIAzaNU6KkAAABYSURBVAjXTc+xEQAhCERR66E0SrMUSqAMAiMd7/gYYPASB9gd9382UkdBTfdMDwYuNHQU1HTP9GDgQkNHQW1K+7U2FW1bba4r76K3JKslrLSVvFq8RtXOPurerEVls0aUAAAAAElFTkSuQmCC');background-size:cover;width:.5rem;height:1rem;margin-left:-.04rem}
 
 /*商品列表*/

@@ -67,20 +67,20 @@ class mz_brandsaleControl extends mobileHomeControl{
         $page = $page <= 0 ? 1 : $page;
         $brandsale_list = Model('brandsale')->where($condition)->order('sort desc')->limit((($page-1)*$size).','.$size)->select();
 		if($brandsale_list){
-			if($type){
-				//国家
-				$country_list = rkcache('country');
-			}
+			//国家
+			$country_list = rkcache('country');
         	$goods_common_model = Model('goods_common');
 			foreach($brandsale_list as $k=>$v){
 				$brandsale_list[$k]['img_url'] = UPLOAD_SITE_URL."/shop/brandsale/".$v['image'];
 				$brandsale_list[$k]['isnew'] = $v['start_time']>=$t ? 1 : 0;
+				if($country_list[$v['country_id']]){
+					$brandsale_list[$k]['country_icon'] = $country_list[$v['country_id']]['country_img_url'];
+					$brandsale_list[$k]['country_name'] = $country_list[$v['country_id']]['country_name'];
+				}
 				if($type){
 					$info = unserialize($v['info']);
 					$goods = $goods_common_model->field('count(*) as num')->where(array('goods_state'=>1,'goods_verify'=>1,'brand_id'=>$v['brand_id'],'gc_id_1'=>$v['gc_id']))->find();
 					$brandsale_list[$k]['count'] = $goods['num'];
-					$brandsale_list[$k]['country_icon'] = $country_list[$v['country_id']]['country_img_url'];
-					$brandsale_list[$k]['country_name'] = $country_list[$v['country_id']]['country_name'];
 				}else{
 					$lest = $v['end_time']-TIMESTAMP;
 					$brandsale_list[$k]['timer']['day'] = floor($lest/86400);
