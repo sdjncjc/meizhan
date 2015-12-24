@@ -117,7 +117,10 @@ class mz_team_memberControl extends mobileMemberControl {
      */
     public function getMemberListOp(){
         $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']),'*',array('mz_team'));
-        $member_list = Model("mz_member")->where(array('team_id'=>$team_member_info['team_id'],'team_id'=>array('gt',0)))->select();
+        if ($team_member_info['team_id'] <= 0) {
+            output_error("未加入小组");
+        }
+        $member_list = Model("mz_member")->where(array('team_id'=>$team_member_info['team_id']))->select();
         foreach ($member_list as $key => $value) {
             $member_info = Model('member')->where(array('member_id'=>$value['member_id']))->field('member_name,member_avatar')->find();
             $member_list[$key]['member_name'] = $member_info['member_name'];

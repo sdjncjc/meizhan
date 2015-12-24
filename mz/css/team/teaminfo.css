@@ -510,6 +510,12 @@ textarea {
 .qrcode {
   text-align: center;
 }
+.qrcode li {
+  list-style: none;
+}
+.qrcode li img {
+  width: 100%;
+}
 .goods_category {
   text-align: center;
 }

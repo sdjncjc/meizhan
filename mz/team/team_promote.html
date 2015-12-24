@@ -8,8 +8,8 @@
         set_title("获取推广连接");
         getAjaxResult(getUrl('mz_team_member','getPromote'),'',"",'',"setQrcode");
         function setQrcode(data){
-            var html = "<div><img src='" + data.qrcode + "'></div>";
-            html += "<div>推广连接:<br/>"+data.url+"</div>";
+            var html = "<li><img src='" + data.qrcode + "'></li>";
+            html += "<li>推广连接:<br/>"+data.url+"</li>";
             $(".qrcode").html(html);
         }
     </script>
