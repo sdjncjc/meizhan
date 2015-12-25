@@ -328,6 +328,8 @@ class mz_teamControl extends mobileMemberControl {
         $data['team_intro'] = $team_intro;
         $result = Model("mz_team")->where(array('team_id'=>$team_member['team_id'],'team_status'=>1))->update($data);
         if ($result) {
+			//更新小组积分
+    		Model("mz_team")->updateTeamIntegra($team_member['team_id']);
             output_data("更新成功");
         }else{
             output_error("更新失败");

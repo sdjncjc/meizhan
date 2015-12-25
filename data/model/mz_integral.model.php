@@ -120,4 +120,19 @@ class mz_integralModel extends Model{
 		$stage_arr['order'] = '订单消费';
 		return $stage_arr;
 	}	
+	
+	/**
+	 * 订单完成后，为推广人分配积分
+	 * @param array $order_info 订单信息
+	 */
+	public function toPromotePeopleIntegral($order_info) {
+		if($order_info['pm'] && $order_info['order_amount'] > 0){
+			//判断推广人是否存在
+			$mz_member = Model('mz_member')->where(array('member_id'=>$order_info['pm']))->find();
+			if(!empty($mz_member)){
+				$member = Model('member')->getMemberInfoByID($order_info['pm'],'member_id,member_name');
+				$this->saveMzIntegralLog('order',array('integral_memberid'=>$member['member_id'],'integral_membername'=>$member['member_name'],'orderprice'=>$order_info['order_amount'],'order_sn'=>$order_info['order_sn']));
+			}
+		}
+	}
 }

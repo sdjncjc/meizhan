@@ -18,7 +18,7 @@ class mz_balanceModel extends Model{
 	 * @return bool
 	 */
 	public function saveMzBalanceLog($stage,$insertarr){
-		if (!$insertarr['balance_teamid']){
+		if (!$insertarr['balance_teamid'] || $insertarr['balance_price'] == 0){
 			return false;
 		}
 		//记录原因文字
@@ -28,6 +28,11 @@ class mz_balanceModel extends Model{
 					$insertarr['balance_desc'] = '小组'.$insertarr['balance_teamname'].'分配佣金';
 				}
 				if($insertarr['balance_price']>0)$insertarr['balance_price'] = -$insertarr['balance_price'];
+				break;
+			case 'bonus':
+				if (!$insertarr['balance_desc']){
+					$insertarr['balance_desc'] = '奖金池'.$insertarr['bp_name'].'奖金分配';
+				}
 				break;
 			case 'order':
 				if (!$insertarr['balance_desc']){
@@ -49,8 +54,8 @@ class mz_balanceModel extends Model{
 		}
 		if ($result){
 			//更新mz_team内容
-			Model('mz_team')->where(array('team_id'=>$insertarr['balance_teamid']))->update(array('team_balance'=>array('exp','team_balance + '.$value_array['balance_price'])));
-			return true;
+			$team_balance = ($value_array['balance_price'] > 0 ? ' + ' : ' - ').abs($value_array['balance_price']);
+			return Model('mz_team')->where(array('team_id'=>$insertarr['balance_teamid']))->update(array('team_balance'=>array('exp','team_balance'.$team_balance)));
 		}else {
 			return false;
 		}
@@ -94,6 +99,7 @@ class mz_balanceModel extends Model{
 	public function getStage(){
 	    $stage_arr = array();
 		$stage_arr['allot'] = '小组分配';
+		$stage_arr['bonus'] = '奖金池分配';
 		$stage_arr['order'] = '订单消费';
 		return $stage_arr;
 	}	

@@ -70,6 +70,10 @@ class mz_team_memberControl extends mobileMemberControl {
      * @return [type] [description]
      */
     public function auditMemberOp(){
+		$mz_team_lock = intval(C('mz_team_lock'));
+		if ($mz_team_lock > 0 && $mz_team_lock <= date('m')){
+            output_error("每月{$mz_team_lock}日后不能添加会员");
+		}
     	$team_log_id = intval($_GET['id']);
     	$agree = intval($_GET['agree']);
     	$team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
@@ -107,6 +111,8 @@ class mz_team_memberControl extends mobileMemberControl {
     		Model("mz_team_log")->where(array('id'=>$team_log_id))->delete();
     		Model("mz_member")->where(array('member_id'=>$team_log_info['member_id']))->update(array('team_id'=>$team_member_info['team_id']));
     		Model("mz_team")->where(array('team_id'=>$team_member_info['team_id']))->update(array('num'=>$team_info['num'] + 1));
+			//更新小组积分
+    		Model("mz_team")->updateTeamIntegra($team_member_info['team_id']);
     		output_data("已同意添加到本组");
     	}
     	output_error("参数错误");
@@ -135,6 +141,10 @@ class mz_team_memberControl extends mobileMemberControl {
      * @return [type] [description]
      */
     public function layoffMemberOp(){
+		$mz_team_lock = intval(C('mz_team_lock'));
+		if ($mz_team_lock > 0 && $mz_team_lock <= date('m')){
+            output_error("每月{$mz_team_lock}日后不能删除会员");
+		}
         $member_id = intval($_GET['member_id']);
         $team_member_info = Model("mz_member")->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
         if ($member_id >0) {
@@ -153,6 +163,8 @@ class mz_team_memberControl extends mobileMemberControl {
         if ($result) {
             $num = Model("mz_team")->where(array('team_id'=>$team_member_info['team_id']))->get_field('num');
             Model("mz_team")->where(array('team_id'=>$team_member_info['team_id']))->update(array('num'=>$num-1));
+			//更新小组积分
+    		Model("mz_team")->updateTeamIntegra($team_member_info['team_id']);
             output_data("操作成功");
         }else{
             output_data("系统错误");
