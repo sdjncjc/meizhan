@@ -1,0 +1,70 @@
+<!--#include virtual="/mine/head.html"-->
+<link href="/css/team/teaminfo.css<!--#include virtual='/tpl/version.html'-->" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="grid-wrap" id="wrapper">
+        <div class="grid team_info"></div>
+        <script type="text/template" id="team-info-tpl">
+            <div class="item row-1">
+                <label class="col-3">所属类别</label>
+                <label>{{if data.team_type == 0}}社会{{else}}学生{{/if}}</label>
+            </div>
+            <div class="item address row-1">
+                <label class="col-3">所属地区</label>
+                <label>{{data.province}}</label>
+                <label>{{data.city_school}}</label>
+            </div>
+            <div class="item team_name row-1">
+                <label class="col-3">名称</label>
+                <input class="col-8" type="text" value="{{data.team_name}}" placeholder="请输入小组名称"{{if data.is_leader == 0}} readonly="readonly"{{/if}}/>
+            </div>
+            <div class="item subdomain row-1">
+                <label class="col-3">成员数</label>
+                <label class="col-6">{{data.num}}/{{data.max_num}}</label>
+            </div>
+            <div class="item subdomain row-1">
+                <label class="col-3">子域名</label>
+                <label class="col-6">{{data.team_domain_name}}.mz.qinqin.net</label>
+            </div>
+            <div class="item subdomain row-1">
+                <label class="col-3">小组余额</label>
+                <label class="col-6">&yen;{{data.team_balance}}</label>
+            </div>
+            <div class="item team_intro row-3">
+                <label class="col-3">小组简介</label>
+                <textarea class="col-7" rows="4"{{if data.is_leader == 0}} readonly="readonly"{{/if}}>{{data.team_intro}}</textarea>
+            </div>
+	        <div class="button">
+                {{if data.is_leader == 1}} 
+	            <span class="submitbutton" data-team-id="0">确认修改</span>
+                {{/if}}
+                {{if data.is_join == 0}}
+                {{if data.has_apply == 0}}
+                <span class="joinbutton" data-team-id="{{data.team_id}}">加入小组</span>
+                {{else}}
+                <span>已提交申请</span>
+                {{/if}}
+                {{/if}}
+	        </div>
+        </script>
+    </section>
+    <script type="text/javascript" src="/js/team/team.js<!--#include virtual='/tpl/version.html'-->"></script>
+    <script type="text/javascript">
+        set_title("小组简介");
+        var team_id = GetQueryString("team_id");
+        getAjaxResult(getUrl('mz_team','getTeamInfo','team_id='+team_id),'team-info-tpl',".team_info",'','bindEvent');
+        function bindEvent(){
+        	$('.submitbutton').tap(function(){
+        		var params = {
+        			team_name:$(".team_name input").val(),
+        			team_intro:$(".team_intro textarea").val()
+        		};
+        		ajax_do(getUrl('mz_team','editTeamInfo'),params);
+        	});
+            $('.joinbutton').tap(function(){
+                var team_id = $(this).attr("data-team-id");
+                team.joinTeam(team_id);
+            });
+        }
+    </script>
+</body>    
+</html>

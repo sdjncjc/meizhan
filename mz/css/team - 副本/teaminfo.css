@@ -1,0 +1,535 @@
+@charset "utf-8";
+body {
+  margin: 0;
+  padding: 0;
+}
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+}
+#wrapper {
+  padding-top: 2.5rem;
+}
+.grid-wrap {
+  padding: 0.5rem;
+}
+.grid-wrap .grid {
+  box-sizing: content-box;
+  padding-left: .3rem;
+  padding-right: .3rem;
+  margin-left: -0.2rem;
+}
+.grid-wrap .grid [class^=col-] {
+  margin-left: .2rem;
+  float: left;
+}
+.grid-wrap .grid .gutter-bottom {
+  margin-bottom: 0.2rem;
+}
+.grid-wrap .grid .gutter-right {
+  margin-right: 0.2rem;
+}
+.grid-wrap .grid .col-1 {
+  width: 1.1rem;
+}
+.grid-wrap .grid .row-1 {
+  height: 1.1rem;
+}
+.grid-wrap .grid .col-2 {
+  width: 2.4rem;
+}
+.grid-wrap .grid .row-2 {
+  height: 2.4rem;
+}
+.grid-wrap .grid .col-3 {
+  width: 3.7rem;
+}
+.grid-wrap .grid .row-3 {
+  height: 3.7rem;
+}
+.grid-wrap .grid .col-4 {
+  width: 5rem;
+}
+.grid-wrap .grid .row-4 {
+  height: 5rem;
+}
+.grid-wrap .grid .col-5 {
+  width: 6.3rem;
+}
+.grid-wrap .grid .row-5 {
+  height: 6.3rem;
+}
+.grid-wrap .grid .col-6 {
+  width: 7.6rem;
+}
+.grid-wrap .grid .row-6 {
+  height: 7.6rem;
+}
+.grid-wrap .grid .col-7 {
+  width: 8.9rem;
+}
+.grid-wrap .grid .row-7 {
+  height: 8.9rem;
+}
+.grid-wrap .grid .col-8 {
+  width: 10.2rem;
+}
+.grid-wrap .grid .row-8 {
+  height: 10.2rem;
+}
+.grid-wrap .grid .col-9 {
+  width: 11.5rem;
+}
+.grid-wrap .grid .row-9 {
+  height: 11.5rem;
+}
+.grid-wrap .grid .col-10 {
+  width: 12.8rem;
+}
+.grid-wrap .grid .row-10 {
+  height: 12.8rem;
+}
+.grid-wrap .grid .col-11 {
+  width: 14.1rem;
+}
+.grid-wrap .grid .row-11 {
+  height: 14.1rem;
+}
+.grid-wrap .grid .col-12 {
+  width: 15.4rem;
+}
+.grid-wrap .grid .row-12 {
+  height: 15.4rem;
+}
+.grid-wrap .grid:before,
+.grid-wrap .grid:after {
+  content: " ";
+  display: table;
+}
+.grid-wrap .grid:after {
+  clear: both;
+}
+.grid-wrap .grid-fat {
+  box-sizing: content-box;
+  padding-left: .6125rem;
+  padding-right: .6125rem;
+  margin-left: -0.25rem;
+}
+.grid-wrap .grid-fat [class^=col-] {
+  margin-left: .25rem;
+  float: left;
+}
+.grid-wrap .grid-fat .gutter-bottom {
+  margin-bottom: 0.25rem;
+}
+.grid-wrap .grid-fat .gutter-right {
+  margin-right: 0.25rem;
+}
+.grid-wrap .grid-fat .col-1 {
+  width: 1rem;
+}
+.grid-wrap .grid-fat .row-1 {
+  height: 1rem;
+}
+.grid-wrap .grid-fat .col-2 {
+  width: 2.25rem;
+}
+.grid-wrap .grid-fat .row-2 {
+  height: 2.25rem;
+}
+.grid-wrap .grid-fat .col-3 {
+  width: 3.5rem;
+}
+.grid-wrap .grid-fat .row-3 {
+  height: 3.5rem;
+}
+.grid-wrap .grid-fat .col-4 {
+  width: 4.75rem;
+}
+.grid-wrap .grid-fat .row-4 {
+  height: 4.75rem;
+}
+.grid-wrap .grid-fat .col-5 {
+  width: 6rem;
+}
+.grid-wrap .grid-fat .row-5 {
+  height: 6rem;
+}
+.grid-wrap .grid-fat .col-6 {
+  width: 7.25rem;
+}
+.grid-wrap .grid-fat .row-6 {
+  height: 7.25rem;
+}
+.grid-wrap .grid-fat .col-7 {
+  width: 8.5rem;
+}
+.grid-wrap .grid-fat .row-7 {
+  height: 8.5rem;
+}
+.grid-wrap .grid-fat .col-8 {
+  width: 9.75rem;
+}
+.grid-wrap .grid-fat .row-8 {
+  height: 9.75rem;
+}
+.grid-wrap .grid-fat .col-9 {
+  width: 11rem;
+}
+.grid-wrap .grid-fat .row-9 {
+  height: 11rem;
+}
+.grid-wrap .grid-fat .col-10 {
+  width: 12.25rem;
+}
+.grid-wrap .grid-fat .row-10 {
+  height: 12.25rem;
+}
+.grid-wrap .grid-fat .col-11 {
+  width: 13.5rem;
+}
+.grid-wrap .grid-fat .row-11 {
+  height: 13.5rem;
+}
+.grid-wrap .grid-fat .col-12 {
+  width: 14.75rem;
+}
+.grid-wrap .grid-fat .row-12 {
+  height: 14.75rem;
+}
+.grid-wrap .grid-fat:before,
+.grid-wrap .grid-fat:after {
+  content: " ";
+  display: table;
+}
+.grid-wrap .grid-fat:after {
+  clear: both;
+}
+.grid-wrap .grid-thin {
+  box-sizing: content-box;
+  padding-left: 0rem;
+  padding-right: 0rem;
+  margin-left: -0.2rem;
+}
+.grid-wrap .grid-thin [class^=col-] {
+  margin-left: .2rem;
+  float: left;
+}
+.grid-wrap .grid-thin .gutter-bottom {
+  margin-bottom: 0.2rem;
+}
+.grid-wrap .grid-thin .gutter-right {
+  margin-right: 0.2rem;
+}
+.grid-wrap .grid-thin .col-1 {
+  width: 1.15rem;
+}
+.grid-wrap .grid-thin .row-1 {
+  height: 1.15rem;
+}
+.grid-wrap .grid-thin .col-2 {
+  width: 2.5rem;
+}
+.grid-wrap .grid-thin .row-2 {
+  height: 2.5rem;
+}
+.grid-wrap .grid-thin .col-3 {
+  width: 3.85rem;
+}
+.grid-wrap .grid-thin .row-3 {
+  height: 3.85rem;
+}
+.grid-wrap .grid-thin .col-4 {
+  width: 5.2rem;
+}
+.grid-wrap .grid-thin .row-4 {
+  height: 5.2rem;
+}
+.grid-wrap .grid-thin .col-5 {
+  width: 6.55rem;
+}
+.grid-wrap .grid-thin .row-5 {
+  height: 6.55rem;
+}
+.grid-wrap .grid-thin .col-6 {
+  width: 7.9rem;
+}
+.grid-wrap .grid-thin .row-6 {
+  height: 7.9rem;
+}
+.grid-wrap .grid-thin .col-7 {
+  width: 9.25rem;
+}
+.grid-wrap .grid-thin .row-7 {
+  height: 9.25rem;
+}
+.grid-wrap .grid-thin .col-8 {
+  width: 10.6rem;
+}
+.grid-wrap .grid-thin .row-8 {
+  height: 10.6rem;
+}
+.grid-wrap .grid-thin .col-9 {
+  width: 11.95rem;
+}
+.grid-wrap .grid-thin .row-9 {
+  height: 11.95rem;
+}
+.grid-wrap .grid-thin .col-10 {
+  width: 13.3rem;
+}
+.grid-wrap .grid-thin .row-10 {
+  height: 13.3rem;
+}
+.grid-wrap .grid-thin .col-11 {
+  width: 14.65rem;
+}
+.grid-wrap .grid-thin .row-11 {
+  height: 14.65rem;
+}
+.grid-wrap .grid-thin .col-12 {
+  width: 16rem;
+}
+.grid-wrap .grid-thin .row-12 {
+  height: 16rem;
+}
+.grid-wrap .grid-thin:before,
+.grid-wrap .grid-thin:after {
+  content: " ";
+  display: table;
+}
+.grid-wrap .grid-thin:after {
+  clear: both;
+}
+.grid-wrap .item {
+  padding-bottom: .4rem;
+  margin-bottom: .6rem;
+  border-bottom: solid 1px #DDD;
+  font-size: 0.7rem;
+}
+.grid-wrap .item label {
+  line-height: 1.1rem;
+  padding-right: 0.3rem;
+}
+.grid-wrap .item input {
+  height: 1.1rem;
+  border: 0;
+}
+.grid-wrap .item input[type=checkbox] {
+  float: right;
+  width: 0.8rem;
+}
+.grid-wrap .item select {
+  padding: 0.1rem 0;
+}
+.grid-wrap .item .info {
+  font-size: .5rem;
+  color: #999;
+  text-align: right;
+}
+.city_school_div {
+  width: 9rem;
+}
+.city_school_div .select2-search {
+  -webkit-box-sizing: border-box;
+  /* webkit */
+  -moz-box-sizing: border-box;
+  /* firefox */
+  box-sizing: border-box;
+  /* css3 */
+  padding-top: 4px;
+  display: inline-block;
+  width: 100%;
+  min-height: 26px;
+  margin: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+  position: relative;
+  z-index: 10000;
+  white-space: nowrap;
+}
+.city_school_div .select2-search input {
+  -webkit-box-sizing: border-box;
+  /* webkit */
+  -moz-box-sizing: border-box;
+  /* firefox */
+  box-sizing: border-box;
+  /* css3 */
+  width: 100%;
+  height: auto !important;
+  min-height: 26px;
+  padding: 4px 20px 4px 5px;
+  margin: 0;
+  outline: 0;
+  font-family: sans-serif;
+  font-size: 1em;
+  border: 1px solid #aaa;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background: #fff url('../../img/select2.png') no-repeat 100% -22px;
+  background: url('../../img/select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
+  background: url('../../img/select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
+  background: url('../../img/select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
+  background: url('../../img/select2.png') no-repeat 100% -22px, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0;
+}
+.button {
+  margin-top: 2rem;
+  width: 100%;
+  text-align: center;
+}
+.button span {
+  border-radius: .2rem;
+  background: #ff4965;
+  width: 100%;
+  display: inline-block;
+  padding: .6rem 0;
+  color: #FFF;
+  border: #ff4a7a;
+  margin-bottom: 1rem;
+}
+.team-list-page .search,
+.team-list-page .balance {
+  border-bottom: solid 1px #DDD;
+  margin-bottom: .5rem;
+  padding-bottom: .1rem;
+}
+.team-list-page .search .search_title,
+.team-list-page .balance .search_title,
+.team-list-page .search .balance_income,
+.team-list-page .balance .balance_income,
+.team-list-page .search .top_left_btn,
+.team-list-page .balance .top_left_btn {
+  float: left;
+  text-align: center;
+}
+.team-list-page .search .search_item,
+.team-list-page .balance .search_item {
+  float: left;
+}
+.team-list-page .search .search_item span,
+.team-list-page .balance .search_item span {
+  font-size: 0.6rem;
+  margin-left: .2rem;
+  list-style: none;
+}
+.team-list-page .search .search_reset,
+.team-list-page .balance .search_reset,
+.team-list-page .search .balance_outcome,
+.team-list-page .balance .balance_outcome,
+.team-list-page .search .top_right_btn,
+.team-list-page .balance .top_right_btn {
+  float: right;
+  text-align: center;
+}
+.team-list-page .search .search_reset span,
+.team-list-page .balance .search_reset span,
+.team-list-page .search .balance_outcome span,
+.team-list-page .balance .balance_outcome span,
+.team-list-page .search .top_right_btn span,
+.team-list-page .balance .top_right_btn span {
+  border-radius: .2rem;
+  background: #ff4965;
+  display: inline-block;
+  padding: .1rem 0.3rem;
+  color: #FFF;
+  border: #ff4a7a;
+}
+.team-list-page .search .current,
+.team-list-page .balance .current {
+  color: #fff;
+  background: #ff4965;
+  padding: .1rem .2rem;
+}
+.team-list-page .empty {
+  font-size: 0.6rem;
+  text-align: center;
+}
+.team-list-page .teams,
+.team-list-page .brands,
+.team-list-page .balance_log {
+  text-align: center;
+}
+.team-list-page .teams .team_list_head,
+.team-list-page .brands .team_list_head,
+.team-list-page .balance_log .team_list_head {
+  background-color: #DDD;
+  margin-bottom: .5rem;
+  font-weight: bold;
+  padding: .3rem;
+}
+.team-list-page .teams .team_list,
+.team-list-page .brands .team_list,
+.team-list-page .balance_log .team_list {
+  border-bottom: solid 1px #DDD;
+  margin-bottom: .5rem;
+  padding-bottom: .5rem;
+}
+.team-list-page .teams .team_list .team_desc,
+.team-list-page .brands .team_list .team_desc,
+.team-list-page .balance_log .team_list .team_desc {
+  text-align: left;
+}
+.team-list-page .teams .team_list .join,
+.team-list-page .brands .team_list .join,
+.team-list-page .balance_log .team_list .join,
+.team-list-page .teams .team_list .remove,
+.team-list-page .brands .team_list .remove,
+.team-list-page .balance_log .team_list .remove {
+  border-radius: .2rem;
+  text-align: center;
+  width: 100%;
+  background: #ff4965;
+  padding: .3rem .5rem;
+  color: #fff;
+}
+.team-list-page .teams .pages,
+.team-list-page .brands .pages,
+.team-list-page .balance_log .pages {
+  text-align: center;
+}
+.team-list-page .teams .pages .uppage,
+.team-list-page .brands .pages .uppage,
+.team-list-page .balance_log .pages .uppage,
+.team-list-page .teams .pages .downpage,
+.team-list-page .brands .pages .downpage,
+.team-list-page .balance_log .pages .downpage {
+  border-radius: .2rem;
+  text-align: center;
+  background: #ff4965;
+  color: #fff;
+  padding: .2rem 0;
+}
+.team-list-page .teams .pages .disabled,
+.team-list-page .brands .pages .disabled,
+.team-list-page .balance_log .pages .disabled {
+  background: #ddd;
+}
+.qrcode {
+  text-align: center;
+}
+.qrcode li {
+  list-style: none;
+}
+.qrcode li img {
+  width: 100%;
+}
+.goods_category {
+  text-align: center;
+}
+.goods_category .goods_class {
+  clear: both;
+  border-bottom: 1px solid #666;
+  padding-bottom: .5rem;
+}
+.goods_category .goods_class span {
+  list-style: none;
+  margin: .5rem;
+}
+.goods_category .goods_class .selected {
+  background: #ff4965;
+  color: #fff;
+  padding: .2rem;
+}

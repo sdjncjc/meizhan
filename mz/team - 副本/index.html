@@ -1,0 +1,147 @@
+<!--#include virtual="/mine/head.html"-->
+<link href="/css/team/index.css<!--#include virtual='/tpl/version.html'-->" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="grid-wrap wrapper" id="wrapper">
+        <div class="team-info"></div>
+	    <script id="tpl-teaminfo" type="text/template">
+        {{if data.team_id == 0}}
+            <div class="btn-inline">
+                <a class="btn-login" href="javascript:open_url('team_join');">加入小组</a><a class="btn-register" href="javascript:open_url('team_create');">创建小组</a>
+            </div>
+        {{else}}
+            {{if data.type == 0}}
+            <div class="team_title">
+            {{data.extend_team_info.team_name}}<span>(组员)</span>
+            </div>
+            {{/if}}
+            {{if data.type==1}}
+            <div class="team_title">
+                {{data.extend_team_info.team_name}}<span>(组长)</span>
+            </div>
+            {{if data.extend_team_info.team_status == 0}}
+            <div class="request_status">{{if data.team_apply_status == 0}}申请中{{/if}}{{if data.team_apply_status == 1}}申请失败 <a href="javascript:open_url('team_create','','{{data.team_id}}')">修改</a>{{/if}}</div>
+            {{/if}}
+            {{if data.extend_team_info.team_status == 2}}
+            <div class="request_status">已关闭</div>
+            {{/if}}
+            {{/if}}
+            <div class="team_desc">{{data.extend_team_info.team_intro}}</div>
+        {{/if}}
+	    </script>
+        <div class="team_page">
+            <ul class="my-list">
+                <li class="team-form">
+                    <a href="javascript:void(0)">小组荣誉<span class="next-page hidden"></span></a>
+                </li>
+            </ul>
+            <ul class="sum-box">
+                <li class="team-item">
+                    <a href="javascript:void(0)">
+                        <i class="icon"></i>
+                        <span class="txt">小组余额</span><span id="team-balance" class="num"></span>
+                    </a>
+                </li>
+                <li class="team-item">
+                    <a href="javascript:open_url('team_member_list');">
+                        <i class="icon"></i>
+                        <span class="txt">小组成员</span><span id="team-member-num" class="num"></span>
+                    </a>
+                </li>
+                <li class="team-item apply-member hidden">
+                    <a href="javascript:open_url('team_audit_member');">
+                        <i class="icon"></i>
+                        <span class="txt">审核会员</span><span id="apply-member-num" class="num"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="my-list other-list">
+                <li class="address">
+                    <a href="javascript:void(0)" class="team_info div-line">
+                         小组介绍
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+                <li class="favourite">
+                    <a href="javascript:open_url('team_order')" class="div-line">
+                        小组业绩
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+                <li class="favourite">
+                    <a href="javascript:open_url('team_balance','income')" class="div-line">
+                        小组收支
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+                <li class="service">
+                    <a href="javascript:open_url('team_member_list')" class="div-line">
+                         小组成员
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+                <li class="service">
+                    <a href="javascript:open_url('team_pm')" class="div-line">
+                         我的推广
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="my-list other-list shop_config hidden">
+                <li class="address">
+                    <a href="javascript:open_url('setbrandsale')" class="shop_config div-line">
+                         品牌特卖
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+                <li class="address">
+                    <a href="javascript:open_url('setrecommend')" class="shop_config div-line">
+                         推荐商品
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="my-list other-list">
+                <li class="address">
+                    <a href="javascript:open_url('team_rank')" class="div-line">
+                         地区小组排行
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+                <li class="favourite">
+                    <a href="javascript:open_url('team_member_rank')" class="div-line">
+                        销售精英排行
+                        <span class="next-page"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="hidden team_log_page">
+            <div class="apply-list grid-wrap"></div>
+            <script type="text/template" id="apply-list-tpl">
+                <div class="apply-head grid">
+                    <li class="col-4">小组名称</li>
+                    <li class="col-3">删除申请</li>
+                    <li class="col-3">申请时间</li>
+                </div>
+                {{each data as apply}}
+                <div class="apply-item grid">
+                    <li class="col-4">{{apply.team_name}}</li>
+                    <li class="col-3 delete_apply" data-id="{{apply.id}}"><img src="/img/delete.png" alt="点击删除申请">({{if apply.status == 0}}审核中{{/if}}{{if apply.status == 1}}拒绝{{/if}})</li>
+                    <li class="col-3">{{apply.addtime}}</li>
+                </div>
+                {{/each}}
+            </script>
+            <script type="text/template" id="empty-apply-list-tpl">
+                <div class="empty">暂无申请记录</div>
+            </script>
+        </div>
+    </section>
+
+    <script type="text/javascript" src="/js/team/team.js<!--#include virtual='/tpl/version.html'-->"></script>
+    <script type="text/javascript">
+        set_title("我的美站");
+        // 显示用户基本信息
+        getAjaxResult(getUrl('mz_team','getUserTeam'),'tpl-teaminfo',".team-info",'',"team.checkTeam");
+    </script>
+</body>
+</html>

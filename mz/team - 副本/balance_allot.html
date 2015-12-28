@@ -1,0 +1,82 @@
+<!--#include virtual="/mine/head.html"-->
+<link href="/css/team/index.css<!--#include virtual='/tpl/version.html'-->" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="grid-wrap wrapper" id="wrapper">
+        <div class="member-list grid-wrap"></div>
+        <div class="member-bottom">
+            <li>剩余金额:<span class="remain_amount"></span>元</li>
+            <li>总金额:<span class="total_amount"></span>元</li>
+            <li><input type="button" class="btn_send" value="确定分发"></li>
+        </div>
+        <script type="text/template" id="member-list-tpl">
+            <div class="member-head grid">
+                <li class="col-4">会员名</li>
+                <li class="col-2">等级</li>
+                <li class="col-3">经验</li>
+                <li class="col-3">金额</li>                
+            </div>
+            {{each data.member_list as member}}
+            <div class="member-item grid">
+                <li class="col-4">{{member.member_name}}</li>
+                <li class="col-2">{{if member.type==1}}<span class='manager'>组长</span>{{else}}成员{{/if}}</li>
+                <li class="col-3">{{member.member_grade.level_name}}</li>
+                <li class="col-3"><input type="text" class="col-2 member_amount" data-member-id="{{member.member_id}}">元</li>
+            </div>
+            {{/each}}
+        </script>
+    </section>
+    <script type="text/javascript">
+        set_title("小组成员列表");
+        getAjaxResult(getUrl('mz_team_member','getMemberList'),'member-list-tpl',".member-list","",'bindEvent');
+        function bindEvent(data){
+            $(".remain_amount").html(data.self_info.extend_team_info.team_balance);
+            $(".total_amount").html(data.self_info.extend_team_info.team_balance);
+            $(".member_amount").change(function(){
+                var _this = $(this);
+                var num = _this.val();
+                if (!/^\d+(\.\d+)?$/.test(num)) {
+                    $.dialog({
+                        content : '请输入正确数值',
+                        title : 'alert',
+                        ok : function() {
+                            _this.val('');
+                        },
+                        lock : false
+                    });
+                }else{
+                    var result_amount = data.self_info.extend_team_info.team_balance * 1000;
+                    $('.member_amount').each(function (i){
+                        result_amount -= $(this).val() * 1000;
+                    });
+                    if (result_amount < 0){
+                        $.dialog({
+                            content : '分配总金额大于当前余额',
+                            title : 'alert',
+                            ok : function() {
+                                _this.val('');
+                            },
+                            lock : false
+                        });
+                        $(".btn_send").addClass('btn_disabled');
+                        $(".btn_send").attr("disabled",true);
+                    }else{
+                        $(".btn_send").removeClass('btn_disabled');
+                        $(".btn_send").removeAttr("disabled");
+                        $(".remain_amount").html(result_amount/1000);
+                    }
+                }
+            });
+            $(".btn_send").tap(function(){
+                if ($(this).attr('disabled')) {
+                    return;
+                };
+                var a = '';
+                $('.member_amount').each(function (i){
+                    a += $(this).attr('data-member-id')+"|"+$(this).val() + ",";
+                });
+                ajax_do(getUrl('mz_team_member','balanceAllot'),{params:a.substr(0,a.length-1)});
+            });
+        }
+    </script>
+</body>
+</html>

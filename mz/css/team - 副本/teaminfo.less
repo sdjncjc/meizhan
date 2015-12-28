@@ -1,0 +1,493 @@
+@charset "utf-8";
+body{
+  margin: 0;
+  padding: 0;
+}
+button,input,select,textarea {
+  font-size: 100%;
+}
+#wrapper {
+  padding-top: 2.5rem;
+}
+.grid-wrap {
+  padding: 0.5rem;
+	.grid {
+	  box-sizing: content-box;
+	  padding-left: .3rem;
+	  padding-right: .3rem;
+	  margin-left: -0.2rem;
+		[class^=col-] {
+		  margin-left: .2rem;
+		  float: left;
+		}
+		.gutter-bottom {
+		  margin-bottom: 0.2rem;
+		}
+		.gutter-right {
+		  margin-right: 0.2rem;
+		}
+		.col-1 {
+		  width: 1.1rem;
+		}
+		.row-1 {
+		  height: 1.1rem;
+		}
+		.col-2 {
+		  width: 2.4rem;
+		}
+		.row-2 {
+		  height: 2.4rem;
+		}
+		.col-3 {
+		  width: 3.7rem;
+		}
+		.row-3 {
+		  height: 3.7rem;
+		}
+		.col-4 {
+		  width: 5rem;
+		}
+		.row-4 {
+		  height: 5rem;
+		}
+		.col-5 {
+		  width: 6.3rem;
+		}
+		.row-5 {
+		  height: 6.3rem;
+		}
+		.col-6 {
+		  width: 7.6rem;
+		}
+		.row-6 {
+		  height: 7.6rem;
+		}
+		.col-7 {
+		  width: 8.9rem;
+		}
+		.row-7 {
+		  height: 8.9rem;
+		}
+		.col-8 {
+		  width: 10.2rem;
+		}
+		.row-8 {
+		  height: 10.2rem;
+		}
+		.col-9 {
+		  width: 11.5rem;
+		}
+		.row-9 {
+		  height: 11.5rem;
+		}
+		.col-10 {
+		  width: 12.8rem;
+		}
+		.row-10 {
+		  height: 12.8rem;
+		}
+		.col-11 {
+		  width: 14.1rem;
+		}
+		.row-11 {
+		  height: 14.1rem;
+		}
+		.col-12 {
+		  width: 15.4rem;
+		}
+		.row-12 {
+		  height: 15.4rem;
+		}
+	}
+	.grid:before,.grid:after {
+	  content: " ";
+	  display: table;
+	}
+	.grid:after {
+	  clear: both;
+	}
+	.grid-fat {
+	  box-sizing: content-box;
+	  padding-left: .6125rem;
+	  padding-right: .6125rem;
+	  margin-left: -0.25rem;
+		[class^=col-] {
+		  margin-left: .25rem;
+		  float: left;
+		}
+		.gutter-bottom {
+		  margin-bottom: 0.25rem;
+		}
+		.gutter-right {
+		  margin-right: 0.25rem;
+		}
+		.col-1 {
+		  width: 1rem;
+		}
+		.row-1 {
+		  height: 1rem;
+		}
+		.col-2 {
+		  width: 2.25rem;
+		}
+		.row-2 {
+		  height: 2.25rem;
+		}
+		.col-3 {
+		  width: 3.5rem;
+		}
+		.row-3 {
+		  height: 3.5rem;
+		}
+		.col-4 {
+		  width: 4.75rem;
+		}
+		.row-4 {
+		  height: 4.75rem;
+		}
+		.col-5 {
+		  width: 6rem;
+		}
+		.row-5 {
+		  height: 6rem;
+		}
+		.col-6 {
+		  width: 7.25rem;
+		}
+		.row-6 {
+		  height: 7.25rem;
+		}
+		.col-7 {
+		  width: 8.5rem;
+		}
+		.row-7 {
+		  height: 8.5rem;
+		}
+		.col-8 {
+		  width: 9.75rem;
+		}
+		.row-8 {
+		  height: 9.75rem;
+		}
+		.col-9 {
+		  width: 11rem;
+		}
+		.row-9 {
+		  height: 11rem;
+		}
+		.col-10 {
+		  width: 12.25rem;
+		}
+		.row-10 {
+		  height: 12.25rem;
+		}
+		.col-11 {
+		  width: 13.5rem;
+		}
+		.row-11 {
+		  height: 13.5rem;
+		}
+		.col-12 {
+		  width: 14.75rem;
+		}
+		.row-12 {
+		  height: 14.75rem;
+		}
+	}
+	.grid-fat:before,.grid-fat:after {
+	  content: " ";
+	  display: table;
+	}
+	.grid-fat:after {
+	  clear: both;
+	}
+	.grid-thin {
+	  box-sizing: content-box;
+	  padding-left: 0rem;
+	  padding-right: 0rem;
+	  margin-left: -0.2rem;
+		[class^=col-] {
+		  margin-left: .2rem;
+		  float: left;
+		}
+		.gutter-bottom {
+		  margin-bottom: 0.2rem;
+		}
+		.gutter-right {
+		  margin-right: 0.2rem;
+		}
+		.col-1 {
+		  width: 1.15rem;
+		}
+		.row-1 {
+		  height: 1.15rem;
+		}
+		.col-2 {
+		  width: 2.5rem;
+		}
+		.row-2 {
+		  height: 2.5rem;
+		}
+		.col-3 {
+		  width: 3.85rem;
+		}
+		.row-3 {
+		  height: 3.85rem;
+		}
+		.col-4 {
+		  width: 5.2rem;
+		}
+		.row-4 {
+		  height: 5.2rem;
+		}
+		.col-5 {
+		  width: 6.55rem;
+		}
+		.row-5 {
+		  height: 6.55rem;
+		}
+		.col-6 {
+		  width: 7.9rem;
+		}
+		.row-6 {
+		  height: 7.9rem;
+		}
+		.col-7 {
+		  width: 9.25rem;
+		}
+		.row-7 {
+		  height: 9.25rem;
+		}
+		.col-8 {
+		  width: 10.6rem;
+		}
+		.row-8 {
+		  height: 10.6rem;
+		}
+		.col-9 {
+		  width: 11.95rem;
+		}
+		.row-9 {
+		  height: 11.95rem;
+		}
+		.col-10 {
+		  width: 13.3rem;
+		}
+		.row-10 {
+		  height: 13.3rem;
+		}
+		.col-11 {
+		  width: 14.65rem;
+		}
+		.row-11 {
+		  height: 14.65rem;
+		}
+		.col-12 {
+		  width: 16rem;
+		}
+		.row-12 {
+		  height: 16rem;
+		}
+	}
+	.grid-thin:before,.grid-thin:after {
+	  content: " ";
+	  display: table;
+	}
+	.grid-thin:after {
+	  clear: both;
+	}
+	.item {
+	  padding-bottom: .4rem;
+	  margin-bottom: .6rem;
+	  border-bottom: solid 1px #DDD;
+	  font-size: 0.7rem;
+		label {
+		  line-height: 1.1rem;
+		  padding-right: 0.3rem;
+		}
+		input {
+		  height: 1.1rem;
+		  border: 0;
+		}
+		input[type=checkbox] {
+		  float: right;
+		  width: 0.8rem;
+		}
+		select {
+		  padding: 0.1rem 0;
+		}
+		.info{
+			font-size: .5rem;
+			color: #999;
+			text-align: right;
+		}
+	}
+}
+.city_school_div{
+	width: 9rem;
+	// display: none;
+	.select2-search {		
+		-webkit-box-sizing: border-box; /* webkit */
+		-moz-box-sizing: border-box; /* firefox */
+		box-sizing: border-box; /* css3 */
+    	padding-top: 4px;
+	    display: inline-block;
+	    width: 100%;
+	    min-height: 26px;
+	    margin: 0;
+	    padding-left: 4px;
+	    padding-right: 4px;
+	    position: relative;
+	    z-index: 10000;
+	    white-space: nowrap;
+	}
+
+	.select2-search input {
+
+		-webkit-box-sizing: border-box; /* webkit */
+		-moz-box-sizing: border-box; /* firefox */
+		box-sizing: border-box; /* css3 */
+	    width: 100%;
+	    height: auto !important;
+	    min-height: 26px;
+	    padding: 4px 20px 4px 5px;
+	    margin: 0;
+
+	    outline: 0;
+	    font-family: sans-serif;
+	    font-size: 1em;
+
+	    border: 1px solid #aaa;
+	    border-radius: 0;
+
+	    -webkit-box-shadow: none;
+	            box-shadow: none;
+
+	    background: #fff url('../../img/select2.png') no-repeat 100% -22px;
+	    background: url('../../img/select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
+	    background: url('../../img/select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
+	    background: url('../../img/select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
+	    background: url('../../img/select2.png') no-repeat 100% -22px, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0;
+	}
+
+}
+.button {
+  margin-top: 2rem;
+  width: 100%;
+  text-align: center;
+  span{
+      border-radius: .2rem;
+  	  background: #ff4965;
+  	  width: 100%;
+	  display: inline-block;
+	  padding: .6rem 0;
+	  color: #FFF;
+	  border: #ff4a7a;
+	  margin-bottom: 1rem;
+  }
+}
+.team-list-page{
+	.search,.balance{
+	 	border-bottom: solid 1px #DDD;
+	 	margin-bottom: .5rem;
+	 	padding-bottom: .1rem;
+	 	.search_title,.balance_income,.top_left_btn{
+	 		float: left;
+	 		text-align: center;
+	 	}
+		.search_item{
+	 		float: left;
+		 	span{
+		 		font-size: 0.6rem;
+		 		margin-left: .2rem;
+		 		list-style: none;
+		 	}
+		}
+		.search_reset,.balance_outcome,.top_right_btn{
+			float: right;
+	 		text-align: center;
+			span{
+		      border-radius: .2rem;
+		  	  background: #ff4965;
+			  display: inline-block;
+			  padding: .1rem 0.3rem;
+			  color: #FFF;
+			  border: #ff4a7a;
+			}
+		}
+		.current{
+			color: #fff;
+			background: #ff4965;
+			padding:.1rem .2rem;
+		}
+	}
+	.empty{
+		font-size: 0.6rem;
+		text-align: center;
+	}
+	.teams,.brands,.balance_log{
+		text-align: center;
+		.team_list_head{
+			background-color: #DDD;
+			margin-bottom: .5rem;
+			font-weight: bold;
+			padding: .3rem;
+		}
+		.team_list{
+		 	border-bottom: solid 1px #DDD;
+		 	margin-bottom: .5rem;
+		 	padding-bottom:.5rem;
+		 	.team_desc{
+		 		text-align: left;
+		 	}
+		 	.join,.remove{
+				border-radius: .2rem;
+				text-align: center;
+				width: 100%;
+				background: #ff4965;
+				padding: .3rem .5rem;
+				color: #fff;
+		 	}
+		}
+		.pages{
+			text-align: center;
+			.uppage,.downpage{
+				border-radius: .2rem;
+				text-align: center;
+				background: #ff4965;
+				color: #fff;
+				padding: .2rem 0;
+			}
+			.disabled{
+				background: #ddd;
+			}
+		}
+	}
+}
+.qrcode{
+	text-align: center;
+	li{
+		list-style: none;
+		img{
+			width: 100%;
+		}
+	}
+}
+// 商品分类
+.goods_category{
+	text-align: center;
+	.goods_class{
+		clear: both;
+    	border-bottom: 1px solid #666;
+    	padding-bottom: .5rem;
+		span{
+			list-style: none;
+			margin: .5rem;
+		}
+		.selected{
+			background:#ff4965;
+			color: #fff;
+			padding: .2rem;
+		}
+	}
+}

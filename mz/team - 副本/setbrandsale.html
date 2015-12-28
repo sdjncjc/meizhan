@@ -1,0 +1,121 @@
+<!--#include virtual="/mine/head.html"-->
+<link href="/css/team/teaminfo.css<!--#include virtual='/tpl/version.html'-->" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="grid-wrap" id="wrapper">
+	     <section class="team-list-page grid-wrap">
+	     	<div class="search grid">
+	     		<div class="top_left_btn current col-2">未添加</div>
+	     		<div class="top_right_btn col-2">已添加</div>
+	     	</div>
+	     	<div class="brands"></div>
+	     </section>
+	     <script type="text/template" id="team-list-tpl">
+	        <div class="grid team_list_head">
+	        	<div class="col-5 brand_name">品牌名称</div>
+	        	<div class="col-3">结束时间</div>
+	        	<div class="col-2">操作</div>
+	        </div>
+	     	{{each data as brand}}
+	        <div class="grid team_list">
+	        	<div class="col-5 team_desc">{{brand.brand_name}}</div>
+	        	<div class="col-3">{{brand.end_time}}</div>
+	        	<div class="col-2">
+	        		{{if brand.is_add }}
+	        		<div class="remove" data-id='{{brand.rec_id}}'>删除</div>
+	        		{{else}}
+	        		<div class="join" data-id='{{brand.rec_id}}'>添加</div>
+	        		{{/if}}
+	        	</div>
+	        </div>
+	        {{/each}}
+	        <div class="grid pages">
+	        	<div class="col-5 uppage disabled">上页</div>
+	        	<div class="col-5 downpage">下页</div>
+	        </div>
+	     </script>
+	     <script type="text/template" id="empty-team-list-tpl">
+	     	<div class="empty">暂无信息</div>
+	     </script>
+    </section>
+    <a href="javascript:;" class="backtop"></a>
+    <script type="text/javascript">
+        set_title("品牌特卖设置");
+        var type = getcookie("brand_type")?getcookie("brand_type"):"no_add";
+        if (type == "no_add") {
+	        if (getcookie("brand_page")) {
+	        	page = getcookie("brand_page");
+	        };
+    	}
+        setCurrent(type);
+        getBrandSale(page);
+        $(".top_left_btn").tap(function(){
+        	page = getcookie("brand_page");
+        	type = "no_add";
+        	setCurrent(type);
+        	getBrandSale(page);
+        });
+        $(".top_right_btn").tap(function(){
+        	page = 1;
+        	type = "is_add";
+        	setCurrent(type);
+        	getBrandSale(page);
+        });
+        function setCurrent(type){
+        	if (type == "no_add") {
+	        	$(".top_right_btn").removeClass("current");
+	        	$(".top_left_btn").addClass("current");
+        	}else{
+	        	$(".top_left_btn").removeClass("current");
+	        	$(".top_right_btn").addClass("current");
+        	}
+        	addcookie('brand_type',type);
+        }
+        function getBrandSale(thispage){
+        	if (type == "no_add") {
+        		addcookie("brand_page",thispage);
+        	}
+        	$('.brands').empty();
+        	getAjaxResult(getUrl('mz_brandsale','get_team_brand_list','type='+type+'&page='+thispage),'team-list-tpl',".brands",'empty-team-list-tpl','bindEvent');
+        }
+        function bindEvent(data){
+	    	if (page <= 2) {
+	    		$(".pages .uppage").addClass("disabled");
+	    	}else{
+	    		$(".pages .uppage").removeClass("disabled");
+	    	}
+	    	if (stop) {
+	    		$(".pages .downpage").addClass("disabled");
+	    	}
+	        $(".pages .uppage").tap(function(){
+	        	if ($(this).hasClass("disabled")) {
+	        		return;
+	        	};
+	        	page = page - 2;
+	        	getBrandSale(page);
+	        });
+	        $(".pages .downpage").tap(function(){
+	        	if ($(this).hasClass("disabled")) {
+	        		return;
+	        	};
+	        	getBrandSale(page);
+	        });
+	        $(".join").tap(function(){
+	        	var id = $(this).attr("data-id");
+	        	ajax_do(getUrl("mz_brandsale",'addTeamBrandSale'),{id:id});
+	        });
+	        $(".remove").tap(function(){
+	        	var id = $(this).attr("data-id");
+				$.dialog({
+					content : '确认删除？',
+					title : 'alert',
+					ok : function() {
+	        			ajax_do(getUrl("mz_brandsale",'removeTeamBrandSale'),{id:id});
+					},
+					cancel : function() {},
+					lock : false
+				});
+	        });
+        }
+    </script>
+</body>    
+</html>

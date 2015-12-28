@@ -1,0 +1,53 @@
+<!--#include virtual="/mine/head.html"-->
+<link href="/css/team/teaminfo.css<!--#include virtual='/tpl/version.html'-->" rel="stylesheet" media="all" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="grid-wrap" id="wrapper">
+	     <section class="team-list-page grid-wrap">
+	     	<div class="balance grid">
+	     		<div class="balance_income col-3" onclick="open_url('team_balance','income')">收入信息</div>
+	     		<div class="balance_outcome current col-3">支出信息</div>
+	     	</div>
+	     	<div class="balance_log"></div>
+	     </section>
+	     <script type="text/template" id="team-list-tpl">
+	        <div class="grid team_list_head">
+	        	<div class="col-5">描述</div>
+	        	<div class="col-2">金额</div>
+	        	<div class="col-3">时间</div>
+	        </div>
+	     	{{each data as team_balance}}
+	        <div class="grid team_list">
+	        	<div class="col-5">{{team_balance.balance_desc}}</div>
+	        	<div class="col-2">&yen;{{team_balance.balance_price}}</div>
+	        	<div class="col-3">{{team_balance.balance_addtime}}</div>
+	        </div>
+	        {{/each}}
+	     </script>
+	     <script type="text/template" id="empty-team-list-tpl">
+	     	<div class="empty">暂无信息</div>
+	     </script>
+    </section>
+    <a href="javascript:;" class="backtop"></a>
+    <script type="text/javascript" src="/js/team/team.js<!--#include virtual='/tpl/version.html'-->"></script>
+    <script type="text/javascript">
+        set_title("小组支出");
+        team.getTeamBalanceLog('outcome');
+        $(window).scroll(function() {
+            if($('.loading').offset().top < $(window).scrollTop() + 1.3*$(window).height()){
+                if(!stop){
+                    $(".loading").show();
+        			team.getTeamBalanceLog('outcome');
+                    stop = true;
+                }
+            }
+            if($('body').scrollTop() > 2000){
+                $('.backtop').show();
+            }else{
+                $('.backtop').hide();
+            }
+        });
+
+        $('.backtop').tap(function(){$('body').scrollTop(0);}); 
+    </script>
+</body>    
+</html>

@@ -1,0 +1,117 @@
+<!--#include virtual="/mine/head.html"-->
+    <link rel="stylesheet" href="/css/member/order-detail.css<!--#include virtual='/tpl/version.html'-->" />
+<!--#include virtual="/tpl/navbar.html"-->
+    <section class="wrapper J_wrapper" id="wrapper">
+        <section class="grid-wrap orders">
+            <script id="order-template" type="text/template">
+                <div class="wrapper">
+                    <div class="div-line"></div>
+                    <div class="part1">
+                        <div class="info1">
+                            <span class="username">{{data.extend_order_common.reciver_name}}</span>
+                            <span>{{data.extend_order_common.reciver_info.phone}}</span>
+                            <p class="address-info">{{data.extend_order_common.reciver_info.address}}</p>
+                        </div>
+                    </div>
+                    {{if data.order_state == 30 || data.order_state == 40 }}
+                    <div class="interflow-box">
+                        <div class="interflow-info">
+                            <a href="javascript:open_url('logistics','',{{data.order_id}});">
+                                <div class="node-box">
+                                    <p class="node-text green-node">{{data.withdrawal}}</p>
+                                    <p class="time-node">${shipment.last_detail.create}</p>
+                                    <div class="node-sign green-sign"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {{/if}}
+                    <div class="info-part part3">
+                        <div class="title">费用详情</div>
+                        <div class="info-box">
+                            <div class="my-grid">
+                                <div class="intro">商品金额：</div>
+                                <div class="content-info">{{data.goods_amount}}</div>
+                            </div>
+                            <div class="my-grid postage">
+                                <div class="intro">运费：</div>
+                                <div class="content-info">{{data.shipping_fee}}</div>
+                            </div>
+                            <div class="my-grid manjian">
+                                <div class="intro">满减优惠：</div>
+                                <div class="content-info">{{data.extend_order_common.promotion_total}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="info-part part2 user-select-none">
+                        <div class="title">订单信息</div>
+                        <div class="info-box">
+                            <div class="my-grid">
+                                <div class="my-col-4">推广人：</div>
+                                <div class="my-col-8">{{data.promoter}}</div>
+                                <div class="my-col-4">订单编号：</div>
+                                <div class="my-col-8 user-select">{{data.order_sn}}</div>
+                                <div class="my-col-4">下单时间：</div>
+                                <div class="my-col-8">{{data.add_time}}</div>
+                                <div class="my-col-4">订单状态：</div>
+                                <div class="my-col-8 red-text">{{if data.order_state==0}}已取消{{/if}}{{if data.order_state==10}}未付款{{/if}}{{if data.order_state==20}}已付款{{/if}}{{if data.order_state==30}}已发货{{/if}}{{if data.order_state==40}}已完成{{/if}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-part part4">
+                        <div class="title">商品详情</div>
+                        {{each data.extend_order_goods as order_goods}}
+                        <a href="javascript:open_url('goods','detial',{{order_goods.goods_id}})" style="display:block">
+                            <div class="info-box">
+                                <div class="left-box">
+                                    <img class="item-img" src="{{order_goods.img_url}}">
+                                    <div class="item-info">
+                                        <p class="intro">{{order_goods.goods_name}}</p>
+                                        <p class="sub-intro">{{order_goods.goods_spec}}</p>
+                                    </div>
+                                </div>
+                                <div class="right-box">
+                                    <p class="money">{{order_goods.goods_price}}</p>
+                                    <p class="num">&times; {{order_goods.goods_num}}</p>
+                                </div>
+                            </div>
+                        </a>
+                        {{/each}}
+                    </div>
+                    {{if data.extend_order_common.has_invoice}}
+                    <div class="info-part part5">
+                        <div class="title">发票信息</div>
+                        <div class="info-box">
+                            <div class="my-grid">
+                            {{each data.extend_order_common.invoice_info as invoice key}}
+                                <div class="intro">{{key}}</div>
+                                <div class="content-info">{{invoice}}</div>
+                            {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                    {{/if}}
+                    {{if data.extend_order_common.order_message != ''}}
+                    <div class="info-part part6">
+                        <div class="title">备注信息</div>
+                        <div class="info-box">
+                            <div class="my-grid">
+                                <div class="remark">{{data.extend_order_common.order_message}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if}}
+                </div>
+            </script>
+        </section>
+    </section>
+    <script type="text/javascript">
+        set_title("小组订单详情");
+        getAjaxResult(getUrl('mz_team','getTeamOrderInfo','order_id='+GetQueryString("order_id")),'order-template',".orders",'sd');
+    </script>
+</body>
+
+</html>
