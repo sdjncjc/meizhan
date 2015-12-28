@@ -161,3 +161,27 @@ class mobileSellerControl extends mobileControl{
         }
     }
 }
+
+class memberTeamControl extends mobileMemberControl{
+
+    public function __construct() {
+        parent::__construct();
+
+        $model_member = Model('mz_member');
+        $mz_member_info = $model_member->getMemberInfo(array('member_id'=>$this->member_info['member_id']));
+        if (empty($mz_member_info)) {
+            $condition = array();
+            $condition['member_id'] = $this->member_info['member_id'];
+            $condition['client_type'] = "mz";
+            Model('mb_user_token')->delMbUserToken($condition);
+            output_error('用户信息错误,请重新登录',array('team'=>'0'));
+        }
+        if ($mz_member_info['team_id'] == 0) {
+            output_error('未加入战队',array('team'=>0));
+        }else{
+            $this->member_info['mz_integral'] = $mz_member_info['integral'];
+            $this->member_info['member_type'] = $mz_member_info['type'];
+            $this->member_info['team_info'] = Model('mz_team')->getTeamInfoByID($mz_member_info['team_id']);
+        }
+    }
+}

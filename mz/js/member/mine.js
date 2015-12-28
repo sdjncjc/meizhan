@@ -76,21 +76,21 @@ function getUrl(act,op,params){
 	return ApiUrl + "/index.php?act=" + act + "&op=" + op + "&" + params;
 }
 function ajax_do(url,params){
-		$.post(url,params,function(result){
-	    	if(result.code == 200){
-				$.dialog({content:result.datas,title: "ok",time: 1000});
-				var from = GetQueryString("from");
-				if (from !== undefined) {
-					window.setTimeout(function(){
-						window.location.href = decodeURIComponent(from);
-					},1000); 
-				}else{
-					window.setTimeout(function(){location.reload();},1000); 
-				}
-	        }else{
-				$.dialog({content:result.datas.error,title: "alert",time: 1000});
-	        }
-		},'json');
+	$.post(url,params,function(result){
+    	if(result.code == 200){
+			$.dialog({content:result.datas,title: "ok",time: 1000});
+			var from = GetQueryString("from");
+			if (from !== undefined) {
+				window.setTimeout(function(){
+					window.location.href = decodeURIComponent(from);
+				},1000); 
+			}else{
+				window.setTimeout(function(){location.reload();},1000); 
+			}
+        }else{
+			$.dialog({content:result.datas.error,title: "alert",time: 1000});
+        }
+	},'json');
 }
 
 function open_url(type,sub,id){

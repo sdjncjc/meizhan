@@ -13,7 +13,7 @@
 use Shopnc\Tpl;
 
 defined('InShopNC') or exit('Access Invalid!');
-class mz_teamControl extends mobileMemberControl {
+class mz_teamControl extends memberTeamControl {
 
     public function __construct() {
         parent::__construct();
@@ -27,22 +27,13 @@ class mz_teamControl extends mobileMemberControl {
      * @return [type] [description]
      */
     public function getUserTeamOp(){
-    	$userteam = Model('mz_member')->getMemberInfo(array('member_id'=>$this->member_info['member_id']),"*",array("mz_team"));
-    	if (empty($userteam)) {
-            $userteam['member_id'] = $this->member_info['member_id'];
-            $userteam['team_id'] = 0;
-            $userteam['type'] = 0;
-    	}
-        $team_apply = Model("mz_team_log")->where(array('member_id'=>$this->member_info['member_id'],'type'=>1,'team_id'=>$userteam['team_id']))->field("id,status")->order('addtime desc')->find();
-        if (!empty($team_apply)) {
-            $userteam['team_apply_id'] = $team_apply['id'];
-            $userteam['team_apply_status'] = $team_apply['status'];
-        }else{
-            if ($userteam['type'] == 1) {
-                $userteam['apply_member_num'] = Model('mz_team_log')->where(array('type'=>0,'team_id'=>$userteam['team_id']))->count();
-            }
-        }
-    	output_data(array('data'=>$userteam));
+        $member_info = array();
+        $member_info['mz_integral'] = $this->member_info['mz_integral'];
+        $member_info['member_avatar'] = getMemberAvatar($this->member_info['member_avatar']);
+        $member_info['member_type'] = $this->member_info['member_type'];
+        $member_info['member_type'] = $this->member_info['member_type'];
+        $member_info['team_info'] = $this->member_info['team_info'];
+    	output_data(array('data'=>$member_info));
     }
     /**
      * 获取申请列表
